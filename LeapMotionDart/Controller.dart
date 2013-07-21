@@ -1,4 +1,4 @@
-import 'Frame.dart';
+part of LeapMotionDart;
 
 /**
  * The Controller class is your main interface to the Leap Motion Controller.
@@ -39,7 +39,7 @@ import 'Frame.dart';
  * @author logotype
  *
  */
-class Controller
+class Controller extends EventDispatcher
 {
   /**
    * The default policy.
@@ -63,7 +63,7 @@ class Controller
    * @private
    * History of frame of tracking data from the Leap Motion.
    */
-  List frameHistory;
+  List<Frame> frameHistory = new List<Frame>();
 
   /**
    * @private
@@ -71,12 +71,6 @@ class Controller
    *
    */
   Object context;
-
-  /**
-   * @private
-   * List of Screen objects, created by <code>locatedScreens()</code>.
-   */
-  List _screenList;
 
   /**
    * Constructs a Controller object.

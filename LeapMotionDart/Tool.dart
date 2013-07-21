@@ -1,4 +1,4 @@
-import 'Pointable.dart';
+part of LeapMotionDart;
 /**
  * The Tool class represents a tracked tool.
  *

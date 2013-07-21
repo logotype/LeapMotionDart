@@ -1,4 +1,5 @@
-import 'Pointable.dart';
+part of LeapMotionDart;
+
 /**
  * The Finger class represents a tracked finger.
  *

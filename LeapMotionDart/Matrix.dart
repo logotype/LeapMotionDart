@@ -1,5 +1,4 @@
-import 'dart:math';
-import 'Vector3.dart';
+part of LeapMotionDart;
 
 /**
  * The Matrix class represents a transformation matrix.
@@ -67,8 +66,8 @@ class Matrix
   void setRotation( Vector3 _axis, num angleRadians )
   {
     Vector3 axis = _axis.normalized();
-    num s = sin( angleRadians );
-    num c = cos( angleRadians );
+    num s = Math.sin( angleRadians );
+    num c = Math.cos( angleRadians );
     num C = ( 1 - c );
 
     xBasis = new Vector3( axis.x * axis.x * C + c, axis.x * axis.y * C - axis.z * s, axis.x * axis.z * C + axis.y * s );

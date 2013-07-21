@@ -1,6 +1,4 @@
-import 'Frame.dart';
-import 'Vector3.dart';
-import 'Hand.dart';
+part of LeapMotionDart;
 
 /**
  * The Pointable class reports the physical characteristics of a detected finger or tool.

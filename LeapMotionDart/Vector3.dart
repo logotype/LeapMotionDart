@@ -1,4 +1,4 @@
-import 'dart:math';
+part of LeapMotionDart;
 
 /**
  * The Vector class represents a three-component mathematical vector
@@ -191,7 +191,7 @@ class Vector3
     if( denom <= 0 )
       return 0;
 
-    return acos( dot( other ) / sqrt( denom ) );
+    return Math.acos( dot( other ) / Math.sqrt( denom ) );
   }
 
   /**
@@ -221,7 +221,7 @@ class Vector3
    */
   num distanceTo( Vector3 other )
   {
-    return sqrt( ( x - other.x ) * ( x - other.x ) + ( y - other.y ) * ( y - other.y ) + ( z - other.z ) * ( z - other.z ) );
+    return Math.sqrt( ( x - other.x ) * ( x - other.x ) + ( y - other.y ) * ( y - other.y ) + ( z - other.z ) * ( z - other.z ) );
   }
 
   /**
@@ -275,7 +275,7 @@ class Vector3
    */
   num magnitude()
   {
-    return sqrt( x * x + y * y + z * z );
+    return Math.sqrt( x * x + y * y + z * z );
   }
 
   /**
@@ -301,7 +301,7 @@ class Vector3
     if( denom <= 0 )
       return new Vector3( 0, 0, 0 );
 
-    denom = 1 / sqrt( denom );
+    denom = 1 / Math.sqrt( denom );
     return new Vector3( x * denom, y * denom, z * denom );
   }
 
@@ -316,7 +316,7 @@ class Vector3
    * @return The angle of this vector above or below the horizon (x-z plane).
    *
    */
-  num get pitch => atan2( y, -z );
+  num get pitch => Math.atan2( y, -z );
 
   /**
    * The yaw angle in radians.
@@ -330,7 +330,7 @@ class Vector3
    * @return The angle of this vector to the right or left of the negative z-axis.
    *
    */
-  num get yaw => atan2( x, -z );
+  num get yaw => Math.atan2( x, -z );
 
   /**
    * The roll angle in radians.
@@ -348,7 +348,7 @@ class Vector3
    * @return The angle of this vector to the right or left of the y-axis.
    *
    */
-  num get roll => atan2( x, -y );
+  num get roll => Math.atan2( x, -y );
 
   /**
    * The zero vector: (0, 0, 0)

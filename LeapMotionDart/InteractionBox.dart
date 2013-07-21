@@ -1,5 +1,4 @@
-import 'dart:math';
-import 'Vector3.dart';
+part of LeapMotionDart;
 
 /**
  * The InteractionBox class represents a box-shaped region completely within
@@ -94,9 +93,9 @@ class InteractionBox
 
     if( clamp )
     {
-      vec.x = min( max( vec.x, 0 ), 1 );
-      vec.y = min( max( vec.y, 0 ), 1 );
-      vec.z = min( max( vec.z, 0 ), 1 );
+      vec.x = Math.min( Math.max( vec.x, 0 ), 1 );
+      vec.y = Math.min( Math.max( vec.y, 0 ), 1 );
+      vec.z = Math.min( Math.max( vec.z, 0 ), 1 );
     }
     
     return vec;

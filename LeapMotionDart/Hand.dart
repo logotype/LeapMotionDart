@@ -1,11 +1,4 @@
-import 'dart:math';
-import 'Vector3.dart';
-import 'Frame.dart';
-import 'Pointable.dart';
-import 'Finger.dart';
-import 'Tool.dart';
-import 'Matrix.dart';
-import 'Controller.dart';
+part of LeapMotionDart;
 
 /**
  * The Hand class reports the physical characteristics of a detected hand.
@@ -40,7 +33,7 @@ class Hand
    * to this hand, given in arbitrary order.
    * @see Finger
    */
-  List fingersVector;
+  List<Finger> fingersVector = new List<Finger>();
 
   /**
    * The Frame associated with this Hand.
@@ -104,7 +97,7 @@ class Hand
    * @see Pointable
    *
    */
-  List pointablesVector;
+  List<Pointable> pointablesVector = new List<Pointable>();
 
   /**
    * The center of a sphere fit to the curvature of this hand.
@@ -120,7 +113,7 @@ class Hand
    * The list of Tool objects detected in this frame that are held by this hand, given in arbitrary order.
    * @see Tool
    */
-  List toolsVector;
+  List<Tool> toolsVector = new List<Tool>();
 
   /**
    * Rotation matrix.
@@ -233,7 +226,7 @@ class Hand
    * @return The Finger vector containing all Finger objects detected in this hand.
    *
    */
-  List fingers()
+  List<Finger> fingers()
   {
     return fingersVector;
   }
@@ -283,7 +276,7 @@ class Hand
    * @return The ToolList containing all Tool objects detected in this hand.
    *
    */
-  List tools()
+  List<Tool> tools()
   {
     return toolsVector;
   }
@@ -333,7 +326,7 @@ class Hand
    * @return The Pointable vector containing all Pointable objects
    * detected in this hand.
    */
-  List get pointables => pointablesVector;
+  List<Pointable> get pointables => pointablesVector;
 
   /**
    * The axis of rotation derived from the change in orientation
@@ -393,7 +386,7 @@ class Hand
     num returnValue = 0.0;
     Matrix rotationSinceFrameMatrix = rotationMatrix( sinceFrame );
     num cs = ( rotationSinceFrameMatrix.xBasis.x + rotationSinceFrameMatrix.yBasis.y + rotationSinceFrameMatrix.zBasis.z - 1 ) * 0.5;
-    num angle = acos( cs );
+    num angle = Math.acos( cs );
     returnValue = angle.isNaN ? 0.0 : angle;
 
     if( axis != null )
@@ -459,7 +452,7 @@ class Hand
   num scaleFactor( Frame sinceFrame )
   {
     if( sinceFrame && sinceFrame.hand( id ) && sinceFrame.hand( id ).scaleFactorNumber )
-      return exp( scaleFactorNumber - sinceFrame.hand( id ).scaleFactorNumber );
+      return Math.exp( scaleFactorNumber - sinceFrame.hand( id ).scaleFactorNumber );
     else
       return 1;
   }

@@ -1,4 +1,4 @@
-import 'Frame.dart';
+part of LeapMotionDart;
 
 /**
  * The Gesture class represents a recognized movement by the user.
@@ -200,7 +200,7 @@ class Gesture
    *
    * <p>If no hands are related to this gesture, the list is empty.</p>
    */
-  List hands;
+  List<Hand> hands = new List<Hand>();
 
   /**
    * The gesture ID.
@@ -216,7 +216,7 @@ class Gesture
    *
    * <p>If no Pointable objects are related to this gesture, the list is empty.</p>
    */
-  List pointables;
+  List<Pointable> pointables = new List<Pointable>();
 
   /**
    * The gesture state.

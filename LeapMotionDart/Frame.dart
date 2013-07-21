@@ -1,13 +1,4 @@
-import 'dart:math';
-import 'Vector3.dart';
-import 'Hand.dart';
-import 'Matrix.dart';
-import 'Finger.dart';
-import 'Tool.dart';
-import 'Pointable.dart';
-import 'Gesture.dart';
-import 'InteractionBox.dart';
-import 'Controller.dart';
+part of LeapMotionDart;
 
 /**
  * The Frame class represents a set of hand and finger tracking
@@ -39,14 +30,14 @@ class Frame
    * The list of Finger objects detected in this frame, given in arbitrary order.<br/>
    * <p>The list can be empty if no fingers are detected.</p>
    */
-  List fingersVector;
+  List<Finger> fingersVector = new List<Finger>();
   
   /**
    * @private
    * The list of Hand objects detected in this frame, given in arbitrary order.<br/>
    * <p>The list can be empty if no hands are detected.</p>
    */
-  List handsVector;
+  List<Hand> handsVector = new List<Hand>();
 
   /**
    * @private
@@ -67,7 +58,7 @@ class Frame
    * @see Pointable
    *
    */
-  List pointablesVector;
+  List<Pointable> pointablesVector = new List<Pointable>();
 
   /**
    * @private
@@ -76,7 +67,7 @@ class Frame
    * <p>Circle and swipe gestures are updated every frame.
    * Tap gestures only appear in the list when they start.</p>
    */
-  List gesturesVector;
+  List<Gesture> gesturesVector = new List<Gesture>();
 
   /**
    * A unique ID for this Frame.
@@ -102,7 +93,7 @@ class Frame
    *
    * @see Tool
    */
-  List toolsVector;
+  List<Tool> toolsVector = new List<Tool>();
 
   /**
    * Rotation matrix.
@@ -183,7 +174,7 @@ class Frame
    * @return The Hand vector containing all Hand objects detected in this frame.
    *
    */
-  List get hands => handsVector;
+  List<Hand> get hands => handsVector;
 
   /**
    * The Finger object with the specified ID in this frame.
@@ -231,7 +222,7 @@ class Frame
    * @return The Finger vector containing all Finger objects detected in this frame.
    *
    */
-  List get fingers => fingersVector;
+  List<Finger> get fingers => fingersVector;
 
   /**
    * The Tool object with the specified ID in this frame.
@@ -279,7 +270,7 @@ class Frame
    * @return The ToolList containing all Tool objects detected in this frame.
    *
    */
-  List get tools => toolsVector;
+  List<Tool> get tools => toolsVector;
 
   /**
    * The Pointable object with the specified ID in this frame.
@@ -327,7 +318,7 @@ class Frame
    * @return The Pointable vector containing all Pointable objects
    * detected in this frame.
    */
-  List get pointables => pointablesVector;
+  List<Pointable> get pointables => pointablesVector;
 
   /**
    * The Gesture object with the specified ID in this frame.
@@ -373,7 +364,7 @@ class Frame
    * @return The list of gestures.
    *
    */
-  List gestures( { Frame sinceFrame: null } )
+  List<Gesture> gestures( { Frame sinceFrame: null } )
   {
     if( !isValid() )
       return [];
@@ -386,10 +377,10 @@ class Frame
     else
     {
       if( !sinceFrame.isValid() )
-        return [];
+        return new List<Gesture>();
 
       // Returns a Gesture vector containing all gestures that have occured since the specified frame.
-      List gesturesSinceFrame = [];
+      List<Gesture> gesturesSinceFrame = new List<Gesture>();
       int i = 0;
       int j = 0;
 
@@ -467,7 +458,7 @@ class Frame
     num returnValue = 0.0;
     Matrix rotationSinceFrameMatrix = rotationMatrix( sinceFrame );
     num cs = ( rotationSinceFrameMatrix.xBasis.x + rotationSinceFrameMatrix.yBasis.y + rotationSinceFrameMatrix.zBasis.z - 1 ) * 0.5;
-    num angle = acos( cs );
+    num angle = Math.acos( cs );
     returnValue = angle.isNaN ? 0.0 : angle;
 
     if( axis != null )
@@ -528,7 +519,7 @@ class Frame
   num scaleFactor( Frame sinceFrame )
   {
     if( sinceFrame && sinceFrame.scaleFactorNumber )
-      return exp( scaleFactorNumber - sinceFrame.scaleFactorNumber );
+      return Math.exp( scaleFactorNumber - sinceFrame.scaleFactorNumber );
     else
       return 1;
   }
