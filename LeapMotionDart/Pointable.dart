@@ -214,7 +214,7 @@ class Pointable
    * @return True; if equal, False otherwise.
    *
    */
-  bool isEqualTo( Pointable other )
+  operator ==( Pointable other )
   {
     if( !isValid() || !other.isValid() )
       return false;
@@ -225,7 +225,7 @@ class Pointable
     if( hand != other.hand )
       return false;
 
-    if( !direction.isEqualTo( other.direction ) )
+    if( !(direction == other.direction) )
       return false;
 
     if( length != other.length )
@@ -237,10 +237,10 @@ class Pointable
     if( id != other.id )
       return false;
 
-    if( !tipPosition.isEqualTo( other.tipPosition ) )
+    if( !(tipPosition == other.tipPosition) )
       return false;
 
-    if( !tipVelocity.isEqualTo( other.tipVelocity ) )
+    if( !(tipVelocity == other.tipVelocity) )
       return false;
 
     if( isFinger != other.isFinger || isTool != other.isTool )

@@ -487,7 +487,7 @@ class Frame
   {
     if( sinceFrame && sinceFrame.rotation )
     {
-      return sinceFrame.rotation.multiply( new Matrix( new Vector3( this.rotation.xBasis.x, this.rotation.yBasis.x, this.rotation.zBasis.x ), new Vector3( this.rotation.xBasis.y, this.rotation.yBasis.y, this.rotation.zBasis.y ), new Vector3( this.rotation.xBasis.z, this.rotation.yBasis.z, this.rotation.zBasis.z ) ) );
+      return sinceFrame.rotation * new Matrix( new Vector3( this.rotation.xBasis.x, this.rotation.yBasis.x, this.rotation.zBasis.x ), new Vector3( this.rotation.xBasis.y, this.rotation.yBasis.y, this.rotation.zBasis.y ), new Vector3( this.rotation.xBasis.z, this.rotation.yBasis.z, this.rotation.zBasis.z ) );
     }
     else
     {
@@ -562,7 +562,7 @@ class Frame
    * @return True; if equal. False otherwise.
    *
    */
-  bool isEqualTo( Frame other )
+  operator ==( Frame other )
   {
     if( id != other.id || !isValid() || other.isValid() )
       return false;

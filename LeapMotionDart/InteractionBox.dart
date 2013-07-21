@@ -122,12 +122,12 @@ class InteractionBox
    * @return 
    * 
    */
-  bool isEqualTo( InteractionBox other )
+  operator ==(InteractionBox other)
   {
     if( !this.isValid() || !other.isValid() )
       return false;
 
-    if( !center.isEqualTo( other.center ) )
+    if( !center == other.center )
       return false;
     
     if( depth != other.depth )

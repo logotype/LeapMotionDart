@@ -85,7 +85,7 @@ class Matrix
    */
   Vector3 transformPoint( Vector3 inVector )
   {
-    return new Vector3( xBasis.multiply( inVector.x ).x, yBasis.multiply( inVector.y ).y, zBasis.multiply( inVector.z ).z + origin.z );
+    return new Vector3( ( xBasis * inVector.x ).x, ( yBasis * inVector.y ).y, ( zBasis * inVector.z ).z + origin.z );
   }
 
   /**
@@ -96,10 +96,10 @@ class Matrix
    */
   Vector3 transformDirection( Vector3 inVector )
   {
-    Vector3 x = xBasis.multiply( inVector.x );
-    Vector3 y = yBasis.multiply( inVector.y );
-    Vector3 z = zBasis.multiply( inVector.z );
-    return x.plus( y ).plus( z );
+    Vector3 x = xBasis * inVector.x;
+    Vector3 y = yBasis * inVector.y;
+    Vector3 z = zBasis * inVector.z;
+    return x + y + z;
   }
 
   /**
@@ -121,7 +121,7 @@ class Matrix
    * @return A new Matrix representing the transformation equivalent to applying the other transformation followed by this transformation.
    *
    */
-  Matrix multiply( Matrix other )
+  operator *(Matrix other)
   {
     Vector3 x = transformDirection( other.xBasis );
     Vector3 y = transformDirection( other.yBasis );
@@ -135,21 +135,6 @@ class Matrix
   }
 
   /**
-   * Multiply transform matrices and assign the product.
-   * @param other A Matrix to multiply on the right hand side.
-   * @return This Matrix representing the transformation equivalent to applying the other transformation followed by this transformation.
-   *
-   */
-  Matrix multiplyAssign( Matrix other )
-  {
-    xBasis = transformDirection( other.xBasis );
-    yBasis = transformDirection( other.yBasis );
-    zBasis = transformDirection( other.zBasis );
-    origin = transformPoint( other.origin );
-    return this;
-  }
-
-  /**
    * Compare Matrix equality/inequality component-wise.
    * @param other The Matrix to compare with.
    * @return True; if equal, False otherwise.
@@ -157,16 +142,16 @@ class Matrix
    */
   bool isEqualTo( Matrix other )
   {
-    if( !xBasis.isEqualTo( other.xBasis ) )
+    if( !( xBasis == other.xBasis ) )
       return false;
 
-    if( !yBasis.isEqualTo( other.yBasis ) )
+    if( !( yBasis == other.yBasis ) )
       return false;
 
-    if( !zBasis.isEqualTo( other.zBasis ) )
+    if( !( zBasis == other.zBasis ) )
       return false;
 
-    if( !origin.isEqualTo( other.origin ) )
+    if( !( origin == other.origin ) )
       return false;
 
     return true;

@@ -63,24 +63,7 @@ class Vector3
    * @return
    *
    */
-  Vector3 plus( Vector3 other )
-  {
-    return new Vector3( x + other.x, y + other.y, z + other.z );
-  }
-
-  /**
-   * Add vectors component-wise and assign the value.
-   * @param other
-   * @return This Vector3.
-   *
-   */
-  Vector3 plusAssign( Vector3 other )
-  {
-    x += other.x;
-    y += other.y;
-    z += other.z;
-    return this;
-  }
+  operator +(Vector3 other) => new Vector3( x + other.x, y + other.y, z + other.z );
 
   /**
    * A copy of this vector pointing in the opposite direction.
@@ -88,24 +71,7 @@ class Vector3
    * @return
    *
    */
-  Vector3 minus( Vector3 other )
-  {
-    return new Vector3( x - other.x, y - other.y, z - other.z );
-  }
-
-  /**
-   * A copy of this vector pointing in the opposite direction and assign the value.
-   * @param other
-   * @return This Vector3.
-   *
-   */
-  Vector3 minusAssign( Vector3 other )
-  {
-    x -= other.x;
-    y -= other.y;
-    z -= other.z;
-    return this;
-  }
+  operator -(Vector3 other) => new Vector3( x - other.x, y - other.y, z - other.z );
 
   /**
    * Multiply vector by a scalar.
@@ -113,24 +79,7 @@ class Vector3
    * @return
    *
    */
-  Vector3 multiply( num scalar )
-  {
-    return new Vector3( x * scalar, y * scalar, z * scalar );
-  }
-
-  /**
-   * Multiply vector by a scalar and assign the quotient.
-   * @param scalar
-   * @return This Vector3.
-   *
-   */
-  Vector3 multiplyAssign( num scalar )
-  {
-    x *= scalar;
-    y *= scalar;
-    z *= scalar;
-    return this;
-  }
+  operator *(num scalar) => new Vector3( x * scalar, y * scalar, z * scalar );
 
   /**
    * Divide vector by a scalar.
@@ -138,24 +87,7 @@ class Vector3
    * @return
    *
    */
-  Vector3 divide( num scalar )
-  {
-    return new Vector3( x / scalar, y / scalar, z / scalar );
-  }
-
-  /**
-   * Divide vector by a scalar and assign the value.
-   * @param scalar
-   * @return This Vector3.
-   *
-   */
-  Vector3 divideAssign( num scalar )
-  {
-    x /= scalar;
-    y /= scalar;
-    z /= scalar;
-    return this;
-  }
+  operator /(num scalar) => new Vector3( x / scalar, y / scalar, z / scalar );
 
   /**
    * Compare Vector equality/inequality component-wise.
@@ -163,13 +95,7 @@ class Vector3
    * @return True; if equal, False otherwise.
    *
    */
-  bool isEqualTo( Vector3 other )
-  {
-    if( x != other.x || y != other.y || z != other.z )
-      return false;
-    else
-      return true;
-  }
+  operator ==(Vector3 other) => ( x != other.x || y != other.y || z != other.z );
 
   /**
    * The angle between this vector and the specified vector in radians.

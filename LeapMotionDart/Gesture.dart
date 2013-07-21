@@ -254,7 +254,7 @@ class Gesture
    * @return True; if equal, False otherwise.
    *
    */
-  bool isEqualTo( Gesture other )
+  operator ==( Gesture other )
   {
     return ( id == other.id ) ? true : false;
   }

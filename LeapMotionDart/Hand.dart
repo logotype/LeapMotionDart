@@ -174,7 +174,7 @@ class Hand
    * @return True; if equal. False otherwise.
    *
    */
-  bool isEqualTo( Hand other )
+  operator ==( Hand other )
   {
     if( id == other.id && frame == other.frame && isValid() && other.isValid() )
       return true;
@@ -419,7 +419,7 @@ class Hand
   {
     if( sinceFrame.hand( id ).isValid() )
     {
-      return sinceFrame.hand( id ).rotation.multiply( new Matrix( new Vector3( this.rotation.xBasis.x, this.rotation.yBasis.x, this.rotation.zBasis.x ), new Vector3( this.rotation.xBasis.y, this.rotation.yBasis.y, this.rotation.zBasis.y ), new Vector3( this.rotation.xBasis.z, this.rotation.yBasis.z, this.rotation.zBasis.z ) ) );
+      return sinceFrame.hand( id ).rotation * new Matrix( new Vector3( this.rotation.xBasis.x, this.rotation.yBasis.x, this.rotation.zBasis.x ), new Vector3( this.rotation.xBasis.y, this.rotation.yBasis.y, this.rotation.zBasis.y ), new Vector3( this.rotation.xBasis.z, this.rotation.yBasis.z, this.rotation.zBasis.z ) );
     }
     else
     {
