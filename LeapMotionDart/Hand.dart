@@ -226,10 +226,7 @@ class Hand
    * @return The Finger vector containing all Finger objects detected in this hand.
    *
    */
-  List<Finger> fingers()
-  {
-    return fingersVector;
-  }
+  List<Finger> fingers() => fingersVector;
 
   /**
    * The Tool object with the specified ID held by this hand.
