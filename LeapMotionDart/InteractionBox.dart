@@ -108,7 +108,6 @@ class InteractionBox
    */
   bool isValid()
   {
-    // TODO: Better validity checking
     return center.isValid();
   }
   

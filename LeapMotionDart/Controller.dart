@@ -366,33 +366,14 @@ class Controller extends EventDispatcher
       // Timestamp
       currentFrame.timestamp = json["timestamp"];
 
-      // TODO: Implement splice
       // Add frame to history
-      //if ( frameHistory.length > 59 )
-      //  frameHistory.splice( 59, 1 );
+      if ( frameHistory.length > 59 )
+        frameHistory.removeRange( 59, 1 );
 
-      // TODO: Implement unshift
-      //frameHistory.unshift( _latestFrame );
+      frameHistory.insert( 0, _latestFrame );
       _latestFrame = currentFrame;
       _listener.onFrame( this, _latestFrame );
     });
-
-    /*connection.onopen =>
-    {
-      _isConnected = true;
-      _listener.onConnect( this );
-      heartBeatTimer = setInterval( () =>
-          {
-        connection.send( json["s"]tringify( { heartbeat: true } ) );
-          }, 100 );
-    };
-
-    connection.onclose = () =>
-    {
-      _isConnected = false;
-      _listener.onDisconnect( this );
-      //clearInterval( heartBeatTimer );
-    };*/
   }
 
   /**

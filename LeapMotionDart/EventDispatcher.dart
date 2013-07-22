@@ -39,9 +39,8 @@ class EventDispatcher
     {
         for( int i = 0; i < _listeners.length; i++ )
         {
-            // TODO: Implement splice();
-            //if( _listeners[ i ].type == typeStr && _listeners[ i ].listener == listenerFunction )
-            //    _listeners.splice( i, 1 );
+            if( _listeners[ i ].type == typeStr && _listeners[ i ].listener == listenerFunction )
+                _listeners.removeRange( i, 1 );
         }
     }
 
