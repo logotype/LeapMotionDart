@@ -276,10 +276,7 @@ class Hand
    * @return The ToolList containing all Tool objects detected in this hand.
    *
    */
-  List<Tool> tools()
-  {
-    return toolsVector;
-  }
+  List<Tool> tools() => toolsVector;
 
   /**
    * The Pointable object with the specified ID associated with this hand.
