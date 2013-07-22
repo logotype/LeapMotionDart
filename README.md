@@ -84,7 +84,7 @@ with strongly typed properties such as `Hands`, `Pointables`, `Direction`, `Gest
             Vector3 direction = hand.direction;
     
             // Calculate the hand's pitch, roll, and yaw angles
-            print( "Hand pitch:" + LeapUtil.toDegrees(direction.pitch) + " degrees, " + "roll:" + LeapUtil.toDegrees(normal.roll) + " degrees, " + "yaw:" + LeapUtil.toDegrees(direction.yaw) + " degrees\n" );
+            print( "Hand pitch:" + LeapUtil.toDegrees( direction.pitch ).toString() + " degrees, " + "roll:" + LeapUtil.toDegrees( normal.roll ).toString() + " degrees, " + "yaw:" + LeapUtil.toDegrees( direction.yaw ).toString() + " degrees\n" );
         }
     
         List<Gesture> gestures = frame.gestures();

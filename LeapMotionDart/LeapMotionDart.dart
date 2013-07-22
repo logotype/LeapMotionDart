@@ -23,6 +23,7 @@ part 'CircleGesture.dart';
 part 'SwipeGesture.dart';
 part 'ScreenTapGesture.dart';
 part 'KeyTapGesture.dart';
+part 'LeapUtil.dart';
 
 main()
 {

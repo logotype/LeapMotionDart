@@ -63,7 +63,7 @@ class InterfaceSample implements Listener
         Vector3 direction = hand.direction;
 
         // Calculate the hand's pitch, roll, and yaw angles
-        print( "Hand pitch:" + LeapUtil.toDegrees(direction.pitch) + " degrees, " + "roll:" + LeapUtil.toDegrees(normal.roll) + " degrees, " + "yaw:" + LeapUtil.toDegrees(direction.yaw) + " degrees\n" );
+        print( "Hand pitch:" + LeapUtil.toDegrees( direction.pitch ).toString() + " degrees, " + "roll:" + LeapUtil.toDegrees( normal.roll ).toString() + " degrees, " + "yaw:" + LeapUtil.toDegrees( direction.yaw ).toString() + " degrees\n" );
     }
 
     List<Gesture> gestures = frame.gestures();
@@ -92,7 +92,7 @@ class InterfaceSample implements Listener
                         sweptAngle = ( circle.progress - previousUpdate.progress ) * 2 * Math.PI;
                     }
                 }
-                print( "Circle id:" + circle.id.toString() + ", " + circle.state.toString() + ", progress:" + circle.progress.toString() + ", radius:" + circle.radius.toString() + ", angle:" + LeapUtil.toDegrees(sweptAngle) + ", " + clockwiseness );
+                print( "Circle id:" + circle.id.toString() + ", " + circle.state.toString() + ", progress:" + circle.progress.toString() + ", radius:" + circle.radius.toString() + ", angle:" + LeapUtil.toDegrees( sweptAngle ).toString() + ", " + clockwiseness );
                 break;
             case Gesture.TYPE_SWIPE:
                 SwipeGesture swipe = gesture as SwipeGesture;
