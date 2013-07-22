@@ -75,7 +75,7 @@ class Hand
    * The duration of time this Hand has been visible to the Leap Motion Controller.
    * <p>The duration (in seconds) that this Hand has been tracked.</p> 
    */
-  num timeVisible;
+  double timeVisible;
   
   /**
    * The rate of change of the palm position in millimeters/second.
@@ -106,7 +106,7 @@ class Hand
   /**
    * The radius of a sphere fit to the curvature of this hand.
    */
-  num sphereRadius;
+  double sphereRadius;
 
   /**
    * @private
@@ -124,7 +124,7 @@ class Hand
    * @private
    * Scale factor since last Frame.
    */
-  num scaleFactorNumber;
+  double scaleFactorNumber;
 
   /**
    * @private
@@ -351,7 +351,7 @@ class Hand
     }
     else
     {
-      return new Vector3( 0, 0, 0 );
+      return new Vector3( 0.0, 0.0, 0.0 );
     }
   }
 
@@ -375,15 +375,15 @@ class Hand
    * change between the current frame and that specified in the sinceFrame parameter.
    *
    */
-  num rotationAngle( { Frame sinceFrame, Vector3 axis: null } )
+  double rotationAngle( { Frame sinceFrame, Vector3 axis: null } )
   {
     if( !isValid() || !sinceFrame.hand( id ).isValid() )
       return 0.0;
 
-    num returnValue = 0.0;
+    double returnValue = 0.0;
     Matrix rotationSinceFrameMatrix = rotationMatrix( sinceFrame );
-    num cs = ( rotationSinceFrameMatrix.xBasis.x + rotationSinceFrameMatrix.yBasis.y + rotationSinceFrameMatrix.zBasis.z - 1 ) * 0.5;
-    num angle = Math.acos( cs );
+    double cs = ( rotationSinceFrameMatrix.xBasis.x + rotationSinceFrameMatrix.yBasis.y + rotationSinceFrameMatrix.zBasis.z - 1 ) * 0.5;
+    double angle = Math.acos( cs );
     returnValue = angle.isNaN ? 0.0 : angle;
 
     if( axis != null )
@@ -446,12 +446,12 @@ class Hand
    * in the sinceFrame parameter.
    *
    */
-  num scaleFactor( Frame sinceFrame )
+  double scaleFactor( Frame sinceFrame )
   {
     if( sinceFrame && sinceFrame.hand( id ) && sinceFrame.hand( id ).scaleFactorNumber )
       return Math.exp( scaleFactorNumber - sinceFrame.hand( id ).scaleFactorNumber );
     else
-      return 1;
+      return 1.0;
   }
 
   /**
@@ -469,7 +469,7 @@ class Hand
     if( sinceFrame.hand( id ) && sinceFrame.hand( id ).translationVector )
       return new Vector3( translationVector.x - sinceFrame.hand( id ).translationVector.x, translationVector.y - sinceFrame.hand( id ).translationVector.y, translationVector.z - sinceFrame.hand( id ).translationVector.z );
     else
-      return new Vector3( 0, 0, 0 );
+      return new Vector3( 0.0, 0.0, 0.0 );
   }
 
   /**

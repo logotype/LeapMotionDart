@@ -21,17 +21,17 @@ class Vector3
   /**
    * The horizontal component.
    */
-  num x;
+  double x;
 
   /**
    * The vertical component.
    */
-  num y;
+  double y;
 
   /**
    * The depth component.
    */
-  num z;
+  double z;
 
   /**
    * Creates a new Vector with the specified component values.
@@ -40,7 +40,7 @@ class Vector3
    * @param z The depth component.
    *
    */
-  Vector3( num x, num y, num z )
+  Vector3( double x, double y, double z )
   {
     this.x = x;
     this.y = y;
@@ -79,7 +79,7 @@ class Vector3
    * @return
    *
    */
-  operator *(num scalar) => new Vector3( x * scalar, y * scalar, z * scalar );
+  operator *(double scalar) => new Vector3( x * scalar, y * scalar, z * scalar );
 
   /**
    * Divide vector by a scalar.
@@ -87,7 +87,7 @@ class Vector3
    * @return
    *
    */
-  operator /(num scalar) => new Vector3( x / scalar, y / scalar, z / scalar );
+  operator /(double scalar) => new Vector3( x / scalar, y / scalar, z / scalar );
 
   /**
    * Compare Vector equality/inequality component-wise.
@@ -111,11 +111,11 @@ class Vector3
    * @return The angle between this vector and the specified vector in radians.
    *
    */
-  num angleTo( Vector3 other )
+  double angleTo( Vector3 other )
   {
-    num denom = magnitudeSquared() * other.magnitudeSquared();
+    double denom = magnitudeSquared() * other.magnitudeSquared();
     if( denom <= 0 )
-      return 0;
+      return 0.0;
 
     return Math.acos( dot( other ) / Math.sqrt( denom ) );
   }
@@ -145,7 +145,7 @@ class Vector3
    * @return The distance from this point to the specified point.
    *
    */
-  num distanceTo( Vector3 other )
+  double distanceTo( Vector3 other )
   {
     return Math.sqrt( ( x - other.x ) * ( x - other.x ) + ( y - other.y ) * ( y - other.y ) + ( z - other.z ) * ( z - other.z ) );
   }
@@ -159,7 +159,7 @@ class Vector3
    * @return The dot product of this vector and the specified vector.
    *
    */
-  num dot( Vector3 other )
+  double dot( Vector3 other )
   {
     return ( x * other.x ) + ( y * other.y ) + ( z * other.z );
   }
@@ -199,7 +199,7 @@ class Vector3
    * @return The length of this vector.
    *
    */
-  num magnitude()
+  double magnitude()
   {
     return Math.sqrt( x * x + y * y + z * z );
   }
@@ -209,7 +209,7 @@ class Vector3
    * @return The square of the length of this vector.
    *
    */
-  num magnitudeSquared()
+  double magnitudeSquared()
   {
     return x * x + y * y + z * z;
   }
@@ -223,9 +223,9 @@ class Vector3
    */
   Vector3 normalized()
   {
-    num denom = magnitudeSquared();
+    double denom = magnitudeSquared();
     if( denom <= 0 )
-      return new Vector3( 0, 0, 0 );
+      return new Vector3( 0.0, 0.0, 0.0 );
 
     denom = 1 / Math.sqrt( denom );
     return new Vector3( x * denom, y * denom, z * denom );
@@ -242,7 +242,7 @@ class Vector3
    * @return The angle of this vector above or below the horizon (x-z plane).
    *
    */
-  num get pitch => Math.atan2( y, -z );
+  double get pitch => Math.atan2( y, -z );
 
   /**
    * The yaw angle in radians.
@@ -256,7 +256,7 @@ class Vector3
    * @return The angle of this vector to the right or left of the negative z-axis.
    *
    */
-  num get yaw => Math.atan2( x, -z );
+  double get yaw => Math.atan2( x, -z );
 
   /**
    * The roll angle in radians.
@@ -274,16 +274,16 @@ class Vector3
    * @return The angle of this vector to the right or left of the y-axis.
    *
    */
-  num get roll => Math.atan2( x, -y );
+  double get roll => Math.atan2( x, -y );
 
   /**
-   * The zero vector: (0, 0, 0)
+   * The zero vector: (0.0, 0.0, 0.0)
    * @return
    *
    */
   static Vector3 zero()
   {
-    return new Vector3( 0, 0, 0 );
+    return new Vector3( 0.0, 0.0, 0.0 );
   }
 
   /**
@@ -293,7 +293,7 @@ class Vector3
    */
   static Vector3 xAxis()
   {
-    return new Vector3( 1, 0, 0 );
+    return new Vector3( 1.0, 0.0, 0.0 );
   }
 
   /**
@@ -303,7 +303,7 @@ class Vector3
    */
   static Vector3 yAxis()
   {
-    return new Vector3( 0, 1, 0 );
+    return new Vector3( 0.0, 1.0, 0.0 );
   }
 
   /**
@@ -313,7 +313,7 @@ class Vector3
    */
   static Vector3 zAxis()
   {
-    return new Vector3( 0, 0, 1 );
+    return new Vector3( 0.0, 0.0, 1.0 );
   }
 
   /**
@@ -323,7 +323,7 @@ class Vector3
    */
   static Vector3 left()
   {
-    return new Vector3( -1, 0, 0 );
+    return new Vector3( -1.0, 0.0, 0.0 );
   }
 
   /**
@@ -343,7 +343,7 @@ class Vector3
    */
   static Vector3 down()
   {
-    return new Vector3( 0, -1, 0 );
+    return new Vector3( 0.0, -1.0, 0.0 );
   }
 
   /**
@@ -363,7 +363,7 @@ class Vector3
    */
   static Vector3 forward()
   {
-    return new Vector3( 0, 0, -1 );
+    return new Vector3( 0.0, 0.0, -1.0 );
   }
 
   /**

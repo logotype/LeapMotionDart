@@ -23,7 +23,7 @@ class Frame
    * and other factors.</p>
    * <p>An estimate of frames per second of the Leap Motion Controller.</p>
    */
-  num currentFramesPerSecond;
+  double currentFramesPerSecond;
   
   /**
    * @private
@@ -85,7 +85,7 @@ class Frame
   /**
    * The frame capture time in microseconds elapsed since the Leap Motion started.
    */
-  num timestamp;
+  double timestamp;
 
   /**
    * @private
@@ -104,7 +104,7 @@ class Frame
    * @private
    * Scale factor since last Frame.
    */
-  num scaleFactorNumber;
+  double scaleFactorNumber;
 
   /**
    * @private
@@ -424,7 +424,7 @@ class Frame
     }
     else
     {
-      return new Vector3( 0, 0, 0 );
+      return new Vector3( 0.0, 0.0, 0.0 );
     }
   }
 
@@ -448,15 +448,15 @@ class Frame
    * change between the current frame and that specified in the sinceFrame parameter.
    *
    */
-  num rotationAngle( { Frame sinceFrame, Vector3 axis: null } )
+  double rotationAngle( { Frame sinceFrame, Vector3 axis: null } )
   {
     if( !isValid() || !sinceFrame.isValid() )
       return 0.0;
 
-    num returnValue = 0.0;
+    double returnValue = 0.0;
     Matrix rotationSinceFrameMatrix = rotationMatrix( sinceFrame );
-    num cs = ( rotationSinceFrameMatrix.xBasis.x + rotationSinceFrameMatrix.yBasis.y + rotationSinceFrameMatrix.zBasis.z - 1 ) * 0.5;
-    num angle = Math.acos( cs );
+    double cs = ( rotationSinceFrameMatrix.xBasis.x + rotationSinceFrameMatrix.yBasis.y + rotationSinceFrameMatrix.zBasis.z - 1 ) * 0.5;
+    double angle = Math.acos( cs );
     returnValue = angle.isNaN ? 0.0 : angle;
 
     if( axis != null )
@@ -514,12 +514,12 @@ class Frame
    * in the sinceFrame parameter.
    *
    */
-  num scaleFactor( Frame sinceFrame )
+  double scaleFactor( Frame sinceFrame )
   {
     if( sinceFrame && sinceFrame.scaleFactorNumber )
       return Math.exp( scaleFactorNumber - sinceFrame.scaleFactorNumber );
     else
-      return 1;
+      return 1.0;
   }
 
   /**
@@ -546,7 +546,7 @@ class Frame
     if( sinceFrame.translationVector != null )
       return new Vector3( translationVector.x - sinceFrame.translationVector.x, translationVector.y - sinceFrame.translationVector.y, translationVector.z - sinceFrame.translationVector.z );
     else
-      return new Vector3( 0, 0, 0 );
+      return new Vector3( 0.0, 0.0, 0.0 );
   }
 
   /**

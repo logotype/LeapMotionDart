@@ -88,6 +88,12 @@ class Controller extends EventDispatcher
   List<Frame> frameHistory = new List<Frame>();
 
   /**
+   * @private
+   * Required to suppress OS controls.
+   */
+  Timer _heartBeatTimer;
+
+  /**
    * Constructs a Controller object.
    * @param host IP or hostname of the computer running the Leap Motion software.
    * (currently only supported for socket connections).
@@ -111,16 +117,15 @@ class Controller extends EventDispatcher
     connection.onOpen.listen( ( MessageEvent event ) {
       _isConnected = true;
       _listener.onConnect( this );
-      /*heartBeatTimer = setInterval( () =>
-          {
-        connection.send( json["s"]tringify( { heartbeat: true } ) );
-          }, 100 );*/
+      _heartBeatTimer = new Timer.periodic( new Duration( milliseconds: 100 ), ( timer ) {
+        connection.sendString( "{ \"heartbeat\": true }" );
+      });
     });
 
     connection.onClose.listen( ( CloseEvent event ) {
       _isConnected = false;
       _listener.onDisconnect( this );
-      //clearInterval( heartBeatTimer );
+      _heartBeatTimer.cancel();
     });
 
     connection.onMessage.listen( ( MessageEvent event ) {

@@ -19,22 +19,22 @@ class Matrix
   /**
    * The translation factors for all three axes.
    */
-  Vector3 origin = new Vector3( 0, 0, 0 );
+  Vector3 origin = new Vector3( 0.0, 0.0, 0.0 );
 
   /**
    * The rotation and scale factors for the x-axis.
    */
-  Vector3 xBasis = new Vector3( 0, 0, 0 );
+  Vector3 xBasis = new Vector3( 0.0, 0.0, 0.0 );
 
   /**
    * The rotation and scale factors for the y-axis.
    */
-  Vector3 yBasis = new Vector3( 0, 0, 0 );
+  Vector3 yBasis = new Vector3( 0.0, 0.0, 0.0 );
 
   /**
    * The rotation and scale factors for the z-axis.
    */
-  Vector3 zBasis = new Vector3( 0, 0, 0 );
+  Vector3 zBasis = new Vector3( 0.0, 0.0, 0.0 );
 
   /**
    * Constructs a transformation matrix from the specified basis vectors.
@@ -63,12 +63,12 @@ class Matrix
     * @param angleRadians The amount of rotation in radians.
    *
    */
-  void setRotation( Vector3 _axis, num angleRadians )
+  void setRotation( Vector3 _axis, double angleRadians )
   {
     Vector3 axis = _axis.normalized();
-    num s = Math.sin( angleRadians );
-    num c = Math.cos( angleRadians );
-    num C = ( 1 - c );
+    double s = Math.sin( angleRadians );
+    double c = Math.cos( angleRadians );
+    double C = ( 1 - c );
 
     xBasis = new Vector3( axis.x * axis.x * C + c, axis.x * axis.y * C - axis.z * s, axis.x * axis.z * C + axis.y * s );
     yBasis = new Vector3( axis.y * axis.x * C + axis.z * s, axis.y * axis.y * C + c, axis.y * axis.z * C - axis.x * s );
@@ -164,9 +164,9 @@ class Matrix
    */
   static Matrix identity()
   {
-    Vector3 xBasis = new Vector3( 1, 0, 0 );
-    Vector3 yBasis = new Vector3( 0, 1, 0 );
-    Vector3 zBasis = new Vector3( 0, 0, 1 );
+    Vector3 xBasis = new Vector3( 1.0, 0.0, 0.0 );
+    Vector3 yBasis = new Vector3( 0.0, 1.0, 0.0 );
+    Vector3 zBasis = new Vector3( 0.0, 0.0, 1.0 );
 
     return new Matrix( x: xBasis, y: yBasis, z: zBasis );
   }
