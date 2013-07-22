@@ -42,6 +42,23 @@ part of LeapMotionDart;
 class Controller extends EventDispatcher
 {
   /**
+   * @private
+   * The Listener subclass instance.
+   */
+  Listener _listener;
+
+  /**
+   * Socket connection.
+   */
+  WebSocket connection;
+
+  /**
+   * @private
+   * Reports whether this Controller is connected to the Leap Motion Controller.
+   */
+  bool _isConnected = false;
+
+  /**
    * The default policy.
    *
    * <p>Currently, the only supported policy is the background frames policy,
@@ -66,13 +83,6 @@ class Controller extends EventDispatcher
   List<Frame> frameHistory = new List<Frame>();
 
   /**
-   * @private
-   * Native Extension context object.
-   *
-   */
-  Object context;
-
-  /**
    * Constructs a Controller object.
    * @param host IP or hostname of the computer running the Leap Motion software.
    * (currently only supported for socket connections).
@@ -80,6 +90,35 @@ class Controller extends EventDispatcher
    */
   Controller( { String host: null } )
   {
+    _listener = new DefaultListener();
+
+    if( !host )
+    {
+      connection = new WebSocket("ws://localhost:6437/v3.json");
+    }
+    else
+    {
+      connection = new WebSocket("ws://" + host + ":6437/v3.json");
+    }
+
+    _listener.onInit( this );
+
+    /*connection.onopen =>
+    {
+      _isConnected = true;
+      _listener.onConnect( this );
+      this.heartBeatTimer = setInterval( () =>
+          {
+        this.connection.send( JSON.stringify( { heartbeat: true } ) );
+          }, 100 );
+    };
+
+    connection.onclose = () =>
+    {
+      _isConnected = false;
+      _listener.onDisconnect( this );
+      //clearInterval( this.heartBeatTimer );
+    };*/
   }
 
   /**
@@ -103,8 +142,6 @@ class Controller extends EventDispatcher
   {
     if( history >= frameHistory.length )
       return Frame.invalid();
-    //else if( history == 0 )
-    //  return connection.frame;
     else
       return frameHistory[ history ];
   }

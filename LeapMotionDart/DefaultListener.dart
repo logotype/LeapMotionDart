@@ -4,26 +4,26 @@ class DefaultListener extends EventDispatcher implements Listener
 {
     void onConnect( Controller controller )
     {
-        controller.dispatchEvent( new LeapEvent( LeapEvent.LEAPMOTION_CONNECTED, this ) );
+        controller.dispatchEvent( new LeapEvent( type: LeapEvent.LEAPMOTION_CONNECTED, targetListener: this ) );
     }
 
     void onDisconnect( Controller controller )
     {
-        controller.dispatchEvent( new LeapEvent( LeapEvent.LEAPMOTION_DISCONNECTED, this ) );
+        controller.dispatchEvent( new LeapEvent( type: LeapEvent.LEAPMOTION_DISCONNECTED, targetListener: this ) );
     }
 
     void onExit( Controller controller )
     {
-        controller.dispatchEvent( new LeapEvent( LeapEvent.LEAPMOTION_EXIT, this ) );
+        controller.dispatchEvent( new LeapEvent( type: LeapEvent.LEAPMOTION_EXIT, targetListener: this ) );
     }
 
     void onFrame( Controller controller, Frame frame )
     {
-        controller.dispatchEvent( new LeapEvent( LeapEvent.LEAPMOTION_FRAME, this, frame ) );
+        controller.dispatchEvent( new LeapEvent( type: LeapEvent.LEAPMOTION_FRAME, targetListener: this, frame: frame ) );
     }
 
     void onInit( Controller controller )
     {
-        controller.dispatchEvent( new LeapEvent( LeapEvent.LEAPMOTION_INIT, this ) );
+        controller.dispatchEvent( new LeapEvent( type: LeapEvent.LEAPMOTION_INIT, targetListener: this ) );
     }
 }

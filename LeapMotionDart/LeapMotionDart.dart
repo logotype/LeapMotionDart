@@ -1,6 +1,8 @@
 library LeapMotionDart;
 
 import 'dart:math' as Math;
+import 'dart:io';
+
 part 'Vector3.dart';
 part 'Matrix.dart';
 part 'Pointable.dart';

@@ -5,7 +5,7 @@ part of LeapMotionDart;
  */
 class EventDispatcher
 {
-    List _listeners;
+    List<ListenerObject> _listeners = new List<ListenerObject>();
 
     EventDispatcher()
     {
@@ -32,15 +32,16 @@ class EventDispatcher
         if( hasEventListener( typeStr, listenerFunction ) )
             return;
 
-        _listeners.add( { type: typeStr, listener: listenerFunction } );
+        _listeners.add( new ListenerObject( typeStr, listenerFunction ) );
     }
 
     void removeEventListener ( String typeStr, Function listenerFunction )
     {
         for( int i = 0; i < _listeners.length; i++ )
         {
-            if( _listeners[ i ].type == typeStr && _listeners[ i ].listener == listenerFunction )
-                _listeners.splice( i, 1 );
+            // TODO: Implement splice();
+            //if( _listeners[ i ].type == typeStr && _listeners[ i ].listener == listenerFunction )
+            //    _listeners.splice( i, 1 );
         }
     }
 
@@ -52,4 +53,16 @@ class EventDispatcher
                 _listeners[ i ].listener.call( this, event );
         }
     }
+}
+
+class ListenerObject
+{
+  String type;
+  Function listener;
+  
+  ListenerObject( String typeStr, Function listenerFunction )
+  {
+    type = typeStr;
+    listener = listenerFunction;
+  }
 }

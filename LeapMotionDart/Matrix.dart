@@ -44,14 +44,14 @@ class Matrix
    * @param _origin A Vector specifying translation factors on all three axes.
    *
    */
-  Matrix( { Vector3 x, Vector3 y, Vector3 z, Vector3 lorigin: null } )
+  Matrix( { Vector3 x, Vector3 y, Vector3 z, Vector3 o: null } )
   {
     xBasis = x;
     yBasis = y;
     zBasis = z;
 
-    if( lorigin != null )
-      origin = lorigin;
+    if( o != null )
+      origin = o;
   }
 
   /**
@@ -109,7 +109,7 @@ class Matrix
    */
   Matrix rigidInverse()
   {
-    Matrix rotInverse = new Matrix( new Vector3( xBasis.x, yBasis.x, zBasis.x ), new Vector3( xBasis.y, yBasis.y, zBasis.y ), new Vector3( xBasis.z, yBasis.z, zBasis.z ) );
+    Matrix rotInverse = new Matrix( x: new Vector3( xBasis.x, yBasis.x, zBasis.x ), y: new Vector3( xBasis.y, yBasis.y, zBasis.y ), z: new Vector3( xBasis.z, yBasis.z, zBasis.z ) );
     if( origin != null )
       rotInverse.origin = rotInverse.transformDirection( origin.opposite() );
     return rotInverse;
@@ -121,7 +121,7 @@ class Matrix
    * @return A new Matrix representing the transformation equivalent to applying the other transformation followed by this transformation.
    *
    */
-  operator *(Matrix other)
+  operator *( Matrix other)
   {
     Vector3 x = transformDirection( other.xBasis );
     Vector3 y = transformDirection( other.yBasis );
@@ -131,7 +131,7 @@ class Matrix
     if( origin && other.origin )
       o = transformPoint( other.origin );
 
-    return new Matrix( x, y, z, o );
+    return new Matrix( x: x, y: y, z: z, o: o );
   }
 
   /**
@@ -140,7 +140,7 @@ class Matrix
    * @return True; if equal, False otherwise.
    *
    */
-  bool isEqualTo( Matrix other )
+  operator ==( Matrix other)
   {
     if( !( xBasis == other.xBasis ) )
       return false;
@@ -168,7 +168,7 @@ class Matrix
     Vector3 yBasis = new Vector3( 0, 1, 0 );
     Vector3 zBasis = new Vector3( 0, 0, 1 );
 
-    return new Matrix( xBasis, yBasis, zBasis );
+    return new Matrix( x: xBasis, y: yBasis, z: zBasis );
   }
 
   /**

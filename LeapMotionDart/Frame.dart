@@ -255,7 +255,6 @@ class Frame
       if( toolsVector[ i ].id == id )
       {
         return toolsVector[ i ];
-        break;
       }
     }
 
@@ -302,7 +301,6 @@ class Frame
       if( pointablesVector[ i ].id == id )
       {
         return pointablesVector[ i ];
-        break;
       }
     }
 
@@ -487,7 +485,7 @@ class Frame
   {
     if( sinceFrame && sinceFrame.rotation )
     {
-      return sinceFrame.rotation * new Matrix( new Vector3( this.rotation.xBasis.x, this.rotation.yBasis.x, this.rotation.zBasis.x ), new Vector3( this.rotation.xBasis.y, this.rotation.yBasis.y, this.rotation.zBasis.y ), new Vector3( this.rotation.xBasis.z, this.rotation.yBasis.z, this.rotation.zBasis.z ) );
+      return sinceFrame.rotation * new Matrix( x: new Vector3( this.rotation.xBasis.x, this.rotation.yBasis.x, this.rotation.zBasis.x ), y: new Vector3( this.rotation.xBasis.y, this.rotation.yBasis.y, this.rotation.zBasis.y ), z: new Vector3( this.rotation.xBasis.z, this.rotation.yBasis.z, this.rotation.zBasis.z ) );
     }
     else
     {
