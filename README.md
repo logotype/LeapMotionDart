@@ -1,4 +1,4 @@
-<img src="http://logotype.se/leapmotion/logo_dart.png">
+[<img src="http://logotype.se/leapmotion/logo_dart.png">](https://github.com/logotype/LeapMotionDart)
 
 This is the Dart framework for working with Leap Motion.
 
