@@ -1,5 +1,4 @@
-LeapMotionDart
-=================
+<img src="http://logotype.se/leapmotion/logo_dart.png">
 
 This is the Dart framework for working with Leap Motion.
 
