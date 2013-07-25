@@ -57,6 +57,9 @@ class InterfaceSample implements Listener
     {
       query('#status').text = "Data FPS: " + ( (( framesNumber / ( watch.elapsedMilliseconds / 1000 ) ) * 10.0 ) / 10.0 ).toString();
       framesNumber = 0;
+      watch.stop();
+      watch.reset();
+      watch.start();
     }
   }
 }

@@ -48,6 +48,17 @@ class Controller extends EventDispatcher
   Listener _listener;
 
   /**
+   * @private
+   * History of frame of tracking data from the Leap Motion.
+   */
+  List<Frame> frameHistory = new List<Frame>();
+
+  /**
+   * Most recent received Frame.
+   */
+  Frame _latestFrame;
+
+  /**
    * Socket connection.
    */
   WebSocket connection;
@@ -59,33 +70,10 @@ class Controller extends EventDispatcher
   bool _isConnected = false;
 
   /**
-   * The default policy.
-   *
-   * <p>Currently, the only supported policy is the background frames policy,
-   * which determines whether your application receives frames of tracking
-   * data when it is not the focused, foreground application.</p>
-   */
-  static const int POLICY_DEFAULT = 0;
-
-  /**
-   * Receive background frames.
-   *
-   * <p>Currently, the only supported policy is the background frames policy,
-   * which determines whether your application receives frames of tracking
-   * data when it is not the focused, foreground application.</p>
-   */
-  static const int POLICY_BACKGROUND_FRAMES = ( 1 << 0 );
-
-  /**
-   * Most recent received Frame.
-   */
-  Frame _latestFrame;
-
-  /**
    * @private
-   * History of frame of tracking data from the Leap Motion.
+   * Reports whether gestures is enabled.
    */
-  List<Frame> frameHistory = new List<Frame>();
+  bool _isGesturesEnabled = false;
 
   /**
    * @private
@@ -103,15 +91,13 @@ class Controller extends EventDispatcher
   {
     _listener = new DefaultListener();
 
-    if( host != null && host.length > 0 )
+    if( host != null )
     {
-      print("dev: connecting to specific host");
-      connection = new WebSocket( "ws://" + host.toString() + ":6437/v2.json" );
+      connection = new WebSocket( "ws://" + host + ":6437/v3.json" );
     }
     else
     {
-      print("dev: using localhost");
-      connection = new WebSocket( "ws://localhost:6437/v2.json" );
+      connection = new WebSocket( "ws://localhost:6437/v3.json" );
     }
 
     _listener.onInit( this );
@@ -336,7 +322,7 @@ class Controller extends EventDispatcher
             }
             if( gesture is CircleGesture && gesture.pointables.length > 0 )
             {
-              (gesture as CircleGesture).pointable = gesture.pointables[ 0 ];
+              ( gesture as CircleGesture ).pointable = gesture.pointables[ 0 ];
             }
           }
 
@@ -382,7 +368,7 @@ class Controller extends EventDispatcher
 
       // Add frame to history
       if ( frameHistory.length > 59 )
-        frameHistory.removeRange( 59, 60 );
+        frameHistory.removeRange( 59, frameHistory.length );
 
       frameHistory.insert( 0, _latestFrame );
       _latestFrame = currentFrame;
@@ -405,9 +391,9 @@ class Controller extends EventDispatcher
 
     for( i = 0; i < frame.hands.length; i++ )
     {
-      if ( (frame.hands[ i ]).id == id )
+      if ( frame.hands[ i ].id == id )
       {
-        returnValue = (frame.hands[ i ]);
+        returnValue = frame.hands[ i ];
         break;
       }
     }
@@ -429,9 +415,9 @@ class Controller extends EventDispatcher
 
     for( i = 0; i < frame.pointables.length; i++ )
     {
-      if ( (frame.pointables[ i ]).id == id )
+      if ( frame.pointables[ i ].id == id )
       {
-        returnValue = (frame.pointables[ i ]);
+        returnValue = frame.pointables[ i ];
         break;
       }
     }
@@ -494,7 +480,16 @@ class Controller extends EventDispatcher
    */
   void enableGesture( { int type, bool enable: true } )
   {
-    connection.sendString( "{ \"enableGestures\": true }" );
+    if( enable )
+    {
+      _isGesturesEnabled = true;
+      connection.sendString( "{ \"enableGestures\": true }" );
+    }
+    else
+    {
+      _isGesturesEnabled = false;
+      connection.sendString( "{ \"enableGestures\": false }" );
+    }
   }
 
   /**
@@ -506,7 +501,7 @@ class Controller extends EventDispatcher
    */
   bool isGestureEnabled( int type )
   {
-    //return connection.isGestureEnabled( type );
+    return _isGesturesEnabled;
   }
 
   /**
@@ -526,6 +521,6 @@ class Controller extends EventDispatcher
    */
   bool isConnected()
   {
-    return ( connection.readyState == 4 );
+    return _isConnected;
   }
 }

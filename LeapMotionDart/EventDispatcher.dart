@@ -40,7 +40,7 @@ class EventDispatcher
         for( int i = 0; i < _listeners.length; i++ )
         {
             if( _listeners[ i ].type == typeStr && _listeners[ i ].listener == listenerFunction )
-                _listeners.removeRange( i, 1 );
+                _listeners.removeRange( i, i );
         }
     }
 
