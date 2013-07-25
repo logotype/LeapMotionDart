@@ -103,18 +103,21 @@ class Controller extends EventDispatcher
   {
     _listener = new DefaultListener();
 
-    if( !host )
+    connection = new WebSocket( "ws://localhost:6437/v3.json" );
+    /*if( host.toString().length > 0 )
     {
+      print("dev: using localhost");
       connection = new WebSocket( "ws://localhost:6437/v3.json" );
     }
     else
     {
-      connection = new WebSocket( "ws://" + host + ":6437/v3.json" );
-    }
+      print("dev: connecting to specific host");
+      connection = new WebSocket( "ws://" + host.toString() + ":6437/v3.json" );
+    }*/
 
     _listener.onInit( this );
     
-    connection.onOpen.listen( ( MessageEvent event ) {
+    connection.onOpen.listen( ( Event event ) {
       _isConnected = true;
       _listener.onConnect( this );
       _heartBeatTimer = new Timer.periodic( new Duration( milliseconds: 100 ), ( timer ) {
@@ -125,7 +128,8 @@ class Controller extends EventDispatcher
     connection.onClose.listen( ( CloseEvent event ) {
       _isConnected = false;
       _listener.onDisconnect( this );
-      _heartBeatTimer.cancel();
+      if( _heartBeatTimer != null )
+        _heartBeatTimer.cancel();
     });
 
     connection.onMessage.listen( ( MessageEvent event ) {
@@ -140,6 +144,12 @@ class Controller extends EventDispatcher
       int type;
 
       json = JSON.parse( event.data );
+      
+      if( json["id"] == null )
+      {
+        print( "invalid frame" );
+        return;
+      }
 
       currentFrame = new Frame();
       currentFrame.controller = this;
@@ -153,18 +163,18 @@ class Controller extends EventDispatcher
         {
           hand = new Hand();
           hand.frame = currentFrame;
-          hand.direction = new Vector3( json["hands"][ i ].direction[ 0 ], json["hands"][ i ].direction[ 1 ], json["hands"][ i ].direction[ 2 ] );
-          hand.id = json["hands"][ i ].id;
-          hand.palmNormal = new Vector3( json["hands"][ i ].palmNormal[ 0 ], json["hands"][ i ].palmNormal[ 1 ], json["hands"][ i ].palmNormal[ 2 ] );
-          hand.palmPosition = new Vector3( json["hands"][ i ].palmPosition[ 0 ], json["hands"][ i ].palmPosition[ 1 ], json["hands"][ i ].palmPosition[ 2 ] );
-          hand.stabilizedPalmPosition = new Vector3( json["hands"][ i ].stabilizedPalmPosition[ 0 ], json["hands"][ i ].stabilizedPalmPosition[ 1 ], json["hands"][ i ].stabilizedPalmPosition[ 2 ] );
-          hand.palmVelocity = new Vector3( json["hands"][ i ].palmPosition[ 0 ], json["hands"][ i ].palmPosition[ 1 ], json["hands"][ i ].palmPosition[ 2 ] );
-          hand.rotation = new Matrix( x: new Vector3( json["hands"][ i ].r[ 0 ][ 0 ], json["hands"][ i ].r[ 0 ][ 1 ], json["hands"][ i ].r[ 0 ][ 2 ] ), y: new Vector3( json["hands"][ i ].r[ 1 ][ 0 ], json["hands"][ i ].r[ 1 ][ 1 ], json["hands"][ i ].r[ 1 ][ 2 ] ), z: new Vector3( json["hands"][ i ].r[ 2 ][ 0 ], json["hands"][ i ].r[ 2 ][ 1 ], json["hands"][ i ].r[ 2 ][ 2 ] ) );
-          hand.scaleFactorNumber = json["hands"][ i ].s;
-          hand.sphereCenter = new Vector3( json["hands"][ i ].sphereCenter[ 0 ], json["hands"][ i ].sphereCenter[ 1 ], json["hands"][ i ].sphereCenter[ 2 ] );
-          hand.sphereRadius = json["hands"][ i ].sphereRadius;
-          hand.timeVisible = json["hands"][ i ].timeVisible;
-          hand.translationVector = new Vector3( json["hands"][ i ].t[ 0 ], json["hands"][ i ].t[ 1 ], json["hands"][ i ].t[ 2 ] );
+          hand.direction = new Vector3( json["hands"][ i ]["direction"][ 0 ], json["hands"][ i ]["direction"][ 1 ], json["hands"][ i ]["direction"][ 2 ] );
+          hand.id = json["hands"][ i ]["id"];
+          hand.palmNormal = new Vector3( json["hands"][ i ]["palmNormal"][ 0 ], json["hands"][ i ]["palmNormal"][ 1 ], json["hands"][ i ]["palmNormal"][ 2 ] );
+          hand.palmPosition = new Vector3( json["hands"][ i ]["palmPosition"][ 0 ], json["hands"][ i ]["palmPosition"][ 1 ], json["hands"][ i ]["palmPosition"][ 2 ] );
+          hand.stabilizedPalmPosition = new Vector3( json["hands"][ i ]["stabilizedPalmPosition"][ 0 ], json["hands"][ i ]["stabilizedPalmPosition"][ 1 ], json["hands"][ i ]["stabilizedPalmPosition"][ 2 ] );
+          hand.palmVelocity = new Vector3( json["hands"][ i ]["palmPosition"][ 0 ], json["hands"][ i ]["palmPosition"][ 1 ], json["hands"][ i ]["palmPosition"][ 2 ] );
+          hand.rotation = new Matrix( x: new Vector3( json["hands"][ i ]["r"][ 0 ][ 0 ], json["hands"][ i ]["r"][ 0 ][ 1 ], json["hands"][ i ]["r"][ 0 ][ 2 ] ), y: new Vector3( json["hands"][ i ]["r"][ 1 ][ 0 ], json["hands"][ i ]["r"][ 1 ][ 1 ], json["hands"][ i ]["r"][ 1 ][ 2 ] ), z: new Vector3( json["hands"][ i ]["r"][ 2 ][ 0 ], json["hands"][ i ]["r"][ 2 ][ 1 ], json["hands"][ i ]["r"][ 2 ][ 2 ] ) );
+          hand.scaleFactorNumber = json["hands"][ i ]["s"];
+          hand.sphereCenter = new Vector3( json["hands"][ i ]["sphereCenter"][ 0 ], json["hands"][ i ]["sphereCenter"][ 1 ], json["hands"][ i ]["sphereCenter"][ 2 ] );
+          hand.sphereRadius = json["hands"][ i ]["sphereRadius"];
+          hand.timeVisible = json["hands"][ i ]["timeVisible"];
+          hand.translationVector = new Vector3( json["hands"][ i ]["t"][ 0 ], json["hands"][ i ]["t"][ 1 ], json["hands"][ i ]["t"][ 2 ] );
           currentFrame.hands.add( hand );
         }
       }
@@ -176,10 +186,10 @@ class Controller extends EventDispatcher
       if ( json["interactionBox"] != null )
       {
         currentFrame.interactionBox = new InteractionBox();
-        currentFrame.interactionBox.center = new Vector3( json["interactionBox"].center[ 0 ], json["interactionBox"].center[ 1 ], json["interactionBox"].center[ 2 ] );
-        currentFrame.interactionBox.width = json["interactionBox"].size[ 0 ];
-        currentFrame.interactionBox.height = json["interactionBox"].size[ 1 ];
-        currentFrame.interactionBox.depth = json["interactionBox"].size[ 2 ];
+        currentFrame.interactionBox.center = new Vector3( json["interactionBox"]["center"][ 0 ], json["interactionBox"]["center"][ 1 ], json["interactionBox"]["center"][ 2 ] );
+        currentFrame.interactionBox.width = json["interactionBox"]["size"][ 0 ];
+        currentFrame.interactionBox.height = json["interactionBox"]["size"][ 1 ];
+        currentFrame.interactionBox.depth = json["interactionBox"]["size"][ 2 ];
       }
 
       // Pointables
@@ -189,25 +199,25 @@ class Controller extends EventDispatcher
         length = json["pointables"].length;
         for ( i = 0; i < length; i++ )
         {
-          isTool = json["pointables"][ i ].tool;
+          isTool = json["pointables"][ i ]["tool"];
           if ( isTool )
             pointable = new Tool();
           else
             pointable = new Finger();
 
           pointable.frame = currentFrame;
-          pointable.id = json["pointables"][ i ].id;
-          pointable.hand = Controller.getHandByID( currentFrame, json["pointables"][ i ].handId );
-          pointable.length = json["pointables"][ i ].length;
-          pointable.direction = new Vector3( json["pointables"][ i ].direction[ 0 ], json["pointables"][ i ].direction[ 1 ], json["pointables"][ i ].direction[ 2 ] );
-          pointable.tipPosition = new Vector3( json["pointables"][ i ].tipPosition[ 0 ], json["pointables"][ i ].tipPosition[ 1 ], json["pointables"][ i ].tipPosition[ 2 ] );
-          pointable.stabilizedTipPosition = new Vector3( json["pointables"][ i ].stabilizedTipPosition[ 0 ], json["pointables"][ i ].stabilizedTipPosition[ 1 ], json["pointables"][ i ].stabilizedTipPosition[ 2 ] );
-          pointable.tipVelocity = new Vector3( json["pointables"][ i ].tipVelocity[ 0 ], json["pointables"][ i ].tipVelocity[ 1 ], json["pointables"][ i ].tipVelocity[ 2 ] );
-          pointable.touchDistance = json["pointables"][ i ].touchDist;
-          pointable.timeVisible = json["pointables"][ i ].timeVisible;
+          pointable.id = json["pointables"][ i ]["id"];
+          pointable.hand = Controller.getHandByID( currentFrame, json["pointables"][ i ]["handId"] );
+          pointable.length = json["pointables"][ i ]["length"];
+          pointable.direction = new Vector3( json["pointables"][ i ]["direction"][ 0 ], json["pointables"][ i ]["direction"][ 1 ], json["pointables"][ i ]["direction"][ 2 ] );
+          pointable.tipPosition = new Vector3( json["pointables"][ i ]["tipPosition"][ 0 ], json["pointables"][ i ]["tipPosition"][ 1 ], json["pointables"][ i ]["tipPosition"][ 2 ] );
+          pointable.stabilizedTipPosition = new Vector3( json["pointables"][ i ]["stabilizedTipPosition"][ 0 ], json["pointables"][ i ]["stabilizedTipPosition"][ 1 ], json["pointables"][ i ]["stabilizedTipPosition"][ 2 ] );
+          pointable.tipVelocity = new Vector3( json["pointables"][ i ]["tipVelocity"][ 0 ], json["pointables"][ i ]["tipVelocity"][ 1 ], json["pointables"][ i ]["tipVelocity"][ 2 ] );
+          pointable.touchDistance = json["pointables"][ i ]["touchDist"];
+          pointable.timeVisible = json["pointables"][ i ]["timeVisible"];
           currentFrame.pointables.add( pointable );
 
-          switch( json["pointables"][ i ].touchZone )
+          switch( json["pointables"][ i ]["touchZone"] )
           {
             case "hovering":
               pointable.touchZone = Pointable.ZONE_HOVERING;
@@ -227,7 +237,7 @@ class Controller extends EventDispatcher
           {
             pointable.isTool = true;
             pointable.isFinger = false;
-            pointable.width = json["pointables"][ i ].width;
+            pointable.width = json["pointables"][ i ]["width"];
             currentFrame.tools.add( pointable );
             if ( pointable.hand != null )
               pointable.hand.toolsVector.add( pointable );
@@ -250,17 +260,17 @@ class Controller extends EventDispatcher
         length = json["gestures"].length;
         for ( i = 0; i < length; i++ )
         {
-          switch( json["gestures"][ i ].type )
+          switch( json["gestures"][ i ]["type"] )
           {
             case "circle":
               gesture = new CircleGesture();
               type = Gesture.TYPE_CIRCLE;
               CircleGesture circle = gesture;
 
-              circle.center = new Vector3( json["gestures"][ i ].center[ 0 ], json["gestures"][ i ].center[ 1 ], json["gestures"][ i ].center[ 2 ] );
-              circle.normal = new Vector3( json["gestures"][ i ].normal[ 0 ], json["gestures"][ i ].normal[ 1 ], json["gestures"][ i ].normal[ 2 ] );
-              circle.progress = json["gestures"][ i ].progress;
-              circle.radius = json["gestures"][ i ].radius;
+              circle.center = new Vector3( json["gestures"][ i ]["center"][ 0 ], json["gestures"][ i ]["center"][ 1 ], json["gestures"][ i ]["center"][ 2 ] );
+              circle.normal = new Vector3( json["gestures"][ i ]["normal"][ 0 ], json["gestures"][ i ]["normal"][ 1 ], json["gestures"][ i ]["normal"][ 2 ] );
+              circle.progress = json["gestures"][ i ]["progress"];
+              circle.radius = json["gestures"][ i ]["radius"];
               break;
 
             case "swipe":
@@ -269,10 +279,10 @@ class Controller extends EventDispatcher
 
               SwipeGesture swipe = gesture;
 
-              swipe.startPosition = new Vector3( json["gestures"][ i ].startPosition[ 0 ], json["gestures"][ i ].startPosition[ 1 ], json["gestures"][ i ].startPosition[ 2 ] );
-              swipe.position = new Vector3( json["gestures"][ i ].position[ 0 ], json["gestures"][ i ].position[ 1 ], json["gestures"][ i ].position[ 2 ] );
-              swipe.direction = new Vector3( json["gestures"][ i ].direction[ 0 ], json["gestures"][ i ].direction[ 1 ], json["gestures"][ i ].direction[ 2 ] );
-              swipe.speed = json["gestures"][ i ].speed;
+              swipe.startPosition = new Vector3( json["gestures"][ i ]["startPosition"][ 0 ], json["gestures"][ i ]["startPosition"][ 1 ], json["gestures"][ i ]["startPosition"][ 2 ] );
+              swipe.position = new Vector3( json["gestures"][ i ]["position"][ 0 ], json["gestures"][ i ]["position"][ 1 ], json["gestures"][ i ]["position"][ 2 ] );
+              swipe.direction = new Vector3( json["gestures"][ i ]["direction"][ 0 ], json["gestures"][ i ]["direction"][ 1 ], json["gestures"][ i ]["direction"][ 2 ] );
+              swipe.speed = json["gestures"][ i ]["speed"];
               break;
 
             case "screenTap":
@@ -280,9 +290,9 @@ class Controller extends EventDispatcher
               type = Gesture.TYPE_SCREEN_TAP;
 
               ScreenTapGesture screenTap = gesture;
-              screenTap.position = new Vector3( json["gestures"][ i ].position[ 0 ], json["gestures"][ i ].position[ 1 ], json["gestures"][ i ].position[ 2 ] );
-              screenTap.direction = new Vector3( json["gestures"][ i ].direction[ 0 ], json["gestures"][ i ].direction[ 1 ], json["gestures"][ i ].direction[ 2 ] );
-              screenTap.progress = json["gestures"][ i ].progress;
+              screenTap.position = new Vector3( json["gestures"][ i ]["position"][ 0 ], json["gestures"][ i ]["position"][ 1 ], json["gestures"][ i ]["position"][ 2 ] );
+              screenTap.direction = new Vector3( json["gestures"][ i ]["direction"][ 0 ], json["gestures"][ i ]["direction"][ 1 ], json["gestures"][ i ]["direction"][ 2 ] );
+              screenTap.progress = json["gestures"][ i ]["progress"];
               break;
 
             case "keyTap":
@@ -290,9 +300,9 @@ class Controller extends EventDispatcher
               type = Gesture.TYPE_KEY_TAP;
 
               KeyTapGesture keyTap = gesture;
-              keyTap.position = new Vector3( json["gestures"][ i ].position[ 0 ], json["gestures"][ i ].position[ 1 ], json["gestures"][ i ].position[ 2 ] );
-              keyTap.direction = new Vector3( json["gestures"][ i ].direction[ 0 ], json["gestures"][ i ].direction[ 1 ], json["gestures"][ i ].direction[ 2 ] );
-              keyTap.progress = json["gestures"][ i ].progress;
+              keyTap.position = new Vector3( json["gestures"][ i ]["position"][ 0 ], json["gestures"][ i ]["position"][ 1 ], json["gestures"][ i ]["position"][ 2 ] );
+              keyTap.direction = new Vector3( json["gestures"][ i ]["direction"][ 0 ], json["gestures"][ i ]["direction"][ 1 ], json["gestures"][ i ]["direction"][ 2 ] );
+              keyTap.progress = json["gestures"][ i ]["progress"];
               break;
 
             default:
@@ -302,24 +312,24 @@ class Controller extends EventDispatcher
           int j = 0;
           int lengthInner = 0;
 
-          if( json["gestures"][ i ].handIds != null )
+          if( json["gestures"][ i ]["handIds"] != null )
           {
             j = 0;
-            lengthInner = json["gestures"][ i ].handIds.length;
+            lengthInner = json["gestures"][ i ]["handIds"].length;
             for( j = 0; j < lengthInner; ++j )
             {
-              Hand gestureHand = Controller.getHandByID( currentFrame, json["gestures"][ i ].handIds[ j ] );
+              Hand gestureHand = Controller.getHandByID( currentFrame, json["gestures"][ i ]["handIds"][ j ] );
               gesture.hands.add( gestureHand );
             }
           }
 
-          if( json["gestures"][ i ].pointableIds != null )
+          if( json["gestures"][ i ]["pointableIds"] != null )
           {
             j = 0;
-            lengthInner = json["gestures"][ i ].pointableIds.length;
+            lengthInner = json["gestures"][ i ]["pointableIds"].length;
             for( j = 0; j < lengthInner; ++j )
             {
-              Pointable gesturePointable = Controller.getPointableByID( currentFrame, json["gestures"][ i ].pointableIds[ j ] );
+              Pointable gesturePointable = Controller.getPointableByID( currentFrame, json["gestures"][ i ]["pointableIds"][ j ] );
               if( gesturePointable != null )
               {
                 gesture.pointables.add( gesturePointable );
@@ -332,11 +342,11 @@ class Controller extends EventDispatcher
           }
 
           gesture.frame = currentFrame;
-          gesture.id = json["gestures"][ i ].id;
-          gesture.duration = json["gestures"][ i ].duration;
+          gesture.id = json["gestures"][ i ]["id"];
+          gesture.duration = json["gestures"][ i ]["duration"];
           gesture.durationSeconds = gesture.duration / 1000000;
 
-          switch( json["gestures"][ i ].state )
+          switch( json["gestures"][ i ]["state"] )
           {
             case "start":
               gesture.state = Gesture.STATE_START;
@@ -358,14 +368,14 @@ class Controller extends EventDispatcher
       }
 
       // Rotation (since last frame), interpolate for smoother motion
-      if ( json["r"] )
+      if ( json["r"] != null )
         currentFrame.rotation = new Matrix( x: new Vector3( json["r"][ 0 ][ 0 ], json["r"][ 0 ][ 1 ], json["r"][ 0 ][ 2 ] ), y: new Vector3( json["r"][ 1 ][ 0 ], json["r"][ 1 ][ 1 ], json["r"][ 1 ][ 2 ] ), z: new Vector3( json["r"][ 2 ][ 0 ], json["r"][ 2 ][ 1 ], json["r"][ 2 ][ 2 ] ) );
 
       // Scale factor (since last frame), interpolate for smoother motion
       currentFrame.scaleFactorNumber = json["s"];
 
       // Translation (since last frame), interpolate for smoother motion
-      if ( json["t"] )
+      if ( json["t"] != null )
         currentFrame.translationVector = new Vector3( json["t"][ 0 ], json["t"][ 1 ], json["t"][ 2 ] );
 
       // Timestamp
@@ -373,7 +383,7 @@ class Controller extends EventDispatcher
 
       // Add frame to history
       if ( frameHistory.length > 59 )
-        frameHistory.removeRange( 59, 1 );
+        frameHistory.removeRange( 59, 60 );
 
       frameHistory.insert( 0, _latestFrame );
       _latestFrame = currentFrame;

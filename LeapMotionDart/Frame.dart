@@ -85,7 +85,7 @@ class Frame
   /**
    * The frame capture time in microseconds elapsed since the Leap Motion started.
    */
-  double timestamp;
+  num timestamp;
 
   /**
    * @private

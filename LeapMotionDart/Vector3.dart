@@ -21,17 +21,17 @@ class Vector3
   /**
    * The horizontal component.
    */
-  double x;
+  num x;
 
   /**
    * The vertical component.
    */
-  double y;
+  num y;
 
   /**
    * The depth component.
    */
-  double z;
+  num z;
 
   /**
    * Creates a new Vector with the specified component values.
@@ -40,7 +40,7 @@ class Vector3
    * @param z The depth component.
    *
    */
-  Vector3( double x, double y, double z )
+  Vector3( num x, num y, num z )
   {
     this.x = x;
     this.y = y;
