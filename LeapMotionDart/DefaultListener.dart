@@ -19,7 +19,7 @@ class DefaultListener extends EventDispatcher implements Listener
 
     void onFrame( Controller controller, Frame frame )
     {
-        controller.dispatchEvent( new LeapEvent( type: LeapEvent.LEAPMOTION_FRAME, targetListener: this, frame: frame ) );
+        controller.dispatchEvent( new LeapEvent( type: LeapEvent.LEAPMOTION_FRAME, targetListener: this, frameObject: frame ) );
     }
 
     void onInit( Controller controller )

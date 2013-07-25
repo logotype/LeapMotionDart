@@ -126,7 +126,7 @@ class InteractionBox
     if( !this.isValid() || !other.isValid() )
       return false;
 
-    if( !center == other.center )
+    if( center != other.center )
       return false;
     
     if( depth != other.depth )

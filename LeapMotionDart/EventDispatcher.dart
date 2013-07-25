@@ -49,7 +49,7 @@ class EventDispatcher
         for( int i = 0; i < _listeners.length; i++ )
         {
             if( _listeners[ i ].type == event.getType() )
-                _listeners[ i ].listener.call( this, event );
+              _listeners[ i ].listener( event );
         }
     }
 }

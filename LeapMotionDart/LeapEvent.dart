@@ -13,11 +13,11 @@ class LeapEvent
 
     Frame frame;
 
-    LeapEvent( { String type, Listener targetListener, Frame frame: null } )
+    LeapEvent( { String type, Listener targetListener, Frame frameObject: null } )
     {
         _type = type;
         _target = targetListener;
-        frame = frame;
+        frame = frameObject;
     }
 
     Object getTarget()

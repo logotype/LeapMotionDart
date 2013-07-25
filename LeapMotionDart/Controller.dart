@@ -132,7 +132,6 @@ class Controller extends EventDispatcher
       
       if( json["id"] == null )
       {
-        print( "invalid frame" );
         return;
       }
 

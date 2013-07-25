@@ -275,7 +275,7 @@ class Gesture
    */
   bool isValid()
   {
-    if( durationSeconds.isNaN )
+    if( durationSeconds == null )
       return false;
 
     return true;

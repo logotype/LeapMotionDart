@@ -225,7 +225,7 @@ class Pointable
     if( hand != other.hand )
       return false;
 
-    if( !(direction == other.direction) )
+    if( direction != other.direction )
       return false;
 
     if( length != other.length )
@@ -237,10 +237,10 @@ class Pointable
     if( id != other.id )
       return false;
 
-    if( !(tipPosition == other.tipPosition) )
+    if( tipPosition != other.tipPosition )
       return false;
 
-    if( !(tipVelocity == other.tipVelocity) )
+    if( tipVelocity != other.tipVelocity )
       return false;
 
     if( isFinger != other.isFinger || isTool != other.isTool )

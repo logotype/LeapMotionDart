@@ -367,7 +367,7 @@ class Frame
     if( !isValid() )
       return [];
 
-    if( !sinceFrame )
+    if( sinceFrame == null )
     {
       // The gestures recognized or continuing in this frame.
       return gesturesVector;
@@ -587,7 +587,7 @@ class Frame
    */
   bool isValid()
   {
-    if( !id )
+    if( id == null )
       return false;
 
     return true;

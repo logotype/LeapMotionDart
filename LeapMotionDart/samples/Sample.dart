@@ -1,45 +1,33 @@
 import 'dart:math' as Math;
 import '../LeapMotionDart.dart';
 
-class InterfaceSample implements Listener
+class Sample
 {
   Controller controller;
 
-  InterfaceSample()
+  Sample()
   {
     controller = new Controller();
-    controller.setListener( this );
+    controller.addEventListener( LeapEvent.LEAPMOTION_CONNECTED, onConnected );
+    controller.addEventListener( LeapEvent.LEAPMOTION_FRAME, onFrame );
   }
   
-  void onInit( Controller controller )
+  void onConnected( LeapEvent event )
   {
-    print( "onInit" );
+    print( "connected" );
+    controller.enableGesture( type: Gesture.TYPE_CIRCLE, enable: true );
+    controller.enableGesture( type: Gesture.TYPE_SWIPE, enable: true );
+    controller.enableGesture( type: Gesture.TYPE_SCREEN_TAP, enable: true );
+    controller.enableGesture( type: Gesture.TYPE_KEY_TAP, enable: true );
   }
   
-  void onConnect( Controller controller )
+  void onFrame( LeapEvent event )
   {
-    print( "onConnect" );
-    controller.enableGesture( type: Gesture.TYPE_SWIPE );
-    controller.enableGesture( type: Gesture.TYPE_CIRCLE );
-    controller.enableGesture( type: Gesture.TYPE_SCREEN_TAP );
-    controller.enableGesture( type: Gesture.TYPE_KEY_TAP );
-  }
-  
-  void onDisconnect( Controller controller )
-  {
-    print( "onDisconnect" );
-  }
-  
-  void onExit( Controller controller )
-  {
-    print( "onExit" );
-  }
+    Frame frame = event.frame;
     
-  void onFrame( Controller controller, Frame frame )
-  {
-    print("Frame id:" + frame.id.toString() + ", timestamp:" + frame.timestamp.toString() + ", hands:" + frame.hands.length.toString() + ", fingers:" + frame.fingers.length.toString() + ", tools:" + frame.tools.length.toString() + ", gestures:" + frame.gestures().length.toString() );
+    print( "Frame id:" + frame.id.toString() + ", timestamp:" + frame.timestamp.toString() + ", hands:" + frame.hands.length.toString() + ", fingers:" + frame.fingers.length.toString() + ", tools:" + frame.tools.length.toString() + ", gestures:" + frame.gestures().length.toString() );
 
-    if (frame.hands.length > 0) {
+    if ( frame.hands.length > 0 ) {
         // Get the first hand
         Hand hand = frame.hands[0];
 
@@ -85,11 +73,10 @@ class InterfaceSample implements Listener
 
                 // Calculate angle swept since last frame
                 double sweptAngle = 0.0;
-                if (circle.state != Gesture.STATE_START) {
+                if ( circle.state != Gesture.STATE_START ) {
                     Gesture previousGesture = controller.frame( history: 1 ).gesture( circle.id );
-                    if (previousGesture.isValid()) {
-                        CircleGesture previousUpdate = ( controller.frame( history: 1 ).gesture( circle.id ) as CircleGesture );
-                        sweptAngle = ( circle.progress - previousUpdate.progress ) * 2 * Math.PI;
+                    if ( previousGesture.isValid() ) {
+                        sweptAngle = ( circle.progress - ( previousGesture as CircleGesture ).progress ) * 2 * Math.PI;
                     }
                 }
                 print( "Circle id:" + circle.id.toString() + ", " + circle.state.toString() + ", progress:" + circle.progress.toString() + ", radius:" + circle.radius.toString() + ", angle:" + LeapUtil.toDegrees( sweptAngle ).toString() + ", " + clockwiseness );
@@ -109,4 +96,9 @@ class InterfaceSample implements Listener
         }
     }
   }
+}
+
+main()
+{
+  Sample sample = new Sample();
 }
