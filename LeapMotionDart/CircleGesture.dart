@@ -100,12 +100,12 @@ class CircleGesture extends Gesture
    * be partially formed before the Leap Motion can recognize it, progress will be
    * greater than zero when a circle gesture first appears in the frame.</p>
    */
-  double progress;
+  num progress;
 
   /**
    * The circle radius in mm.
    */
-  double radius;
+  num radius;
 
   /**
    * Constructs a new CircleGesture object.

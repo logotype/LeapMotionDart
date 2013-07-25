@@ -23,7 +23,7 @@ class Frame
    * and other factors.</p>
    * <p>An estimate of frames per second of the Leap Motion Controller.</p>
    */
-  double currentFramesPerSecond;
+  num currentFramesPerSecond;
   
   /**
    * @private
@@ -104,7 +104,7 @@ class Frame
    * @private
    * Scale factor since last Frame.
    */
-  double scaleFactorNumber;
+  num scaleFactorNumber;
 
   /**
    * @private
@@ -448,15 +448,15 @@ class Frame
    * change between the current frame and that specified in the sinceFrame parameter.
    *
    */
-  double rotationAngle( { Frame sinceFrame, Vector3 axis: null } )
+  num rotationAngle( { Frame sinceFrame, Vector3 axis: null } )
   {
     if( !isValid() || !sinceFrame.isValid() )
       return 0.0;
 
-    double returnValue = 0.0;
+    num returnValue = 0.0;
     Matrix rotationSinceFrameMatrix = rotationMatrix( sinceFrame );
-    double cs = ( rotationSinceFrameMatrix.xBasis.x + rotationSinceFrameMatrix.yBasis.y + rotationSinceFrameMatrix.zBasis.z - 1 ) * 0.5;
-    double angle = Math.acos( cs );
+    num cs = ( rotationSinceFrameMatrix.xBasis.x + rotationSinceFrameMatrix.yBasis.y + rotationSinceFrameMatrix.zBasis.z - 1 ) * 0.5;
+    num angle = Math.acos( cs );
     returnValue = angle.isNaN ? 0.0 : angle;
 
     if( axis != null )
@@ -514,7 +514,7 @@ class Frame
    * in the sinceFrame parameter.
    *
    */
-  double scaleFactor( Frame sinceFrame )
+  num scaleFactor( Frame sinceFrame )
   {
     if( sinceFrame && sinceFrame.scaleFactorNumber )
       return Math.exp( scaleFactorNumber - sinceFrame.scaleFactorNumber );

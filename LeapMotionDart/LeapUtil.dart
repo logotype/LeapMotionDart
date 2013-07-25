@@ -7,34 +7,34 @@ part of LeapMotionDart;
 class LeapUtil
 {
   /** The constant pi as a single precision floating point number. */
-  static const double PI = 3.1415926536;
+  static const num PI = 3.1415926536;
 
   /**
    * The constant ratio to convert an angle measure from degrees to radians.
    * Multiply a value in degrees by this constant to convert to radians.
    */
-  static const double DEG_TO_RAD = 0.0174532925;
+  static const num DEG_TO_RAD = 0.0174532925;
 
   /**
    * The constant ratio to convert an angle measure from radians to degrees.
    * Multiply a value in radians by this constant to convert to degrees.
    */
-  static const double RAD_TO_DEG = 57.295779513;
+  static const num RAD_TO_DEG = 57.295779513;
 
   /**
    * Pi &#42; 2.
    */
-  static const double TWO_PI = Math.PI + Math.PI;
+  static const num TWO_PI = Math.PI + Math.PI;
 
   /**
    * Pi &#42; 0.5.
    */
-  static const double HALF_PI = Math.PI * 0.5;
+  static const num HALF_PI = Math.PI * 0.5;
 
   /**
    * Represents the smallest positive single value greater than zero.
    */
-  static const double EPSILON = 0.00001;
+  static const num EPSILON = 0.00001;
 
   LeapUtil()
   {
@@ -47,7 +47,7 @@ class LeapUtil
    * @return The value, in degrees.
    *
    */
-  static double toDegrees( double radians )
+  static num toDegrees( num radians )
   {
     return radians * 180 / Math.PI;
   }
@@ -57,7 +57,7 @@ class LeapUtil
    *
    * @return True, if equal to or less than 0.00001; false otherwise.
    */
-  bool isNearZero( double value )
+  bool isNearZero( num value )
   {
     return value.abs() <= EPSILON;
   }
@@ -120,12 +120,12 @@ class LeapUtil
     return new Vector3( 1.0 / inVector.x, 1.0 / inVector.y, 1.0 / inVector.z );
   }
 
-  double minComponent( Vector3 inVector )
+  num minComponent( Vector3 inVector )
   {
     return Math.min( inVector.x, Math.min( inVector.y, inVector.z ) );
   }
 
-  double maxComponent( Vector3 inVector )
+  num maxComponent( Vector3 inVector )
   {
     return Math.max( inVector.x, Math.max( inVector.y, inVector.z ) );
   }
@@ -133,7 +133,7 @@ class LeapUtil
   /**
    * Compute the polar/spherical heading of a vector direction in z/x plane
    */
-  double heading( Vector3 inVector )
+  num heading( Vector3 inVector )
   {
     return Math.atan2( inVector.z, inVector.x );
   }
@@ -141,7 +141,7 @@ class LeapUtil
   /**
    * Compute the spherical elevation of a vector direction in y above the z/x plane
    */
-  double elevation( Vector3 inVector )
+  num elevation( Vector3 inVector )
   {
     return Math.atan2( inVector.y, Math.sqrt( inVector.z * inVector.z + inVector.x * inVector.x ) );
   }
@@ -155,8 +155,8 @@ class LeapUtil
    */
   Vector3 normalizeSpherical( Vector3 vSpherical )
   {
-    double fHeading = vSpherical.y;
-    double fElevation = vSpherical.z;
+    num fHeading = vSpherical.y;
+    num fElevation = vSpherical.z;
 
     while( fElevation <= -Math.PI )
       fElevation += TWO_PI;
@@ -200,11 +200,11 @@ class LeapUtil
    */
   Vector3 sphericalToCartesian( Vector3 vSpherical )
   {
-    double fMagnitude = vSpherical.x;
-    double fCosHeading = Math.cos( vSpherical.y );
-    double fSinHeading = Math.sin( vSpherical.y );
-    double fCosElevation = Math.cos( vSpherical.z );
-    double fSinElevation = Math.sin( vSpherical.z );
+    num fMagnitude = vSpherical.x;
+    num fCosHeading = Math.cos( vSpherical.y );
+    num fSinHeading = Math.sin( vSpherical.y );
+    num fCosElevation = Math.cos( vSpherical.z );
+    num fSinElevation = Math.sin( vSpherical.z );
 
     return new Vector3( fCosHeading * fCosElevation * fMagnitude, fSinElevation * fMagnitude, fSinHeading * fCosElevation * fMagnitude );
   }
@@ -218,7 +218,7 @@ class LeapUtil
    * @return The value clamped between minVal and maxVal.
    *
    */
-  double clamp( double inVal, double minVal, double maxVal )
+  num clamp( num inVal, num minVal, num maxVal )
   {
     return ( inVal < minVal ) ? minVal : ( ( inVal > maxVal ) ? maxVal : inVal );
   }
@@ -232,7 +232,7 @@ class LeapUtil
    * @return The interpolated number.
    *
    */
-  double lerp( double a, double b, double coefficient )
+  num lerp( num a, num b, num coefficient )
   {
     return a + ( ( b - a ) * coefficient );
   }
@@ -246,7 +246,7 @@ class LeapUtil
    * @return A new interpolated Vector3 object.
    *
    */
-  Vector3 lerpVector( Vector3 vec1, Vector3 vec2, double coefficient )
+  Vector3 lerpVector( Vector3 vec1, Vector3 vec2, num coefficient )
   {
     return vec1 + vec2 - vec1 * coefficient;
   }

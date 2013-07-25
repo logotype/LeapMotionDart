@@ -90,7 +90,7 @@ class KeyTapGesture extends Gesture
   /**
    * The progess value is always 1.0 for a key tap gesture.
    */
-  double progress = 1.0;
+  num progress = 1.0;
 
   /**
    * Constructs a new KeyTapGesture object.

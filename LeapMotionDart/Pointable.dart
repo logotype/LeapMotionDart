@@ -95,7 +95,7 @@ class Pointable
    *
    * <p>If the length isn't known, then a value of 0 is returned.</p>
    */
-  double length = 0.0;
+  num length = 0.0;
 
   /**
    * The estimated width of the finger or tool in millimeters.
@@ -105,7 +105,7 @@ class Pointable
    *
    * <p>If the width isn't known, then a value of 0 is returned.</p>
    */
-  double width = 0.0;
+  num width = 0.0;
 
   /**
    * The tip position in millimeters from the Leap Motion origin.
@@ -123,7 +123,7 @@ class Pointable
    * The duration of time this Pointable has been visible to the Leap Motion Controller.
    * <p>The duration (in seconds) that this Pointable has been tracked.</p>
    */
-  double timeVisible;
+  num timeVisible;
   
   /**
    * The rate of change of the tip position in millimeters/second.
@@ -151,7 +151,7 @@ class Pointable
    * it enters the "hovering" zone. When a Pointable reaches or
    * passes through the plane, it enters the "touching" zone.</p>
    * 
-   * <p>The possible states are present in the Zone edouble of this class:</p>
+   * <p>The possible states are present in the Zone enum of this class:</p>
    * 
    * <code>Zone.NONE – The Pointable is outside the hovering zone.
    * Zone.HOVERING – The Pointable is close to, but not touching the touch plane.
@@ -182,7 +182,7 @@ class Pointable
    * touch target, such as a button.</p>
    *  
    */
-  double touchDistance = 0.0;
+  num touchDistance = 0.0;
   
   Pointable()
   {

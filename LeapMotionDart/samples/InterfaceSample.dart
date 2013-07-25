@@ -55,7 +55,7 @@ class InterfaceSample implements Listener
     
     if ( watch.elapsedMilliseconds > 1000 )
     {
-      query('#status').text = "Data FPS: " + ( (( framesNumber / watch.elapsedMilliseconds ) * 10.0 ) / 10.0 ).toString();
+      query('#status').text = "Data FPS: " + ( (( framesNumber / ( watch.elapsedMilliseconds / 1000 ) ) * 10.0 ) / 10.0 ).toString();
       framesNumber = 0;
     }
   }

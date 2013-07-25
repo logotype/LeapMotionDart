@@ -27,19 +27,19 @@ class InteractionBox
    * The depth of the InteractionBox in millimeters, measured along the z-axis. 
    * 
    */
-  double depth;
+  num depth;
   
   /**
    * The height of the InteractionBox in millimeters, measured along the y-axis. 
    * 
    */
-  double height;
+  num height;
   
   /**
    * The width of the InteractionBox in millimeters, measured along the x-axis. 
    * 
    */
-  double width;
+  num width;
   
   /**
    * Constructs a InteractionBox object. 

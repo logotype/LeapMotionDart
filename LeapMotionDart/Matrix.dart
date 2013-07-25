@@ -63,12 +63,12 @@ class Matrix
     * @param angleRadians The amount of rotation in radians.
    *
    */
-  void setRotation( Vector3 _axis, double angleRadians )
+  void setRotation( Vector3 _axis, num angleRadians )
   {
     Vector3 axis = _axis.normalized();
-    double s = Math.sin( angleRadians );
-    double c = Math.cos( angleRadians );
-    double C = ( 1 - c );
+    num s = Math.sin( angleRadians );
+    num c = Math.cos( angleRadians );
+    num C = ( 1 - c );
 
     xBasis = new Vector3( axis.x * axis.x * C + c, axis.x * axis.y * C - axis.z * s, axis.x * axis.z * C + axis.y * s );
     yBasis = new Vector3( axis.y * axis.x * C + axis.z * s, axis.y * axis.y * C + c, axis.y * axis.z * C - axis.x * s );

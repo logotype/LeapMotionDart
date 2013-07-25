@@ -83,7 +83,7 @@ class ScreenTapGesture extends Gesture
   /**
    * The progess value is always 1.0 for a screen tap gesture.
    */
-  double progress = 1.0;
+  num progress = 1.0;
 
   /**
    * Constructs a new ScreenTapGesture object.

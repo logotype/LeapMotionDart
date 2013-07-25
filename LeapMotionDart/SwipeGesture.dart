@@ -74,7 +74,7 @@ class SwipeGesture extends Gesture
   /**
    * The speed of the finger performing the swipe gesture in millimeters per second.
    */
-  double speed;
+  num speed;
 
   /**
    * The position where the swipe began.

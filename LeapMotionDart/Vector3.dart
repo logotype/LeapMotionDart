@@ -79,7 +79,7 @@ class Vector3
    * @return
    *
    */
-  operator *(double scalar) => new Vector3( x * scalar, y * scalar, z * scalar );
+  operator *(num scalar) => new Vector3( x * scalar, y * scalar, z * scalar );
 
   /**
    * Divide vector by a scalar.
@@ -87,7 +87,7 @@ class Vector3
    * @return
    *
    */
-  operator /(double scalar) => new Vector3( x / scalar, y / scalar, z / scalar );
+  operator /(num scalar) => new Vector3( x / scalar, y / scalar, z / scalar );
 
   /**
    * Compare Vector equality/inequality component-wise.
@@ -111,9 +111,9 @@ class Vector3
    * @return The angle between this vector and the specified vector in radians.
    *
    */
-  double angleTo( Vector3 other )
+  num angleTo( Vector3 other )
   {
-    double denom = magnitudeSquared() * other.magnitudeSquared();
+    num denom = magnitudeSquared() * other.magnitudeSquared();
     if( denom <= 0 )
       return 0.0;
 
@@ -145,7 +145,7 @@ class Vector3
    * @return The distance from this point to the specified point.
    *
    */
-  double distanceTo( Vector3 other )
+  num distanceTo( Vector3 other )
   {
     return Math.sqrt( ( x - other.x ) * ( x - other.x ) + ( y - other.y ) * ( y - other.y ) + ( z - other.z ) * ( z - other.z ) );
   }
@@ -159,7 +159,7 @@ class Vector3
    * @return The dot product of this vector and the specified vector.
    *
    */
-  double dot( Vector3 other )
+  num dot( Vector3 other )
   {
     return ( x * other.x ) + ( y * other.y ) + ( z * other.z );
   }
@@ -199,7 +199,7 @@ class Vector3
    * @return The length of this vector.
    *
    */
-  double magnitude()
+  num magnitude()
   {
     return Math.sqrt( x * x + y * y + z * z );
   }
@@ -209,7 +209,7 @@ class Vector3
    * @return The square of the length of this vector.
    *
    */
-  double magnitudeSquared()
+  num magnitudeSquared()
   {
     return x * x + y * y + z * z;
   }
@@ -223,7 +223,7 @@ class Vector3
    */
   Vector3 normalized()
   {
-    double denom = magnitudeSquared();
+    num denom = magnitudeSquared();
     if( denom <= 0 )
       return new Vector3( 0.0, 0.0, 0.0 );
 
@@ -242,7 +242,7 @@ class Vector3
    * @return The angle of this vector above or below the horizon (x-z plane).
    *
    */
-  double get pitch => Math.atan2( y, -z );
+  num get pitch => Math.atan2( y, -z );
 
   /**
    * The yaw angle in radians.
@@ -256,7 +256,7 @@ class Vector3
    * @return The angle of this vector to the right or left of the negative z-axis.
    *
    */
-  double get yaw => Math.atan2( x, -z );
+  num get yaw => Math.atan2( x, -z );
 
   /**
    * The roll angle in radians.
@@ -274,7 +274,7 @@ class Vector3
    * @return The angle of this vector to the right or left of the y-axis.
    *
    */
-  double get roll => Math.atan2( x, -y );
+  num get roll => Math.atan2( x, -y );
 
   /**
    * The zero vector: (0.0, 0.0, 0.0)

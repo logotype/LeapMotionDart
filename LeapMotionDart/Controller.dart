@@ -103,17 +103,16 @@ class Controller extends EventDispatcher
   {
     _listener = new DefaultListener();
 
-    connection = new WebSocket( "ws://localhost:6437/v3.json" );
-    /*if( host.toString().length > 0 )
+    if( host != null && host.length > 0 )
     {
-      print("dev: using localhost");
-      connection = new WebSocket( "ws://localhost:6437/v3.json" );
+      print("dev: connecting to specific host");
+      connection = new WebSocket( "ws://" + host.toString() + ":6437/v2.json" );
     }
     else
     {
-      print("dev: connecting to specific host");
-      connection = new WebSocket( "ws://" + host.toString() + ":6437/v3.json" );
-    }*/
+      print("dev: using localhost");
+      connection = new WebSocket( "ws://localhost:6437/v2.json" );
+    }
 
     _listener.onInit( this );
     

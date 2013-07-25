@@ -188,7 +188,7 @@ class Gesture
   /**
    * The elapsed duration in seconds.
    */
-  double durationSeconds;
+  num durationSeconds;
 
   /**
    * The Frame containing this Gesture instance.

@@ -75,7 +75,7 @@ class Hand
    * The duration of time this Hand has been visible to the Leap Motion Controller.
    * <p>The duration (in seconds) that this Hand has been tracked.</p> 
    */
-  double timeVisible;
+  num timeVisible;
   
   /**
    * The rate of change of the palm position in millimeters/second.
@@ -106,7 +106,7 @@ class Hand
   /**
    * The radius of a sphere fit to the curvature of this hand.
    */
-  double sphereRadius;
+  num sphereRadius;
 
   /**
    * @private
@@ -124,7 +124,7 @@ class Hand
    * @private
    * Scale factor since last Frame.
    */
-  double scaleFactorNumber;
+  num scaleFactorNumber;
 
   /**
    * @private
@@ -372,15 +372,15 @@ class Hand
    * change between the current frame and that specified in the sinceFrame parameter.
    *
    */
-  double rotationAngle( { Frame sinceFrame, Vector3 axis: null } )
+  num rotationAngle( { Frame sinceFrame, Vector3 axis: null } )
   {
     if( !isValid() || !sinceFrame.hand( id ).isValid() )
       return 0.0;
 
-    double returnValue = 0.0;
+    num returnValue = 0.0;
     Matrix rotationSinceFrameMatrix = rotationMatrix( sinceFrame );
-    double cs = ( rotationSinceFrameMatrix.xBasis.x + rotationSinceFrameMatrix.yBasis.y + rotationSinceFrameMatrix.zBasis.z - 1 ) * 0.5;
-    double angle = Math.acos( cs );
+    num cs = ( rotationSinceFrameMatrix.xBasis.x + rotationSinceFrameMatrix.yBasis.y + rotationSinceFrameMatrix.zBasis.z - 1 ) * 0.5;
+    num angle = Math.acos( cs );
     returnValue = angle.isNaN ? 0.0 : angle;
 
     if( axis != null )
@@ -443,7 +443,7 @@ class Hand
    * in the sinceFrame parameter.
    *
    */
-  double scaleFactor( Frame sinceFrame )
+  num scaleFactor( Frame sinceFrame )
   {
     if( sinceFrame && sinceFrame.hand( id ) && sinceFrame.hand( id ).scaleFactorNumber )
       return Math.exp( scaleFactorNumber - sinceFrame.hand( id ).scaleFactorNumber );
