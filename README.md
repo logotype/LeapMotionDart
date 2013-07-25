@@ -142,6 +142,13 @@ Example output:
 
 Optionally, you can simply call `controller.frame()` e.g. in your main loop, or implement the `Listener` interface for callbacks.
 
+Documentation
+-----------
+
+[API documentation](http://logotype.se/leapmotion/dart/LeapMotionDart.html)
+
+To generate documentation, simply run `dartdoc --out=docs/LeapMotionDart LeapMotionDart.dart` from the main directory.
+
 Authors
 -------
 
