@@ -3,16 +3,16 @@ part of LeapMotionDart;
 /**
  * The SwipeGesture class represents a swiping motion of a finger or tool.
  *
- * <p><strong>Important: To use swipe gestures in your application, you must enable
- * recognition of the swipe gesture.</strong><br/>You can enable recognition with:</p>
+ * <strong>Important: To use swipe gestures in your application, you must enable
+ * recognition of the swipe gesture.</strong><br/>You can enable recognition with:
  *
- * <p><code>leap.controller.enableGesture(Gesture.TYPE_SWIPE);</code></p>
+ * <code>leap.controller.enableGesture(Gesture.TYPE_SWIPE);</code>
  *
- * <p>Swipe gestures are continuous.</p>
+ * Swipe gestures are continuous.
  *
- * <p>You can set the minimum length and velocity required for a movement to be
+ * You can set the minimum length and velocity required for a movement to be
  * recognized as a swipe using the config attribute of a connected Controller object.
- * Use the following keys to configure swipe recognition:</p>
+ * Use the following keys to configure swipe recognition:
  *
  * <table class="innertable">
  *   <tr>
@@ -35,7 +35,7 @@ part of LeapMotionDart;
  *  </tr>
  * </table>
  *
- * <p>The following example demonstrates how to set the swipe configuration parameters:</p>
+ * The following example demonstrates how to set the swipe configuration parameters:
  *
  * <code>if(controller.config().setFloat(&quot;Gesture.Swipe.MinLength&quot;, 200.0) &amp;&amp;
  *       controller.config().setFloat(&quot;Gesture.Swipe.MinVelocity&quot;, 750))
@@ -54,10 +54,10 @@ class SwipeGesture extends Gesture
   /**
    * The unit direction vector parallel to the swipe motion.
    *
-   * <p>You can compare the components of the vector to classify the swipe
+   * You can compare the components of the vector to classify the swipe
    * as appropriate for your application. For example, if you are using
    * swipes for two dimensional scrolling, you can compare the x and y
-   * values to determine if the swipe is primarily horizontal or vertical.</p>
+   * values to determine if the swipe is primarily horizontal or vertical.
    */
   Vector3 direction;
 

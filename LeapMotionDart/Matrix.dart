@@ -3,12 +3,12 @@ part of LeapMotionDart;
 /**
  * The Matrix class represents a transformation matrix.
  *
- * <p>To use this class to transform a Vector, construct a matrix containing the
+ * To use this class to transform a Vector, construct a matrix containing the
  * desired transformation and then use the <code>Matrix.transformPoint()</code> or
- * <code>Matrix.transformDirection()</code> functions to apply the transform.</p>
+ * <code>Matrix.transformDirection()</code> functions to apply the transform.
  *
- * <p>Transforms can be combined by multiplying two or more transform matrices
- * using the <code>multiply()</code> function.</p>
+ * Transforms can be combined by multiplying two or more transform matrices
+ * using the <code>multiply()</code> function.
  *
  *
  * @author logotype
@@ -142,16 +142,16 @@ class Matrix
    */
   operator ==( Matrix other)
   {
-    if( !( xBasis == other.xBasis ) )
+    if( xBasis != other.xBasis )
       return false;
 
-    if( !( yBasis == other.yBasis ) )
+    if( yBasis != other.yBasis )
       return false;
 
-    if( !( zBasis == other.zBasis ) )
+    if( zBasis != other.zBasis )
       return false;
 
-    if( !( origin == other.origin ) )
+    if( origin != other.origin )
       return false;
 
     return true;
@@ -169,6 +169,15 @@ class Matrix
     Vector3 zBasis = new Vector3( 0.0, 0.0, 1.0 );
 
     return new Matrix( x: xBasis, y: yBasis, z: zBasis );
+  }
+
+  /**
+   * Suppress compiler warning for operator overloads.
+   *
+   */
+  int get hashCode
+  {
+    return super.hashCode;
   }
 
   /**

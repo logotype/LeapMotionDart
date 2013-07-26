@@ -3,16 +3,16 @@ part of LeapMotionDart;
 /**
  * The Hand class reports the physical characteristics of a detected hand.
  *
- * <p>Hand tracking data includes a palm position and velocity; vectors for
+ * Hand tracking data includes a palm position and velocity; vectors for
  * the palm normal and direction to the fingers; properties of a sphere fit
- * to the hand; and lists of the attached fingers and tools.</p>
+ * to the hand; and lists of the attached fingers and tools.
  *
- * <p>Note that Hand objects can be invalid, which means that they do not
+ * Note that Hand objects can be invalid, which means that they do not
  * contain valid tracking data and do not correspond to a physical entity.
  * Invalid Hand objects can be the result of asking for a Hand object using
  * an ID from an earlier frame when no Hand objects with that ID exist in
  * the current frame. A Hand object created from the Hand constructor is
- * also invalid. Test for validity with the <code>Hand.isValid()</code> function.</p>
+ * also invalid. Test for validity with the <code>Hand.isValid()</code> function.
  *
  * @author logotype
  *
@@ -22,8 +22,8 @@ class Hand
   /**
    * The direction from the palm position toward the fingers.
    *
-   * <p>The direction is expressed as a unit vector pointing in the same
-   * direction as the directed line from the palm position to the fingers.</p>
+   * The direction is expressed as a unit vector pointing in the same
+   * direction as the directed line from the palm position to the fingers.
    */
   Vector3 direction;
 
@@ -45,12 +45,12 @@ class Hand
    * A unique ID assigned to this Hand object, whose value remains
    * the same across consecutive frames while the tracked hand remains visible.
    *
-   * <p>If tracking is lost (for example, when a hand is occluded by another
+   * If tracking is lost (for example, when a hand is occluded by another
    * hand or when it is withdrawn from or reaches the edge of the Leap Motion field
-   * of view), the Leap Motion may assign a new ID when it detects the hand in a future frame.</p>
+   * of view), the Leap Motion may assign a new ID when it detects the hand in a future frame.
    *
-   * <p>Use the ID value with the <code>Frame.hand()</code> function to find this Hand object
-   * in future frames.</p>
+   * Use the ID value with the <code>Frame.hand()</code> function to find this Hand object
+   * in future frames.
    */
   int id;
 
@@ -66,14 +66,14 @@ class Hand
 
   /**
    * The stabilized palm position of this Hand.
-   * <p>Smoothing and stabilization is performed in order to make this value more suitable for interaction with 2D content.</p>
-   * <p>A modified palm position of this Hand object with some additional smoothing and stabilization applied.</p> 
+   * Smoothing and stabilization is performed in order to make this value more suitable for interaction with 2D content.
+   * A modified palm position of this Hand object with some additional smoothing and stabilization applied. 
    */
   Vector3 stabilizedPalmPosition;
   
   /**
    * The duration of time this Hand has been visible to the Leap Motion Controller.
-   * <p>The duration (in seconds) that this Hand has been tracked.</p> 
+   * The duration (in seconds) that this Hand has been tracked. 
    */
   num timeVisible;
   
@@ -87,12 +87,12 @@ class Hand
    * The list of Pointable objects (fingers and tools) detected in this
    * frame that are associated with this hand, given in arbitrary order.
    *
-   * <p>The list can be empty if no fingers or tools associated with this hand are detected.
+   * The list can be empty if no fingers or tools associated with this hand are detected.
    * Use the <code>Pointable.isFinger()</code> function to determine whether or not an item in the
    * list represents a finger. Use the <code>Pointable.isTool()</code> function to determine
    * whether or not an item in the list represents a tool. You can also get
    * only fingers using the <code>Hand.fingers()</code> function or only tools using
-   * the <code>Hand.tools()</code> function.</p>
+   * the <code>Hand.tools()</code> function.
    *
    * @see Pointable
    *
@@ -141,9 +141,9 @@ class Hand
   /**
    * Constructs a Hand object.
    *
-   * <p>An uninitialized hand is considered invalid.
+   * An uninitialized hand is considered invalid.
    *
-   * Get valid Hand objects from a Frame object.</p>
+   * Get valid Hand objects from a Frame object.
    *
    */
   Hand()
@@ -166,9 +166,9 @@ class Hand
   /**
    * Compare Hand object equality/inequality.
    *
-   * <p>Two Hand objects are equal if and only if both Hand objects
+   * Two Hand objects are equal if and only if both Hand objects
    * represent the exact same physical hand in the same frame
-   * and both Hand objects are valid.</p>
+   * and both Hand objects are valid.
    *
    * @param other The Hand object to compare with.
    * @return True; if equal. False otherwise.
@@ -185,15 +185,15 @@ class Hand
   /**
    * The Finger object with the specified ID attached to this hand.
    *
-   * <p>Use the <code>Hand.finger()</code> function to retrieve a Finger object attached
+   * Use the <code>Hand.finger()</code> function to retrieve a Finger object attached
    * to this hand using an ID value obtained from a previous frame.
    * This function always returns a Finger object, but if no finger
-   * with the specified ID is present, an invalid Finger object is returned.</p>
+   * with the specified ID is present, an invalid Finger object is returned.
    *
-   * <p>Note that ID values persist across frames, but only until tracking of
+   * Note that ID values persist across frames, but only until tracking of
    * a particular object is lost. If tracking of a finger is lost and
    * subsequently regained, the new Finger object representing that
-   * finger may have a different ID than that representing the finger in an earlier frame.</p>
+   * finger may have a different ID than that representing the finger in an earlier frame.
    *
    * @param id The ID value of a Finger object from a previous frame.
    * @return The Finger object with the matching ID if one exists for
@@ -222,7 +222,7 @@ class Hand
    * The list of Finger objects detected in this hand,
    * given in arbitrary order.
    *
-   * <p>The list can be empty if no fingers are detected.</p>
+   * The list can be empty if no fingers are detected.
    * @return The Finger vector containing all Finger objects detected in this hand.
    *
    */
@@ -231,16 +231,16 @@ class Hand
   /**
    * The Tool object with the specified ID held by this hand.
    *
-   * <p>Use the <code>Hand.tool()</code> function to retrieve a Tool object held
+   * Use the <code>Hand.tool()</code> function to retrieve a Tool object held
    * by this hand using an ID value obtained from a previous frame.
    * This function always returns a Tool object, but if no tool
-   * with the specified ID is present, an invalid Tool object is returned.</p>
+   * with the specified ID is present, an invalid Tool object is returned.
    *
-   * <p>Note that ID values persist across frames, but only until
+   * Note that ID values persist across frames, but only until
    * tracking of a particular object is lost. If tracking of a tool
    * is lost and subsequently regained, the new Tool object
    * representing that tool may have a different ID than that
-   * representing the tool in an earlier frame.</p>
+   * representing the tool in an earlier frame.
    *
    * @param id The ID value of a Tool object from a previous frame.
    * @return The Tool object with the matching ID if one exists for
@@ -269,7 +269,7 @@ class Hand
    * The list of Tool objects detected in this hand,
    * given in arbitrary order.
    *
-   * <p>The list can be empty if no tools are detected.</p>
+   * The list can be empty if no tools are detected.
    * @return The ToolList containing all Tool objects detected in this hand.
    *
    */
@@ -278,16 +278,16 @@ class Hand
   /**
    * The Pointable object with the specified ID associated with this hand.
    *
-   * <p>Use the <code>Hand.pointable()</code> function to retrieve a Pointable object
+   * Use the <code>Hand.pointable()</code> function to retrieve a Pointable object
    * associated with this hand using an ID value obtained from a previous frame.
    * This function always returns a Pointable object, but if no finger or
-   * tool with the specified ID is present, an invalid Pointable object is returned.</p>
+   * tool with the specified ID is present, an invalid Pointable object is returned.
    *
-   * <p>Note that ID values persist across frames, but only until tracking
+   * Note that ID values persist across frames, but only until tracking
    * of a particular object is lost. If tracking of a finger or tool is
    * lost and subsequently regained, the new Pointable object representing
    * that finger or tool may have a different ID than that representing
-   * the finger or tool in an earlier frame.</p>
+   * the finger or tool in an earlier frame.
    *
    * @param id
    * @return
@@ -315,7 +315,7 @@ class Hand
    * The list of Pointable objects (fingers and tools) detected in this
    * hand, given in arbitrary order.
    *
-   * <p>The list can be empty if no fingers or tools are detected.</p>
+   * The list can be empty if no fingers or tools are detected.
    *
    * @return The Pointable vector containing all Pointable objects
    * detected in this hand.
@@ -327,11 +327,11 @@ class Hand
    * of this hand, and any associated fingers and tools,
    * between the current frame and the specified frame.
    *
-   * <p>The returned direction vector is normalized.</p>
+   * The returned direction vector is normalized.
    *
-   * <p>If a corresponding Hand object is not found in sinceFrame,
+   * If a corresponding Hand object is not found in sinceFrame,
    * or if either this frame or sinceFrame are invalid Frame objects,
-   * then this method returns a zero vector.</p>
+   * then this method returns a zero vector.
    *
    * @param sinceFrame The starting frame for computing the relative rotation.
    * @return A normalized direction Vector representing the heuristically
@@ -357,14 +357,14 @@ class Hand
    * change in orientation of this hand, and any associated fingers
    * and tools, between the current frame and the specified frame.
    *
-   * <p>The returned angle is expressed in radians measured clockwise
+   * The returned angle is expressed in radians measured clockwise
    * around the rotation axis (using the right-hand rule) between the
    * start and end frames. The value is always between 0 and pi radians
-   * (0 and 180 degrees).</p>
+   * (0 and 180 degrees).
    *
-   * <p>If a corresponding Hand object is not found in sinceFrame,
+   * If a corresponding Hand object is not found in sinceFrame,
    * or if either this frame or sinceFrame are invalid Frame objects,
-   * then the angle of rotation is zero.</p>
+   * then the angle of rotation is zero.
    *
    * @param sinceFrame The starting frame for computing the relative rotation.
    * @param axis Optional. The axis to measure rotation around.
@@ -397,9 +397,9 @@ class Hand
    * the change in orientation of this hand, and any associated
    * fingers and tools, between the current frame and the specified frame.
    *
-   * <p>If a corresponding Hand object is not found in sinceFrame,
+   * If a corresponding Hand object is not found in sinceFrame,
    * or if either this frame or sinceFrame are invalid Frame objects,
-   * then this method returns an identity matrix.</p>
+   * then this method returns an identity matrix.
    *
    * @param sinceFrame
    * @return A transformation Matrix representing the heuristically
@@ -425,17 +425,17 @@ class Hand
    * The scale factor derived from this hand's motion between
    * the current frame and the specified frame.
    *
-   * <p>The scale factor is always positive. A value of 1.0 indicates no
+   * The scale factor is always positive. A value of 1.0 indicates no
    * scaling took place. Values between 0.0 and 1.0 indicate contraction
-   * and values greater than 1.0 indicate expansion.</p>
+   * and values greater than 1.0 indicate expansion.
    *
-   * <p>The Leap Motion derives scaling from the relative inward or outward motion
+   * The Leap Motion derives scaling from the relative inward or outward motion
    * of a hand and its associated fingers and tools (independent of
-   * translation and rotation).</p>
+   * translation and rotation).
    *
-   * <p>If a corresponding Hand object is not found in sinceFrame,
+   * If a corresponding Hand object is not found in sinceFrame,
    * or if either this frame or sinceFrame are invalid Frame objects,
-   * then this method returns 1.0.</p>
+   * then this method returns 1.0.
    *
    * @param sinceFrame The starting frame for computing the relative scaling.
    * @return A positive value representing the heuristically determined
@@ -472,9 +472,9 @@ class Hand
   /**
    * Returns an invalid Hand object.
    *
-   * <p>You can use the instance returned by this function in comparisons
+   * You can use the instance returned by this function in comparisons
    * testing whether a given Hand instance is valid or invalid.
-   * (You can also use the <code>Hand.isValid()</code> function.)</p>
+   * (You can also use the <code>Hand.isValid()</code> function.)
    *
    * @return The invalid Hand instance.
    *
@@ -482,5 +482,14 @@ class Hand
   static Hand invalid()
   {
     return new Hand();
+  }
+
+  /**
+   * Suppress compiler warning for operator overloads.
+   *
+   */
+  int get hashCode
+  {
+    return super.hashCode;
   }
 }

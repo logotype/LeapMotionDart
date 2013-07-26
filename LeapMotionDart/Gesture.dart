@@ -3,50 +3,50 @@ part of LeapMotionDart;
 /**
  * The Gesture class represents a recognized movement by the user.
  *
- * <p>The Leap Motion watches the activity within its field of view for certain movement
+ * The Leap Motion watches the activity within its field of view for certain movement
  * patterns typical of a user gesture or command. For example, a movement from
  * side to side with the hand can indicate a swipe gesture, while a finger poking
- * forward can indicate a screen tap gesture.</p>
+ * forward can indicate a screen tap gesture.
  *
- * <p>When the Leap Motion recognizes a gesture, it assigns an ID and adds a Gesture object
+ * When the Leap Motion recognizes a gesture, it assigns an ID and adds a Gesture object
  * to the frame gesture list. For continuous gestures, which occur over many frames,
  * the Leap Motion updates the gesture by adding a Gesture object having the same ID and
- * updated properties in each subsequent frame.</p>
+ * updated properties in each subsequent frame.
  *
- * <p><strong>Important: Recognition for each type of gesture must be enabled using the
+ * <strong>Important: Recognition for each type of gesture must be enabled using the
  * <code>Controller.enableGesture()</code> function; otherwise no gestures are recognized
- * or reported.</strong></p>
+ * or reported.</strong>
  *
- * <p>Subclasses of Gesture define the properties for the specific movement
- * patterns recognized by the Leap Motion.</p>
+ * Subclasses of Gesture define the properties for the specific movement
+ * patterns recognized by the Leap Motion.
  *
- * <p>The Gesture subclasses for include:
+ * The Gesture subclasses for include:
  * <pre>
  * CircleGesture – A circular movement by a finger.
  * SwipeGesture – A straight line movement by the hand with fingers extended.
  * ScreenTapGesture – A forward tapping movement by a finger.
  * KeyTapGesture – A downward tapping movement by a finger.
  * </pre>
- * </p>
+ * 
  *
- * <p>Circle and swipe gestures are continuous and these objects can have a state
- * of start, update, and stop.</p>
+ * Circle and swipe gestures are continuous and these objects can have a state
+ * of start, update, and stop.
  *
- * <p>The screen tap gesture is a discrete gesture. The Leap Motion only creates a single
- * ScreenTapGesture object appears for each tap and it always has a stop state.</p>
+ * The screen tap gesture is a discrete gesture. The Leap Motion only creates a single
+ * ScreenTapGesture object appears for each tap and it always has a stop state.
  *
- * <p>Get valid Gesture instances from a Frame object. You can get a list of gestures
+ * Get valid Gesture instances from a Frame object. You can get a list of gestures
  * with the <code>Frame.gestures()</code> method. You can get a list of gestures since a specified
  * frame with the <code>Frame.gestures(frame)</code> methods. You can also use the <code>Frame.gesture()</code>
  * method to find a gesture in the current frame using an ID value obtained
- * in a previous frame.</p>
+ * in a previous frame.
  *
- * <p>Gesture objects can be invalid. For example, when you get a gesture by ID using
+ * Gesture objects can be invalid. For example, when you get a gesture by ID using
  * <code>Frame.gesture()</code>, and there is no gesture with that ID in the current frame, then
  * <code>gesture()</code> returns an Invalid Gesture object (rather than a null value).
- * Always check object validity in situations where a gesture might be invalid.</p>
+ * Always check object validity in situations where a gesture might be invalid.
  *
- * <p>The following keys can be used with the Config class to configure the gesture recognizer:</p>
+ * The following keys can be used with the Config class to configure the gesture recognizer:
  *
  * <table class="innertable">
  *   <tr>
@@ -178,10 +178,10 @@ class Gesture
    * The elapsed duration of the recognized movement up to the frame
    * containing this Gesture object, in microseconds.
    *
-   * <p>The duration reported for the first Gesture in the sequence (with
+   * The duration reported for the first Gesture in the sequence (with
    * the <code>STATE_START</code> state) will typically be a small positive number
    * since the movement must progress far enough for the Leap Motion to recognize
-   * it as an intentional gesture.</p>
+   * it as an intentional gesture.
    */
   int duration;
 
@@ -198,32 +198,32 @@ class Gesture
   /**
    * The list of hands associated with this Gesture, if any.
    *
-   * <p>If no hands are related to this gesture, the list is empty.</p>
+   * If no hands are related to this gesture, the list is empty.
    */
   List<Hand> hands = new List<Hand>();
 
   /**
    * The gesture ID.
    *
-   * <p>All Gesture objects belonging to the same recognized movement share
+   * All Gesture objects belonging to the same recognized movement share
    * the same ID value. Use the ID value with the Frame.gesture() method
-   * to find updates related to this Gesture object in subsequent frames.</p>
+   * to find updates related to this Gesture object in subsequent frames.
    */
   int id;
 
   /**
    * The list of fingers and tools associated with this Gesture, if any.
    *
-   * <p>If no Pointable objects are related to this gesture, the list is empty.</p>
+   * If no Pointable objects are related to this gesture, the list is empty.
    */
   List<Pointable> pointables = new List<Pointable>();
 
   /**
    * The gesture state.
    *
-   * <p>Recognized movements occur over time and have a beginning, a middle,
+   * Recognized movements occur over time and have a beginning, a middle,
    * and an end. The <code>state</code> attribute reports where in that sequence
-   * this Gesture object falls.</p>
+   * this Gesture object falls.
    */
   int state;
 
@@ -235,9 +235,9 @@ class Gesture
   /**
    * Constructs a new Gesture object.
    *
-   * <p>An uninitialized Gesture object is considered invalid. Get valid
+   * An uninitialized Gesture object is considered invalid. Get valid
    * instances of the Gesture class, which will be one of the Gesture
-   * subclasses, from a Frame object.</p>
+   * subclasses, from a Frame object.
    *
    */
   Gesture()
@@ -247,8 +247,8 @@ class Gesture
   /**
    * Compare Gesture object equality/inequality.
    *
-   * <p>Two Gestures are equal if they represent the same snapshot of
-   * the same recognized movement.</p>
+   * Two Gestures are equal if they represent the same snapshot of
+   * the same recognized movement.
    *
    * @param other The Gesture to compare with.
    * @return True; if equal, False otherwise.
@@ -258,17 +258,17 @@ class Gesture
   {
     return ( id == other.id ) ? true : false;
   }
-
+  
   /**
    * Reports whether this Gesture instance represents a valid Gesture.
    *
-   * <p>An invalid Gesture object does not represent a snapshot of a recognized
+   * An invalid Gesture object does not represent a snapshot of a recognized
    * movement. Invalid Gesture objects are returned when a valid object
    * cannot be provided. For example, when you get an gesture by ID using
    * Frame.gesture(), and there is no gesture with that ID in the current
    * frame, then gesture() returns an Invalid Gesture object (rather than
    * a null value). Always check object validity in situations where an
-   * gesture might be invalid.</p>
+   * gesture might be invalid.
    *
    * @return True, if this is a valid Gesture instance; false, otherwise.
    *
@@ -284,9 +284,9 @@ class Gesture
   /**
    * Returns an invalid Gesture object.
    *
-   * <p>You can use the instance returned by this function in comparisons
+   * You can use the instance returned by this function in comparisons
    * testing whether a given Gesture instance is valid or invalid.
-   * (You can also use the <code>Gesture.isValid()</code> function.)</p>
+   * (You can also use the <code>Gesture.isValid()</code> function.)
    *
    * @return The invalid Gesture instance.
    *
@@ -294,6 +294,15 @@ class Gesture
   static Gesture invalid()
   {
     return new Gesture();
+  }
+
+  /**
+   * Suppress compiler warning for operator overloads.
+   *
+   */
+  int get hashCode
+  {
+    return super.hashCode;
   }
 
   /**

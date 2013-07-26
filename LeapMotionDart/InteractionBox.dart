@@ -4,13 +4,13 @@ part of LeapMotionDart;
  * The InteractionBox class represents a box-shaped region completely within
  * the field of view of the Leap Motion controller.
  * 
- * <p>The interaction box is an axis-aligned rectangular prism and provides
+ * The interaction box is an axis-aligned rectangular prism and provides
  * normalized coordinates for hands, fingers, and tools within this box.
  * The InteractionBox class can make it easier to map positions in the
  * Leap Motion coordinate system to 2D or 3D coordinate systems used
- * for application drawing.</p>
+ * for application drawing.
    * 
- * <p>The InteractionBox region is defined by a center and dimensions along the x, y, and z axes.</p>
+ * The InteractionBox region is defined by a center and dimensions along the x, y, and z axes.
  *  
  * @author logotype
  * 
@@ -19,7 +19,7 @@ class InteractionBox
 {
   /**
    * The center of the InteractionBox in device coordinates (millimeters).
-   * <p>This point is equidistant from all sides of the box.</p> 
+   * This point is equidistant from all sides of the box. 
    */
   Vector3 center;
   
@@ -73,9 +73,9 @@ class InteractionBox
   /**
    * Normalizes the coordinates of a point using the interaction box.
    * 
-   * <p>Coordinates from the Leap Motion frame of reference (millimeters) are
+   * Coordinates from the Leap Motion frame of reference (millimeters) are
    * converted to a range of [0..1] such that the minimum value of the
-   * InteractionBox maps to 0 and the maximum value of the InteractionBox maps to 1.</p>
+   * InteractionBox maps to 0 and the maximum value of the InteractionBox maps to 1.
    *  
    * @param position The input position in device coordinates.
    * @param clamp Whether or not to limit the output value to the range [0,1]
@@ -114,8 +114,8 @@ class InteractionBox
   /**
    * Compare InteractionBox object equality/inequality.
    * 
-   * <p>Two InteractionBox objects are equal if and only if both InteractionBox
-   * objects represent the exact same InteractionBox and both InteractionBoxes are valid.</p>
+   * Two InteractionBox objects are equal if and only if both InteractionBox
+   * objects represent the exact same InteractionBox and both InteractionBoxes are valid.
    *  
    * @param other
    * @return 
@@ -144,9 +144,9 @@ class InteractionBox
   /**
    * Returns an invalid InteractionBox object.
    *
-   * <p>You can use the instance returned by this function in comparisons
+   * You can use the instance returned by this function in comparisons
    * testing whether a given InteractionBox instance is valid or invalid.
-   * (You can also use the <code>InteractionBox.isValid()</code> function.)</p>
+   * (You can also use the <code>InteractionBox.isValid()</code> function.)
    *
    * @return The invalid InteractionBox instance.
    *
@@ -154,6 +154,15 @@ class InteractionBox
   static InteractionBox invalid()
   {
     return new InteractionBox();
+  }
+
+  /**
+   * Suppress compiler warning for operator overloads.
+   *
+   */
+  int get hashCode
+  {
+    return super.hashCode;
   }
 
   /**

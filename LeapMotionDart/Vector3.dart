@@ -4,14 +4,14 @@ part of LeapMotionDart;
  * The Vector class represents a three-component mathematical vector
  * or point such as a direction or position in three-dimensional space.
  *
- * <p>The Leap Motion software employs a right-handed Cartesian coordinate system.
+ * The Leap Motion software employs a right-handed Cartesian coordinate system.
  * Values given are in units of real-world millimeters. The origin is
  * centered at the center of the Leap Motion Controller. The x- and z-axes lie in
  * the horizontal plane, with the x-axis running parallel to the long edge
  * of the device. The y-axis is vertical, with positive values increasing
  * upwards (in contrast to the downward orientation of most computer
  * graphics coordinate systems). The z-axis has positive values increasing
- * away from the computer screen.</p>
+ * away from the computer screen.
  *
  * @author logotype
  *
@@ -100,12 +100,12 @@ class Vector3
   /**
    * The angle between this vector and the specified vector in radians.
    *
-   * <p>The angle is measured in the plane formed by the two vectors.
+   * The angle is measured in the plane formed by the two vectors.
    * The angle returned is always the smaller of the two conjugate angles.
    * Thus <code>A.angleTo(B) == B.angleTo(A)</code> and is always a positive value less
-   * than or equal to pi radians (180 degrees).</p>
+   * than or equal to pi radians (180 degrees).
    *
-   * <p>If either vector has zero length, then this function returns zero.</p>
+   * If either vector has zero length, then this function returns zero.
    *
    * @param other A Vector object.
    * @return The angle between this vector and the specified vector in radians.
@@ -374,6 +374,15 @@ class Vector3
   static Vector3 backward()
   {
     return zAxis();
+  }
+
+  /**
+   * Suppress compiler warning for operator overloads.
+   *
+   */
+  int get hashCode
+  {
+    return super.hashCode;
   }
 
   /**
