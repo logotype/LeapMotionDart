@@ -55,7 +55,7 @@ class Frame
    * that finger or tool may have a different ID than that representing
    * the finger or tool in an earlier frame.
    *
-   * @see Pointable
+   * @see [Pointable]
    *
    */
   List<Pointable> pointablesVector = new List<Pointable>();
@@ -78,7 +78,7 @@ class Frame
   /**
    * The current InteractionBox for the frame.
    * See the InteractionBox class documentation for more details on how this class should be used.
-   * @see InteractionBox
+   * @see [InteractionBox]
    */
   InteractionBox interactionBox;
 
@@ -91,7 +91,7 @@ class Frame
    * @private
    * The list of Tool objects detected in this frame, given in arbitrary order.
    *
-   * @see Tool
+   * @see [Tool]
    */
   List<Tool> toolsVector = new List<Tool>();
 
@@ -143,10 +143,10 @@ class Frame
    * that physical hand may have a different ID than that
    * representing the physical hand in an earlier frame.
    *
-   * @param id The ID value of a Hand object from a previous frame.
-   * @return The Hand object with the matching ID if one exists
+   * [id] The ID value of a Hand object from a previous frame.
+   * [return] The Hand object with the matching ID if one exists
    * in this frame; otherwise, an invalid Hand object is returned.
-   * @see Hand
+   * @see [Hand]
    *
    */
   Hand hand( int id )
@@ -171,7 +171,7 @@ class Frame
    * given in arbitrary order.
    *
    * The list can be empty if no hands are detected.
-   * @return The Hand vector containing all Hand objects detected in this frame.
+   * [return] The Hand vector containing all Hand objects detected in this frame.
    *
    */
   List<Hand> get hands => handsVector;
@@ -191,10 +191,10 @@ class Frame
    * object representing that physical finger may have a different
    * ID than that representing the finger in an earlier frame.
    *
-   * @param id The ID value of a Finger object from a previous frame.
-   * @return The Finger object with the matching ID if one exists
+   * [id] The ID value of a Finger object from a previous frame.
+   * [return] The Finger object with the matching ID if one exists
    * in this frame; otherwise, an invalid Finger object is returned.
-   * @see Finger
+   * @see [Finger]
    *
    */
   Finger finger( int id )
@@ -219,7 +219,7 @@ class Frame
    * given in arbitrary order.
    *
    * The list can be empty if no fingers are detected.
-   * @return The Finger vector containing all Finger objects detected in this frame.
+   * [return] The Finger vector containing all Finger objects detected in this frame.
    *
    */
   List<Finger> get fingers => fingersVector;
@@ -239,10 +239,10 @@ class Frame
    * object representing that tool may have a different ID
    * than that representing the tool in an earlier frame.
    *
-   * @param id The ID value of a Tool object from a previous frame.
-   * @return The Tool object with the matching ID if one exists in
+   * [id] The ID value of a Tool object from a previous frame.
+   * [return] The Tool object with the matching ID if one exists in
    * this frame; otherwise, an invalid Tool object is returned.
-   * @see Tool
+   * @see [Tool]
    *
    */
   Tool tool( int id )
@@ -266,7 +266,7 @@ class Frame
    * given in arbitrary order.
    *
    * The list can be empty if no tools are detected.
-   * @return The ToolList containing all Tool objects detected in this frame.
+   * [return] The ToolList containing all Tool objects detected in this frame.
    *
    */
   List<Tool> get tools => toolsVector;
@@ -286,8 +286,8 @@ class Frame
    * that finger or tool may have a different ID than that representing
    * the finger or tool in an earlier frame.
    *
-   * @param id The ID value of a Pointable object from a previous frame.
-   * @return The Pointable object with the matching ID if one exists
+   * [id] The ID value of a Pointable object from a previous frame.
+   * [return] The Pointable object with the matching ID if one exists
    * in this frame; otherwise, an invalid Pointable object is returned.
    *
    */
@@ -313,7 +313,7 @@ class Frame
    *
    * The list can be empty if no fingers or tools are detected.
    *
-   * @return The Pointable vector containing all Pointable objects
+   * [return] The Pointable vector containing all Pointable objects
    * detected in this frame.
    */
   List<Pointable> get pointables => pointablesVector;
@@ -328,8 +328,8 @@ class Frame
    *
    * All Gesture objects representing the same recognized movement share the same ID.
    *
-   * @param id The ID of an Gesture object from a previous frame.
-   * @return The Gesture object in the frame with the specified ID if one
+   * [id] The ID of an Gesture object from a previous frame.
+   * [return] The Gesture object in the frame with the specified ID if one
    * exists; Otherwise, an Invalid Gesture object.
    *
    */
@@ -357,9 +357,9 @@ class Frame
    * If no frame is specifed, the gestures recognized or continuing in
    * this frame will be returned.
    *
-   * @param sinceFrame An earlier Frame object. The starting frame must
+   * [sinceFrame] An earlier Frame object. The starting frame must
    * still be in the frame history cache, which has a default length of 60 frames.
-   * @return The list of gestures.
+   * [return] The list of gestures.
    *
    */
   List<Gesture> gestures( { Frame sinceFrame: null } )
@@ -409,8 +409,8 @@ class Frame
    * object, or if no rotation is detected between the
    * two frames, a zero vector is returned.
    *
-   * @param sinceFrame The starting frame for computing the relative rotation.
-   * @return A normalized direction Vector representing the axis of the
+   * [sinceFrame] The starting frame for computing the relative rotation.
+   * [return] A normalized direction Vector representing the axis of the
    * heuristically determined rotational change between the current
    * frame and that specified in the sinceFrame parameter.
    *
@@ -442,9 +442,9 @@ class Frame
    * If either this frame or sinceFrame is an invalid Frame object,
    * then the angle of rotation is zero.
    *
-   * @param sinceFrame The starting frame for computing the relative rotation.
-   * @param axis Optional. The axis to measure rotation around.
-   * @return A positive value containing the heuristically determined rotational
+   * [sinceFrame] The starting frame for computing the relative rotation.
+   * [axis] Optional. The axis to measure rotation around.
+   * [return] A positive value containing the heuristically determined rotational
    * change between the current frame and that specified in the sinceFrame parameter.
    *
    */
@@ -477,9 +477,6 @@ class Frame
    * or if either this frame or sinceFrame are invalid Frame objects,
    * then this method returns an identity matrix.
    *
-   * @param sinceFrame
-   * @return
-   *
    */
   Matrix rotationMatrix( Frame sinceFrame )
   {
@@ -508,8 +505,8 @@ class Frame
    * If either this frame or sinceFrame is an invalid Frame object,
    * then this method returns 1.0.
    *
-   * @param sinceFrame The starting frame for computing the relative scaling.
-   * @return A positive value representing the heuristically determined
+   * [sinceFrame] The starting frame for computing the relative scaling.
+   * [return] A positive value representing the heuristically determined
    * scaling change ratio between the current frame and that specified
    * in the sinceFrame parameter.
    *
@@ -535,8 +532,8 @@ class Frame
    * If either this frame or sinceFrame is an invalid Frame object,
    * then this method returns a zero vector.
    *
-   * @param sinceFrame The starting frame for computing the translation.
-   * @return A Vector representing the heuristically determined change
+   * [sinceFrame] The starting frame for computing the translation.
+   * [return] A Vector representing the heuristically determined change
    * in hand position between the current frame and that specified
    * in the sinceFrame parameter.
    *
@@ -556,8 +553,8 @@ class Frame
    * represent the exact same frame of tracking data and both
    * Frame objects are valid.
    *
-   * @param other The Frame to compare with.
-   * @return True; if equal. False otherwise.
+   * [other] The Frame to compare with.
+   * [return] True; if equal. False otherwise.
    *
    */
   operator ==( Frame other )
@@ -582,7 +579,7 @@ class Frame
    * frame(n) returned a null object.<br/>
    * (You should still check that the returned Finger instance is valid.)
    *
-   * @return True, if this is a valid Frame object; false otherwise.
+   * [return] True, if this is a valid Frame object; false otherwise.
    *
    */
   bool isValid()
@@ -600,7 +597,7 @@ class Frame
    * testing whether a given Frame instance is valid or invalid.
    * (You can also use the <code>Frame.isValid()</code> function.)
    *
-   * @return The invalid Frame instance.
+   * [return] The invalid Frame instance.
    *
    */
   static Frame invalid() => new Frame();

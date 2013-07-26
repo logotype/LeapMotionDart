@@ -118,11 +118,11 @@ part of LeapMotionDart;
  * </table>
  *
  * @author logotype
- * @see CircleGesture
- * @see SwipeGesture
- * @see ScreenTapGesture
- * @see KeyTapGesture
- * @see Config
+ * @see [CircleGesture]
+ * @see [SwipeGesture]
+ * @see [ScreenTapGesture]
+ * @see [KeyTapGesture]
+ * @see [Config]
  *
  */
 class Gesture
@@ -250,8 +250,8 @@ class Gesture
    * Two Gestures are equal if they represent the same snapshot of
    * the same recognized movement.
    *
-   * @param other The Gesture to compare with.
-   * @return True; if equal, False otherwise.
+   * [other] The Gesture to compare with.
+   * [return] True; if equal, False otherwise.
    *
    */
   operator ==( Gesture other ) => ( id == other.id ) ? true : false;
@@ -267,7 +267,7 @@ class Gesture
    * a null value). Always check object validity in situations where an
    * gesture might be invalid.
    *
-   * @return True, if this is a valid Gesture instance; false, otherwise.
+   * [return] True, if this is a valid Gesture instance; false, otherwise.
    *
    */
   bool isValid()
@@ -285,7 +285,7 @@ class Gesture
    * testing whether a given Gesture instance is valid or invalid.
    * (You can also use the <code>Gesture.isValid()</code> function.)
    *
-   * @return The invalid Gesture instance.
+   * [return] The invalid Gesture instance.
    *
    */
   static Gesture invalid() => new Gesture();

@@ -43,8 +43,8 @@ class LeapUtil
   /**
    * Convert an angle measure from radians to degrees.
    *
-   * @param radians
-   * @return The value, in degrees.
+   * [radians]
+   * [return] The value, in degrees.
    *
    */
   static num toDegrees( num radians ) => radians * 180 / Math.PI;
@@ -52,14 +52,14 @@ class LeapUtil
   /**
    * Determines if a value is equal to or less than 0.00001.
    *
-   * @return True, if equal to or less than 0.00001; false otherwise.
+   * [return] True, if equal to or less than 0.00001; false otherwise.
    */
   bool isNearZero( num value ) => value.abs() <= EPSILON;
 
   /**
    * Determines if all Vector3 components is equal to or less than 0.00001.
    *
-   * @return True, if equal to or less than 0.00001; false otherwise.
+   * [return] True, if equal to or less than 0.00001; false otherwise.
    */
   bool vectorIsNearZero( Vector3 inVector ) => isNearZero( inVector.x ) && isNearZero( inVector.y ) && isNearZero( inVector.z );
 
@@ -105,8 +105,8 @@ class LeapUtil
   /**
    * Set magnitude to 1 and bring heading to [-Pi,Pi], elevation into [-Pi/2, Pi/2]
    *
-   * @param The Vector3 to convert.
-   * @return The normalized spherical Vector3.
+   * [vSpherical] The Vector3 to convert.
+   * [return] The normalized spherical Vector3.
    *
    */
   Vector3 normalizeSpherical( Vector3 vSpherical )
@@ -137,8 +137,8 @@ class LeapUtil
    * Convert from Cartesian (rectangular) coordinates to spherical coordinates
    * (magnitude, heading, elevation).
    *
-   * @param The Vector3 to convert.
-   * @return The cartesian Vector3 converted to spherical.
+   * [vCartesian] The Vector3 to convert.
+   * [return] The cartesian Vector3 converted to spherical.
    *
    */
   Vector3 cartesianToSpherical( Vector3 vCartesian ) => new Vector3( vCartesian.magnitude(), heading( vCartesian ), elevation( vCartesian ) );
@@ -147,8 +147,8 @@ class LeapUtil
    * Convert from spherical coordinates (magnitude, heading, elevation) to
    * Cartesian (rectangular) coordinates.
    *
-   * @param The Vector3 to convert.
-   * @return The spherical Vector3 converted to cartesian.
+   * [vSpherical] The Vector3 to convert.
+   * [return] The spherical Vector3 converted to cartesian.
    *
    */
   Vector3 sphericalToCartesian( Vector3 vSpherical )
@@ -165,10 +165,10 @@ class LeapUtil
   /**
    * Clamps a value between a minimum Number and maximum Number value.
    *
-   * @param inVal The number to clamp.
-   * @param minVal The minimum value.
-   * @param maxVal The maximum value.
-   * @return The value clamped between minVal and maxVal.
+   * [inVal] The number to clamp.
+   * [minVal] The minimum value.
+   * [maxVal] The maximum value.
+   * [return] The value clamped between minVal and maxVal.
    *
    */
   num clamp( num inVal, num minVal, num maxVal ) => ( inVal < minVal ) ? minVal : ( ( inVal > maxVal ) ? maxVal : inVal );
@@ -176,10 +176,10 @@ class LeapUtil
   /**
    * Linearly interpolates between two Numbers.
    *
-   * @param a A number.
-   * @param b A number.
-   * @param t The interpolation coefficient [0-1].
-   * @return The interpolated number.
+   * [a] A number.
+   * [b] A number.
+   * [t] The interpolation coefficient [0-1].
+   * [return] The interpolated number.
    *
    */
   num lerp( num a, num b, num coefficient ) => a + ( ( b - a ) * coefficient );
@@ -187,10 +187,10 @@ class LeapUtil
   /**
    * Linearly interpolates between two Vector3 objects.
    *
-   * @param a A Vector3 object.
-   * @param b A Vector3 object.
-   * @param t The interpolation coefficient [0-1].
-   * @return A new interpolated Vector3 object.
+   * [a] A Vector3 object.
+   * [b] A Vector3 object.
+   * [t] The interpolation coefficient [0-1].
+   * [return] A new interpolated Vector3 object.
    *
    */
   Vector3 lerpVector( Vector3 vec1, Vector3 vec2, num coefficient ) => vec1 + vec2 - vec1 * coefficient;

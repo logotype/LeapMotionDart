@@ -57,7 +57,7 @@ class Pointable
    * The Frame associated with this Pointable object.<br/>
    * The associated Frame object, if available; otherwise, an invalid
    * Frame object is returned.
-   * @see Frame
+   * @see [Frame]
    */
   Frame frame;
 
@@ -65,7 +65,7 @@ class Pointable
    * The Hand associated with this finger or tool.<br/>
    * The associated Hand object, if available; otherwise, an invalid
    * Hand object is returned.
-   * @see Hand
+   * @see [Hand]
    */
   Hand hand;
 
@@ -193,7 +193,7 @@ class Pointable
 
   /**
    * Reports whether this is a valid Pointable object.
-   * @return True if <code>direction</code>, <code>tipPosition</code> and <code>tipVelocity</code> are true.
+   * [return] True if <code>direction</code>, <code>tipPosition</code> and <code>tipVelocity</code> are true.
    */
   bool isValid()
   {
@@ -210,8 +210,8 @@ class Pointable
    * objects represent the exact same physical entities in
    * the same frame and both Pointable objects are valid.
    *
-   * @param other The Pointable to compare with.
-   * @return True; if equal, False otherwise.
+   * [other] The Pointable to compare with.
+   * [return] True; if equal, False otherwise.
    *
    */
   operator ==( Pointable other )
@@ -257,7 +257,7 @@ class Pointable
    * is valid or invalid.<br/>
    * (You can also use the <code>Pointable.isValid()</code> function.)
    *
-   * @return The invalid Pointable instance.
+   * [return] The invalid Pointable instance.
    *
    */
   static Pointable invalid() => new Pointable();

@@ -35,56 +35,44 @@ class Vector3
 
   /**
    * Creates a new Vector with the specified component values.
-   * @param x The horizontal component.
-   * @param y The vertical component.
-   * @param z The depth component.
+   * [x] The horizontal component.
+   * [y] The vertical component.
+   * [z] The depth component.
    *
    */
   Vector3( this.x, this.y, this.z );
 
   /**
    * A copy of this vector pointing in the opposite direction.
-   * @return A Vector3 object with all components negated.
+   * [return] A Vector3 object with all components negated.
    *
    */
   Vector3 opposite() => new Vector3( -x, -y, -z );
 
   /**
    * Add vectors component-wise.
-   * @param other
-   * @return
-   *
    */
   operator +(Vector3 other) => new Vector3( x + other.x, y + other.y, z + other.z );
 
   /**
    * A copy of this vector pointing in the opposite direction.
-   * @param other
-   * @return
-   *
    */
   operator -(Vector3 other) => new Vector3( x - other.x, y - other.y, z - other.z );
 
   /**
    * Multiply vector by a scalar.
-   * @param scalar
-   * @return
-   *
    */
   operator *(num scalar) => new Vector3( x * scalar, y * scalar, z * scalar );
 
   /**
    * Divide vector by a scalar.
-   * @param scalar
-   * @return
-   *
    */
   operator /(num scalar) => new Vector3( x / scalar, y / scalar, z / scalar );
 
   /**
    * Compare Vector equality/inequality component-wise.
-   * @param other The Vector3 to compare with.
-   * @return True; if equal, False otherwise.
+   * [other] The Vector3 to compare with.
+   * [return] True; if equal, False otherwise.
    *
    */
   operator ==(Vector3 other) => ( x != other.x || y != other.y || z != other.z );
@@ -99,8 +87,8 @@ class Vector3
    *
    * If either vector has zero length, then this function returns zero.
    *
-   * @param other A Vector object.
-   * @return The angle between this vector and the specified vector in radians.
+   * [other] A Vector object.
+   * [return] The angle between this vector and the specified vector in radians.
    *
    */
   num angleTo( Vector3 other )
@@ -120,8 +108,8 @@ class Vector3
    * two vectors as sides. The direction of the returned vector is
    * determined by the right-hand rule. Thus <code>A.cross(B) == -B.cross(A)</code>.
    *
-   * @param other A Vector object.
-   * @return The cross product of this vector and the specified vector.
+   * [other] A Vector object.
+   * [return] The cross product of this vector and the specified vector.
    *
    */
   Vector3 cross( Vector3 other ) => new Vector3( ( y * other.z ) - ( z * other.y ), ( z * other.x ) - ( x * other.z ), ( x * other.y ) - ( y * other.x ) );
@@ -130,8 +118,8 @@ class Vector3
    * The distance between the point represented by this Vector
    * object and a point represented by the specified Vector object.
    *
-   * @param other A Vector object.
-   * @return The distance from this point to the specified point.
+   * [other] A Vector object.
+   * [return] The distance from this point to the specified point.
    *
    */
   num distanceTo( Vector3 other ) => Math.sqrt( ( x - other.x ) * ( x - other.x ) + ( y - other.y ) * ( y - other.y ) + ( z - other.z ) * ( z - other.z ) );
@@ -141,15 +129,15 @@ class Vector3
    * The dot product is the magnitude of the projection of this vector
    * onto the specified vector.
    *
-   * @param other A Vector object.
-   * @return The dot product of this vector and the specified vector.
+   * [other] A Vector object.
+   * [return] The dot product of this vector and the specified vector.
    *
    */
   num dot( Vector3 other ) => ( x * other.x ) + ( y * other.y ) + ( z * other.z );
 
   /**
    * Returns true if all of the vector's components are finite.
-   * @return If any component is NaN or infinite, then this returns false.
+   * [return] If any component is NaN or infinite, then this returns false.
    *
    */
   bool isValid() => ( x <= double.MAX_FINITE && x >= -double.MAX_FINITE ) && ( y <= double.MAX_FINITE && y >= -double.MAX_FINITE ) && ( z <= double.MAX_FINITE && z >= -double.MAX_FINITE );
@@ -162,7 +150,7 @@ class Vector3
    * is valid or invalid.
    * (You can also use the Vector3.isValid property.)
    *
-   * @return The invalid Vector3 instance.
+   * [return] The invalid Vector3 instance.
    *
    */
   static Vector3 invalid() => new Vector3( double.NAN, double.NAN, double.NAN );
@@ -173,14 +161,14 @@ class Vector3
    * origin and the point represented by the (x, y, z) components
    * of this Vector object.
    *
-   * @return The length of this vector.
+   * [return] The length of this vector.
    *
    */
   num magnitude() => Math.sqrt( x * x + y * y + z * z );
 
   /**
    * The square of the magnitude, or length, of this vector.
-   * @return The square of the length of this vector.
+   * [return] The square of the length of this vector.
    *
    */
   num magnitudeSquared() => x * x + y * y + z * z;
@@ -189,7 +177,7 @@ class Vector3
    * A normalized copy of this vector.
    * A normalized vector has the same direction as the original
    * vector, but with a length of one.
-   * @return A Vector object with a length of one, pointing in the same direction as this Vector object.
+   * [return] A Vector object with a length of one, pointing in the same direction as this Vector object.
    *
    */
   Vector3 normalized()
@@ -210,7 +198,7 @@ class Vector3
    * returned angle is between 0 and pi radians (180 degrees); if it
    * points downward, the angle is between 0 and -pi radians.
    *
-   * @return The angle of this vector above or below the horizon (x-z plane).
+   * [return] The angle of this vector above or below the horizon (x-z plane).
    *
    */
   num get pitch => Math.atan2( y, -z );
@@ -224,7 +212,7 @@ class Vector3
    * radians (180 degrees); if it points to the left, the angle is
    * between 0 and -pi radians.
    *
-   * @return The angle of this vector to the right or left of the negative z-axis.
+   * [return] The angle of this vector to the right or left of the negative z-axis.
    *
    */
   num get yaw => Math.atan2( x, -z );
@@ -242,91 +230,68 @@ class Vector3
    * the palm, then this function returns the tilt or roll of the palm
    * plane compared to the horizontal (x-z) plane.
    *
-   * @return The angle of this vector to the right or left of the y-axis.
+   * [return] The angle of this vector to the right or left of the y-axis.
    *
    */
   num get roll => Math.atan2( x, -y );
 
   /**
    * The zero vector: (0.0, 0.0, 0.0)
-   * @return
-   *
    */
   static Vector3 zero() => new Vector3( 0.0, 0.0, 0.0 );
 
   /**
    * The x-axis unit vector: (1, 0, 0)
-   * @return
-   *
    */
   static Vector3 xAxis() => new Vector3( 1.0, 0.0, 0.0 );
 
   /**
    * The y-axis unit vector: (0, 1, 0)
-   * @return
-   *
    */
   static Vector3 yAxis() => new Vector3( 0.0, 1.0, 0.0 );
 
   /**
    * The z-axis unit vector: (0, 0, 1)
-   * @return
-   *
    */
   static Vector3 zAxis() => new Vector3( 0.0, 0.0, 1.0 );
 
   /**
    * The unit vector pointing left along the negative x-axis: (-1, 0, 0)
-   * @return
-   *
    */
   static Vector3 left() => new Vector3( -1.0, 0.0, 0.0 );
 
   /**
    * The unit vector pointing right along the positive x-axis: (1, 0, 0)
-   * @return
-   *
    */
   static Vector3 right() => xAxis();
 
   /**
    * The unit vector pointing down along the negative y-axis: (0, -1, 0)
-   * @return
-   *
    */
   static Vector3 down() => new Vector3( 0.0, -1.0, 0.0 );
 
   /**
    * The unit vector pointing up along the positive x-axis: (0, 1, 0)
-   * @return
-   *
    */
   static Vector3 up() => yAxis();
 
   /**
    * The unit vector pointing forward along the negative z-axis: (0, 0, -1)
-   * @return
-   *
    */
   static Vector3 forward() => new Vector3( 0.0, 0.0, -1.0 );
 
   /**
    * The unit vector pointing backward along the positive z-axis: (0, 0, 1)
-   * @return
-   *
    */
   static Vector3 backward() => zAxis();
 
   /**
    * Suppress compiler warning for operator overloads.
-   *
    */
    int get hashCode => super.hashCode;
 
   /**
    * Returns a string containing this vector in a human readable format: (x, y, z).
-   * @return
-   *
    */
   String toString() => "[Vector3 x:" + x.toString() + " y:" + y.toString() + " z:" + z.toString() + "]";
 }

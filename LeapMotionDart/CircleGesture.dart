@@ -54,7 +54,7 @@ part of LeapMotionDart;
  *        controller.config().save();</listing>
  *
  * @author logotype
- * @see Gesture
+ * @see [Gesture]
  *
  */
 class CircleGesture extends Gesture

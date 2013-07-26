@@ -83,7 +83,7 @@ class Controller extends EventDispatcher
 
   /**
    * Constructs a Controller object.
-   * @param host IP or hostname of the computer running the Leap Motion software.
+   * [host] IP or hostname of the computer running the Leap Motion software.
    * (currently only supported for socket connections).
    *
    */
@@ -382,9 +382,9 @@ class Controller extends EventDispatcher
   /**
    * Finds a Hand object by ID.
   *
-   * @param frame The Frame object in which the Hand contains
-   * @param id The ID of the Hand object
-   * @return The Hand object if found, otherwise null
+   * [frame] The Frame object in which the Hand contains
+   * [id] The ID of the Hand object
+   * [return] The Hand object if found, otherwise null
   *
    */
   static Hand getHandByID( Frame frame, int id )
@@ -406,9 +406,9 @@ class Controller extends EventDispatcher
   /**
    * Finds a Pointable object by ID.
    *
-   * @param frame The Frame object in which the Pointable contains
-   * @param id The ID of the Pointable object
-   * @return The Pointable object if found, otherwise null
+   * [frame] The Frame object in which the Pointable contains
+   * [id] The ID of the Pointable object
+   * [return] The Pointable object if found, otherwise null
   *
    */
   static Pointable getPointableByID( Frame frame, int id )
@@ -436,10 +436,10 @@ class Controller extends EventDispatcher
    * greater than the number of stored frames, then the controller returns
    * an invalid frame.
    *
-   * @param history The age of the frame to return, counting backwards from
+   * [history] The age of the frame to return, counting backwards from
    * the most recent frame (0) into the past and up to the maximum age (59).
    *
-   * @return The specified frame; or, if no history parameter is specified,
+   * [return] The specified frame; or, if no history parameter is specified,
    * the newest frame. If a frame is not available at the specified
    * history position, an invalid Frame is returned.
    *
@@ -459,8 +459,6 @@ class Controller extends EventDispatcher
    * You can override this behaviour, by implementing the IListener interface
    * in your own classes, and use this method to set the listener to your
    * own implementation.
-  *
-   * @param listener
    */
   void setListener( Listener listener )
   {
@@ -477,8 +475,8 @@ class Controller extends EventDispatcher
    * As a performance optimization, only enable recognition for the types
    * of movements that you use in your application.
    *
-   * @param type The type of gesture to enable or disable. Must be a member of the Gesture::Type enumeration.
-   * @param enable True, to enable the specified gesture type; False, to disable.
+   * [type] The type of gesture to enable or disable. Must be a member of the Gesture::Type enumeration.
+   * [enable] True, to enable the specified gesture type; False, to disable.
    *
    */
   void enableGesture( { int type, bool enable: true } )
@@ -498,8 +496,8 @@ class Controller extends EventDispatcher
   /**
    * Reports whether the specified gesture type is enabled.
    *
-   * @param type The Gesture.TYPE parameter.
-   * @return True, if the specified type is enabled; false, otherwise.
+   * [type] The Gesture.TYPE parameter.
+   * [return] True, if the specified type is enabled; false, otherwise.
    *
    */
   bool isGestureEnabled( int type ) => _isGesturesEnabled;
@@ -516,7 +514,7 @@ class Controller extends EventDispatcher
    * application to be connected to the Leap Motion before performing
    * some other operation.
    *
-   * @return True, if connected; false otherwise.
+   * [return] True, if connected; false otherwise.
    *
    */
   bool isConnected() => _isConnected;

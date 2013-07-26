@@ -24,7 +24,7 @@ abstract class Listener
      * Called when the Controller object connects to the Leap software,
      * or when this Listener object is added to a Controller that is already connected.
      *
-     * @param controller The Controller object invoking this callback function.
+     * [controller] The Controller object invoking this callback function.
      *
      */
     void onConnect( Controller controller );
@@ -46,7 +46,7 @@ abstract class Listener
      * This is to allow you to step through code without losing the connection
      * because of time outs.
      *
-     * @param controller The Controller object invoking this callback function.
+     * [controller] The Controller object invoking this callback function.
      *
      */
     void onDisconnect( Controller controller );
@@ -60,7 +60,7 @@ abstract class Listener
      *     trace( "Exited" );
      * }</listing>
      *
-     * @param controller The Controller object invoking this callback function.
+     * [controller] The Controller object invoking this callback function.
      *
      */
     void onExit( Controller controller );
@@ -84,8 +84,8 @@ abstract class Listener
      * by comparing the ID of the most recent frame with the ID of the last
      * received frame.
      *
-     * @param controller The Controller object invoking this callback function.
-     * @param frame The most recent frame object.
+     * [controller] The Controller object invoking this callback function.
+     * [frame] The most recent frame object.
      *
      */
     void onFrame( Controller controller, Frame frame );
@@ -98,7 +98,7 @@ abstract class Listener
      *     trace( "Init" );
      * }</listing>
      *
-     * @param controller The Controller object invoking this callback function.
+     * [controller] The Controller object invoking this callback function.
      *
      */
     void onInit( Controller controller );

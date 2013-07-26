@@ -38,10 +38,10 @@ class Matrix
 
   /**
    * Constructs a transformation matrix from the specified basis vectors.
-   * @param x A Vector specifying rotation and scale factors for the x-axis.
-   * @param y A Vector specifying rotation and scale factors for the y-axis.
-   * @param z A Vector specifying rotation and scale factors for the z-axis.
-   * @param _origin A Vector specifying translation factors on all three axes.
+   * [x] A Vector specifying rotation and scale factors for the x-axis.
+   * [y] A Vector specifying rotation and scale factors for the y-axis.
+   * [z] A Vector specifying rotation and scale factors for the z-axis.
+   * [_origin] A Vector specifying translation factors on all three axes.
    *
    */
   Matrix( { Vector3 x, Vector3 y, Vector3 z, Vector3 o: null } )
@@ -59,8 +59,8 @@ class Matrix
    * This function erases any previous rotation and scale transforms applied to this matrix,
    * but does not affect translation.
    *
- * @param _axis A Vector specifying the axis of rotation.
-    * @param angleRadians The amount of rotation in radians.
+   * [_axis] A Vector specifying the axis of rotation.
+   * [angleRadians] The amount of rotation in radians.
    *
    */
   void setRotation( Vector3 _axis, num angleRadians )
@@ -79,16 +79,16 @@ class Matrix
    * Transforms a vector with this matrix by transforming its rotation, scale, and translation.
    * Translation is applied after rotation and scale.
    *
-   * @param inVector The Vector to transform.
-   * @return A new Vector representing the transformed original.
+   * [inVector] The Vector to transform.
+   * [return] A new Vector representing the transformed original.
    *
    */
   Vector3 transformPoint( Vector3 inVector ) => new Vector3( ( xBasis * inVector.x ).x, ( yBasis * inVector.y ).y, ( zBasis * inVector.z ).z + origin.z );
 
   /**
    * Transforms a vector with this matrix by transforming its rotation and scale only.
-   * @param inVector The Vector to transform.
-   * @return A new Vector representing the transformed original.
+   * [inVector] The Vector to transform.
+   * [return] A new Vector representing the transformed original.
    *
    */
   Vector3 transformDirection( Vector3 inVector )
@@ -101,7 +101,7 @@ class Matrix
 
   /**
    * Performs a matrix inverse if the matrix consists entirely of rigid transformations (translations and rotations).
-   * @return The rigid inverse of the matrix.
+   * [return] The rigid inverse of the matrix.
    *
    */
   Matrix rigidInverse()
@@ -114,8 +114,8 @@ class Matrix
 
   /**
    * Multiply transform matrices.
-   * @param other A Matrix to multiply on the right hand side.
-   * @return A new Matrix representing the transformation equivalent to applying the other transformation followed by this transformation.
+   * [other] A Matrix to multiply on the right hand side.
+   * [return] A new Matrix representing the transformation equivalent to applying the other transformation followed by this transformation.
    *
    */
   operator *( Matrix other)
@@ -133,8 +133,8 @@ class Matrix
 
   /**
    * Compare Matrix equality/inequality component-wise.
-   * @param other The Matrix to compare with.
-   * @return True; if equal, False otherwise.
+   * [other] The Matrix to compare with.
+   * [return] True; if equal, False otherwise.
    *
    */
   operator ==( Matrix other)
@@ -156,7 +156,7 @@ class Matrix
 
   /**
    * Returns the identity matrix specifying no translation, rotation, and scale.
-   * @return The identity matrix.
+   * [return] The identity matrix.
    *
    */
   static Matrix identity()
@@ -176,8 +176,6 @@ class Matrix
 
   /**
    * Write the matrix to a string in a human readable format.
-   * @return
-   *
    */
   String toString() => "[Matrix xBasis:" + xBasis.toString() + " yBasis:" + yBasis.toString() + " zBasis:" + zBasis.toString() + " origin:" + origin.toString() + "]";
 }

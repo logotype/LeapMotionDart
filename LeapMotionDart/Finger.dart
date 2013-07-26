@@ -49,7 +49,7 @@ class Finger extends Pointable
    * is valid or invalid.
    * (You can also use the <code>Finger.isValid()</code> function.)
    *
-   * @return The invalid Finger instance.
+   * [return] The invalid Finger instance.
    *
    */
   static Finger invalid() => new Finger();

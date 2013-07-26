@@ -55,8 +55,8 @@ class InteractionBox
    * 
    * This function performs the inverse of normalizePoint().
    *  
-   * @param normalizedPosition The input position in InteractionBox coordinates.
-   * @return The corresponding denormalized position in device coordinates.
+   * [normalizedPosition] The input position in InteractionBox coordinates.
+   * [return] The corresponding denormalized position in device coordinates.
    * 
    */
   Vector3 denormalizePoint( Vector3 normalizedPosition )
@@ -77,10 +77,10 @@ class InteractionBox
    * converted to a range of [0..1] such that the minimum value of the
    * InteractionBox maps to 0 and the maximum value of the InteractionBox maps to 1.
    *  
-   * @param position The input position in device coordinates.
-   * @param clamp Whether or not to limit the output value to the range [0,1]
+   * [position] The input position in device coordinates.
+   * [clamp] Whether or not to limit the output value to the range [0,1]
    * when the input position is outside the InteractionBox. Defaults to true.
-   * @return The normalized position.
+   * [return] The normalized position.
    * 
    */
   Vector3 normalizePoint( { Vector3 position, bool clamp: true } )
@@ -103,7 +103,7 @@ class InteractionBox
   
   /**
    * Reports whether this is a valid InteractionBox object. 
-   * @return True, if this InteractionBox object contains valid data.
+   * [return] True, if this InteractionBox object contains valid data.
    * 
    */
   bool isValid() => center.isValid();
@@ -114,9 +114,6 @@ class InteractionBox
    * Two InteractionBox objects are equal if and only if both InteractionBox
    * objects represent the exact same InteractionBox and both InteractionBoxes are valid.
    *  
-   * @param other
-   * @return 
-   * 
    */
   operator ==(InteractionBox other)
   {
@@ -145,7 +142,7 @@ class InteractionBox
    * testing whether a given InteractionBox instance is valid or invalid.
    * (You can also use the <code>InteractionBox.isValid()</code> function.)
    *
-   * @return The invalid InteractionBox instance.
+   * [return] The invalid InteractionBox instance.
    *
    */
   static InteractionBox invalid() => new InteractionBox();
@@ -158,7 +155,7 @@ class InteractionBox
 
   /**
    * Writes a brief, human readable description of the InteractionBox object.
-   * @return A description of the InteractionBox as a string.
+   * [return] A description of the InteractionBox as a string.
    *
    */
   toString() => "[InteractionBox depth:" + depth.toString() + " height:" + height.toString() + " width:" + width.toString() + "]";

@@ -37,7 +37,7 @@ class Tool extends Pointable
    * is valid or invalid.
    * (You can also use the Tool.isValid property.)
    *
-   * @return The invalid Tool instance.
+   * [return] The invalid Tool instance.
    *
    */
   static Tool invalid() => new Tool();
