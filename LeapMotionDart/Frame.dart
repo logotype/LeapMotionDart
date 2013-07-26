@@ -603,17 +603,11 @@ class Frame
    * @return The invalid Frame instance.
    *
    */
-  static Frame invalid()
-  {
-    return new Frame();
-  }
+  static Frame invalid() => new Frame();
 
   /**
    * Suppress compiler warning for operator overloads.
    *
    */
-  int get hashCode
-  {
-    return super.hashCode;
-  }
+   int get hashCode => super.hashCode;
 }

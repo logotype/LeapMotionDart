@@ -102,22 +102,26 @@ class Controller extends EventDispatcher
 
     _listener.onInit( this );
     
-    connection.onOpen.listen( ( Event event ) {
+    connection.onOpen.listen( ( Event event )
+    {
       _isConnected = true;
       _listener.onConnect( this );
-      _heartBeatTimer = new Timer.periodic( new Duration( milliseconds: 100 ), ( timer ) {
+      _heartBeatTimer = new Timer.periodic( new Duration( milliseconds: 100 ), ( timer )
+      {
         connection.sendString( "{ \"heartbeat\": true }" );
       });
     });
 
-    connection.onClose.listen( ( CloseEvent event ) {
+    connection.onClose.listen( ( CloseEvent event )
+    {
       _isConnected = false;
       _listener.onDisconnect( this );
       if( _heartBeatTimer != null )
         _heartBeatTimer.cancel();
     });
 
-    connection.onMessage.listen( ( MessageEvent event ) {
+    connection.onMessage.listen( ( MessageEvent event )
+    {
       int i;
       Map json;
       Frame currentFrame;
@@ -498,10 +502,7 @@ class Controller extends EventDispatcher
    * @return True, if the specified type is enabled; false, otherwise.
    *
    */
-  bool isGestureEnabled( int type )
-  {
-    return _isGesturesEnabled;
-  }
+  bool isGestureEnabled( int type ) => _isGesturesEnabled;
 
   /**
    * Reports whether this Controller is connected to the Leap Motion Controller.
@@ -518,8 +519,5 @@ class Controller extends EventDispatcher
    * @return True, if connected; false otherwise.
    *
    */
-  bool isConnected()
-  {
-    return _isConnected;
-  }
+  bool isConnected() => _isConnected;
 }

@@ -254,10 +254,7 @@ class Gesture
    * @return True; if equal, False otherwise.
    *
    */
-  operator ==( Gesture other )
-  {
-    return ( id == other.id ) ? true : false;
-  }
+  operator ==( Gesture other ) => ( id == other.id ) ? true : false;
   
   /**
    * Reports whether this Gesture instance represents a valid Gesture.
@@ -291,26 +288,17 @@ class Gesture
    * @return The invalid Gesture instance.
    *
    */
-  static Gesture invalid()
-  {
-    return new Gesture();
-  }
+  static Gesture invalid() => new Gesture();
 
   /**
    * Suppress compiler warning for operator overloads.
    *
    */
-  int get hashCode
-  {
-    return super.hashCode;
-  }
+   int get hashCode => super.hashCode;
 
   /**
    * A string containing a brief, human-readable description of this Gesture.
    *
    */
-  String toString()
-  {
-    return "[Gesture id:" + id.toString() + " duration:" + duration.toString() + " type:" + type.toString() + "]";
-  }
+  String toString() => "[Gesture id:" + id.toString() + " duration:" + duration.toString() + " type:" + type.toString() + "]";
 }

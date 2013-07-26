@@ -40,22 +40,14 @@ class Vector3
    * @param z The depth component.
    *
    */
-  Vector3( num x, num y, num z )
-  {
-    this.x = x;
-    this.y = y;
-    this.z = z;
-  }
+  Vector3( this.x, this.y, this.z );
 
   /**
    * A copy of this vector pointing in the opposite direction.
    * @return A Vector3 object with all components negated.
    *
    */
-  Vector3 opposite()
-  {
-    return new Vector3( -x, -y, -z );
-  }
+  Vector3 opposite() => new Vector3( -x, -y, -z );
 
   /**
    * Add vectors component-wise.
@@ -132,10 +124,7 @@ class Vector3
    * @return The cross product of this vector and the specified vector.
    *
    */
-  Vector3 cross( Vector3 other )
-  {
-    return new Vector3( ( y * other.z ) - ( z * other.y ), ( z * other.x ) - ( x * other.z ), ( x * other.y ) - ( y * other.x ) );
-  }
+  Vector3 cross( Vector3 other ) => new Vector3( ( y * other.z ) - ( z * other.y ), ( z * other.x ) - ( x * other.z ), ( x * other.y ) - ( y * other.x ) );
 
   /**
    * The distance between the point represented by this Vector
@@ -145,10 +134,7 @@ class Vector3
    * @return The distance from this point to the specified point.
    *
    */
-  num distanceTo( Vector3 other )
-  {
-    return Math.sqrt( ( x - other.x ) * ( x - other.x ) + ( y - other.y ) * ( y - other.y ) + ( z - other.z ) * ( z - other.z ) );
-  }
+  num distanceTo( Vector3 other ) => Math.sqrt( ( x - other.x ) * ( x - other.x ) + ( y - other.y ) * ( y - other.y ) + ( z - other.z ) * ( z - other.z ) );
 
   /**
    * The dot product of this vector with another vector.
@@ -159,20 +145,14 @@ class Vector3
    * @return The dot product of this vector and the specified vector.
    *
    */
-  num dot( Vector3 other )
-  {
-    return ( x * other.x ) + ( y * other.y ) + ( z * other.z );
-  }
+  num dot( Vector3 other ) => ( x * other.x ) + ( y * other.y ) + ( z * other.z );
 
   /**
    * Returns true if all of the vector's components are finite.
    * @return If any component is NaN or infinite, then this returns false.
    *
    */
-  bool isValid()
-  {
-    return ( x <= double.MAX_FINITE && x >= -double.MAX_FINITE ) && ( y <= double.MAX_FINITE && y >= -double.MAX_FINITE ) && ( z <= double.MAX_FINITE && z >= -double.MAX_FINITE );
-  }
+  bool isValid() => ( x <= double.MAX_FINITE && x >= -double.MAX_FINITE ) && ( y <= double.MAX_FINITE && y >= -double.MAX_FINITE ) && ( z <= double.MAX_FINITE && z >= -double.MAX_FINITE );
 
   /**
    * Returns an invalid Vector3 object.
@@ -185,10 +165,7 @@ class Vector3
    * @return The invalid Vector3 instance.
    *
    */
-  static Vector3 invalid()
-  {
-    return new Vector3( double.NAN, double.NAN, double.NAN );
-  }
+  static Vector3 invalid() => new Vector3( double.NAN, double.NAN, double.NAN );
 
   /**
    * The magnitude, or length, of this vector.
@@ -199,20 +176,14 @@ class Vector3
    * @return The length of this vector.
    *
    */
-  num magnitude()
-  {
-    return Math.sqrt( x * x + y * y + z * z );
-  }
+  num magnitude() => Math.sqrt( x * x + y * y + z * z );
 
   /**
    * The square of the magnitude, or length, of this vector.
    * @return The square of the length of this vector.
    *
    */
-  num magnitudeSquared()
-  {
-    return x * x + y * y + z * z;
-  }
+  num magnitudeSquared() => x * x + y * y + z * z;
 
   /**
    * A normalized copy of this vector.
@@ -281,117 +252,81 @@ class Vector3
    * @return
    *
    */
-  static Vector3 zero()
-  {
-    return new Vector3( 0.0, 0.0, 0.0 );
-  }
+  static Vector3 zero() => new Vector3( 0.0, 0.0, 0.0 );
 
   /**
    * The x-axis unit vector: (1, 0, 0)
    * @return
    *
    */
-  static Vector3 xAxis()
-  {
-    return new Vector3( 1.0, 0.0, 0.0 );
-  }
+  static Vector3 xAxis() => new Vector3( 1.0, 0.0, 0.0 );
 
   /**
    * The y-axis unit vector: (0, 1, 0)
    * @return
    *
    */
-  static Vector3 yAxis()
-  {
-    return new Vector3( 0.0, 1.0, 0.0 );
-  }
+  static Vector3 yAxis() => new Vector3( 0.0, 1.0, 0.0 );
 
   /**
    * The z-axis unit vector: (0, 0, 1)
    * @return
    *
    */
-  static Vector3 zAxis()
-  {
-    return new Vector3( 0.0, 0.0, 1.0 );
-  }
+  static Vector3 zAxis() => new Vector3( 0.0, 0.0, 1.0 );
 
   /**
    * The unit vector pointing left along the negative x-axis: (-1, 0, 0)
    * @return
    *
    */
-  static Vector3 left()
-  {
-    return new Vector3( -1.0, 0.0, 0.0 );
-  }
+  static Vector3 left() => new Vector3( -1.0, 0.0, 0.0 );
 
   /**
    * The unit vector pointing right along the positive x-axis: (1, 0, 0)
    * @return
    *
    */
-  static Vector3 right()
-  {
-    return xAxis();
-  }
+  static Vector3 right() => xAxis();
 
   /**
    * The unit vector pointing down along the negative y-axis: (0, -1, 0)
    * @return
    *
    */
-  static Vector3 down()
-  {
-    return new Vector3( 0.0, -1.0, 0.0 );
-  }
+  static Vector3 down() => new Vector3( 0.0, -1.0, 0.0 );
 
   /**
    * The unit vector pointing up along the positive x-axis: (0, 1, 0)
    * @return
    *
    */
-  static Vector3 up()
-  {
-    return yAxis();
-  }
+  static Vector3 up() => yAxis();
 
   /**
    * The unit vector pointing forward along the negative z-axis: (0, 0, -1)
    * @return
    *
    */
-  static Vector3 forward()
-  {
-    return new Vector3( 0.0, 0.0, -1.0 );
-  }
+  static Vector3 forward() => new Vector3( 0.0, 0.0, -1.0 );
 
   /**
    * The unit vector pointing backward along the positive z-axis: (0, 0, 1)
    * @return
    *
    */
-  static Vector3 backward()
-  {
-    return zAxis();
-  }
+  static Vector3 backward() => zAxis();
 
   /**
    * Suppress compiler warning for operator overloads.
    *
    */
-  int get hashCode
-  {
-    return super.hashCode;
-  }
+   int get hashCode => super.hashCode;
 
   /**
    * Returns a string containing this vector in a human readable format: (x, y, z).
    * @return
    *
    */
-  String toString()
-  {
-    return "[Vector3 x:" + x.toString() + " y:" + y.toString() + " z:" + z.toString() + "]";
-  }
+  String toString() => "[Vector3 x:" + x.toString() + " y:" + y.toString() + " z:" + z.toString() + "]";
 }

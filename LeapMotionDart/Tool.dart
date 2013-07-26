@@ -40,8 +40,5 @@ class Tool extends Pointable
    * @return The invalid Tool instance.
    *
    */
-  static Tool invalid()
-  {
-    return new Tool();
-  }
+  static Tool invalid() => new Tool();
 }

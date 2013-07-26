@@ -211,7 +211,6 @@ class Hand
       if( fingersVector[ i ].id == id )
       {
         return fingersVector[ i ];
-        break;
       }
     }
 
@@ -258,7 +257,6 @@ class Hand
       if( toolsVector[ i ].id == id )
       {
         return toolsVector[ i ];
-        break;
       }
     }
 
@@ -304,7 +302,6 @@ class Hand
       if( pointablesVector[ i ].id == id )
       {
         return pointablesVector[ i ];
-        break;
       }
     }
 
@@ -479,17 +476,11 @@ class Hand
    * @return The invalid Hand instance.
    *
    */
-  static Hand invalid()
-  {
-    return new Hand();
-  }
+  static Hand invalid() => new Hand();
 
   /**
    * Suppress compiler warning for operator overloads.
    *
    */
-  int get hashCode
-  {
-    return super.hashCode;
-  }
+   int get hashCode => super.hashCode;
 }

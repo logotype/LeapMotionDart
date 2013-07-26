@@ -52,8 +52,5 @@ class Finger extends Pointable
    * @return The invalid Finger instance.
    *
    */
-  static Finger invalid()
-  {
-    return new Finger();
-  }
+  static Finger invalid() => new Finger();
 }

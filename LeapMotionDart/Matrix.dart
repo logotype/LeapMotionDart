@@ -83,10 +83,7 @@ class Matrix
    * @return A new Vector representing the transformed original.
    *
    */
-  Vector3 transformPoint( Vector3 inVector )
-  {
-    return new Vector3( ( xBasis * inVector.x ).x, ( yBasis * inVector.y ).y, ( zBasis * inVector.z ).z + origin.z );
-  }
+  Vector3 transformPoint( Vector3 inVector ) => new Vector3( ( xBasis * inVector.x ).x, ( yBasis * inVector.y ).y, ( zBasis * inVector.z ).z + origin.z );
 
   /**
    * Transforms a vector with this matrix by transforming its rotation and scale only.
@@ -175,18 +172,12 @@ class Matrix
    * Suppress compiler warning for operator overloads.
    *
    */
-  int get hashCode
-  {
-    return super.hashCode;
-  }
+   int get hashCode => super.hashCode;
 
   /**
    * Write the matrix to a string in a human readable format.
    * @return
    *
    */
-  String toString()
-  {
-    return "[Matrix xBasis:" + xBasis.toString() + " yBasis:" + yBasis.toString() + " zBasis:" + zBasis.toString() + " origin:" + origin.toString() + "]";
-  }
+  String toString() => "[Matrix xBasis:" + xBasis.toString() + " yBasis:" + yBasis.toString() + " zBasis:" + zBasis.toString() + " origin:" + origin.toString() + "]";
 }

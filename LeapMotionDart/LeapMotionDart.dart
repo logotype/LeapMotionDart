@@ -3,7 +3,7 @@ library LeapMotionDart;
 import 'dart:async';
 import 'dart:math' as Math;
 import 'dart:json' as JSON;
-import 'dart:html';
+import 'dart:html' show WebSocket, Event, CloseEvent, MessageEvent;
 
 part 'Vector3.dart';
 part 'Matrix.dart';
@@ -24,8 +24,3 @@ part 'SwipeGesture.dart';
 part 'ScreenTapGesture.dart';
 part 'KeyTapGesture.dart';
 part 'LeapUtil.dart';
-
-main()
-{
-  
-}

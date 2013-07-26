@@ -106,10 +106,7 @@ class InteractionBox
    * @return True, if this InteractionBox object contains valid data.
    * 
    */
-  bool isValid()
-  {
-    return center.isValid();
-  }
+  bool isValid() => center.isValid();
   
   /**
    * Compare InteractionBox object equality/inequality.
@@ -151,27 +148,18 @@ class InteractionBox
    * @return The invalid InteractionBox instance.
    *
    */
-  static InteractionBox invalid()
-  {
-    return new InteractionBox();
-  }
+  static InteractionBox invalid() => new InteractionBox();
 
   /**
    * Suppress compiler warning for operator overloads.
    *
    */
-  int get hashCode
-  {
-    return super.hashCode;
-  }
+   int get hashCode => super.hashCode;
 
   /**
    * Writes a brief, human readable description of the InteractionBox object.
    * @return A description of the InteractionBox as a string.
    *
    */
-  toString()
-  {
-    return "[InteractionBox depth:" + depth.toString() + " height:" + height.toString() + " width:" + width.toString() + "]";
-  }
+  toString() => "[InteractionBox depth:" + depth.toString() + " height:" + height.toString() + " width:" + width.toString() + "]";
 }

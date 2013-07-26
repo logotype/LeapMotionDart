@@ -260,25 +260,16 @@ class Pointable
    * @return The invalid Pointable instance.
    *
    */
-  static Pointable invalid()
-  {
-    return new Pointable();
-  }
+  static Pointable invalid() => new Pointable();
 
   /**
    * Suppress compiler warning for operator overloads.
    *
    */
-  int get hashCode
-  {
-    return super.hashCode;
-  }
+   int get hashCode => super.hashCode;
 
   /**
    * A string containing a brief, human readable description of the Pointable object.
    */
-  String toString()
-  {
-    return "[Pointable direction: " + direction.toString() + " tipPosition: " + tipPosition.toString() + " tipVelocity: " + tipVelocity.toString() + "]";
-  }
+  String toString() => "[Pointable direction: " + direction.toString() + " tipPosition: " + tipPosition.toString() + " tipVelocity: " + tipVelocity.toString() + "]";
 }
