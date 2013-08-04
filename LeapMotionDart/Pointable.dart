@@ -197,7 +197,7 @@ class Pointable
    */
   bool isValid()
   {
-    if( ( direction && direction.isValid() ) && ( tipPosition && tipPosition.isValid() ) && ( tipVelocity && tipVelocity.isValid() ) )
+    if( ( direction != null && direction.isValid() ) && ( tipPosition != null && tipPosition.isValid() ) && ( tipVelocity != null && tipVelocity.isValid() ) )
       return true;
 
     return false;

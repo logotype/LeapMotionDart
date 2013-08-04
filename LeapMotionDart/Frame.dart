@@ -159,7 +159,6 @@ class Frame
       if( handsVector[ i ].id == id )
       {
         return handsVector[ i ];
-        break;
       }
     }
 
@@ -343,7 +342,6 @@ class Frame
       if( gesturesVector[ i ].id == id )
       {
         return gesturesVector[ i ];
-        break;
       }
     }
 

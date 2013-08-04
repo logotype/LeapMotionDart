@@ -125,7 +125,7 @@ class Matrix
     Vector3 z = transformDirection( other.zBasis );
     Vector3 o = origin;
 
-    if( origin && other.origin )
+    if( origin != null && other.origin != null )
       o = transformPoint( other.origin );
 
     return new Matrix( x: x, y: y, z: z, o: o );

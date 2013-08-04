@@ -157,7 +157,7 @@ class Hand
    */
   bool isValid()
   {
-    if( ( direction && direction.isValid() ) && ( palmNormal && palmNormal.isValid() ) && ( palmPosition && palmPosition.isValid() ) && ( palmVelocity && palmVelocity.isValid() ) && ( sphereCenter && sphereCenter.isValid() ) )
+    if( ( direction != null && direction.isValid() ) && ( palmNormal != null && palmNormal.isValid() ) && ( palmPosition != null && palmPosition.isValid() ) && ( palmVelocity != null && palmVelocity.isValid() ) && ( sphereCenter != null && sphereCenter.isValid() ) )
       return true;
 
     return false;
