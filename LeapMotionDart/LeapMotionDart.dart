@@ -3,6 +3,7 @@ library LeapMotionDart;
 import 'dart:async';
 import 'dart:math' as Math;
 import 'dart:json' as JSON;
+import 'dart:collection';
 import 'dart:html' show WebSocket, Event, CloseEvent, MessageEvent;
 
 part 'Vector3.dart';
@@ -10,6 +11,7 @@ part 'Matrix.dart';
 part 'Pointable.dart';
 part 'Tool.dart';
 part 'Finger.dart';
+part 'FingerList.dart';
 part 'InteractionBox.dart';
 part 'Hand.dart';
 part 'Gesture.dart';

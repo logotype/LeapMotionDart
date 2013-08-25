@@ -30,7 +30,7 @@ class Frame
    * The list of Finger objects detected in this frame, given in arbitrary order.<br/>
    * The list can be empty if no fingers are detected.
    */
-  List<Finger> fingersVector = new List<Finger>();
+  FingerList<Finger> fingerList = new FingerList<Finger>();
   
   /**
    * @private
@@ -199,13 +199,13 @@ class Frame
   Finger finger( int id )
   {
     int i = 0;
-    int length = fingersVector.length;
+    int length = fingerList.length;
 
     for( i; i < length; ++i )
     {
-      if( fingersVector[ i ].id == id )
+      if( fingerList[ i ].id == id )
       {
-        return fingersVector[ i ];
+        return fingerList[ i ];
         break;
       }
     }
@@ -221,7 +221,7 @@ class Frame
    * [return] The Finger vector containing all Finger objects detected in this frame.
    *
    */
-  List<Finger> get fingers => fingersVector;
+  List<Finger> get fingers => fingerList;
 
   /**
    * The Tool object with the specified ID in this frame.
