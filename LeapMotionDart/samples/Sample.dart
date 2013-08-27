@@ -32,7 +32,7 @@ class Sample
         Hand hand = frame.hands[0];
 
         // Check if the hand has any fingers
-        List<Finger> fingers = hand.fingersVector;
+        FingerList fingers = hand.fingerList;
         if ( fingers.length > 0 ) {
             // Calculate the hand's average finger tip position
             Vector3 avgPos = Vector3.zero();

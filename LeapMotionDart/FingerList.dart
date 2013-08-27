@@ -8,7 +8,7 @@ part of LeapMotionDart;
  * @author logotype
  *
  */
-class FingerList<Finger> extends ListBase<Finger>
+class FingerList extends ListBase<Finger>
 {
   List<Finger> list;
   

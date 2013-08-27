@@ -30,7 +30,7 @@ class Frame
    * The list of Finger objects detected in this frame, given in arbitrary order.<br/>
    * The list can be empty if no fingers are detected.
    */
-  FingerList<Finger> fingerList = new FingerList<Finger>();
+  FingerList fingerList = new FingerList();
   
   /**
    * @private
@@ -206,7 +206,6 @@ class Frame
       if( fingerList[ i ].id == id )
       {
         return fingerList[ i ];
-        break;
       }
     }
 
@@ -221,7 +220,7 @@ class Frame
    * [return] The Finger vector containing all Finger objects detected in this frame.
    *
    */
-  List<Finger> get fingers => fingerList;
+  FingerList get fingers => fingerList;
 
   /**
    * The Tool object with the specified ID in this frame.

@@ -33,7 +33,7 @@ class Hand
    * to this hand, given in arbitrary order.
    * @see [Finger]
    */
-  List<Finger> fingersVector = new List<Finger>();
+  FingerList fingerList = new FingerList();
 
   /**
    * The Frame associated with this Hand.
@@ -204,13 +204,13 @@ class Hand
   Finger finger( int id )
   {
     int i = 0;
-    int length = fingersVector.length;
+    int length = fingerList.length;
 
     for( i; i < length; ++i )
     {
-      if( fingersVector[ i ].id == id )
+      if( fingerList[ i ].id == id )
       {
-        return fingersVector[ i ];
+        return fingerList[ i ];
       }
     }
 
@@ -225,7 +225,7 @@ class Hand
    * [return] The Finger vector containing all Finger objects detected in this hand.
    *
    */
-  List<Finger> fingers() => fingersVector;
+  FingerList fingers() => fingerList;
 
   /**
    * The Tool object with the specified ID held by this hand.

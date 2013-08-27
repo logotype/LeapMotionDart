@@ -106,7 +106,7 @@ class Controller extends EventDispatcher
     {
       _isConnected = true;
       _listener.onConnect( this );
-      _heartBeatTimer = new Timer.periodic( new Duration( milliseconds: 100 ), ( timer )
+      _heartBeatTimer = new Timer.periodic( new Duration( milliseconds: 80 ), ( timer )
       {
         connection.sendString( "{ \"heartbeat\": true }" );
       });
@@ -236,7 +236,7 @@ class Controller extends EventDispatcher
             pointable.isFinger = true;
             currentFrame.fingers.add( pointable );
             if ( pointable.hand != null )
-              pointable.hand.fingersVector.add( pointable );
+              pointable.hand.fingerList.add( pointable );
           }
         }
       }
