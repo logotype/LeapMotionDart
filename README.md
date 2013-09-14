@@ -68,7 +68,7 @@ with strongly typed properties such as `Hands`, `Pointables`, `Direction`, `Gest
             if ( fingers.length > 0 ) {
                 // Calculate the hand's average finger tip position
                 Vector3 avgPos = Vector3.zero();
-                for ( int i = 0; i <fingers.length; i++ )
+                for ( int i = 0; i < fingers.length; i++ )
                     avgPos = avgPos + fingers[ i ].tipPosition;
     
                 avgPos = avgPos / fingers.length.toDouble();
@@ -156,7 +156,7 @@ Authors
 
 + http://twitter.com/logotype
 + http://github.com/logotype
-+ http://logotype.se
++ https://logotype.se
 
 Copyright and license
 ---------------------
