@@ -76,12 +76,6 @@ class Controller extends EventDispatcher
   bool _isGesturesEnabled = false;
 
   /**
-   * @private
-   * Required to suppress OS controls.
-   */
-  Timer _heartBeatTimer;
-
-  /**
    * Constructs a Controller object.
    * [host] IP or hostname of the computer running the Leap Motion software.
    * (currently only supported for socket connections).
@@ -93,11 +87,11 @@ class Controller extends EventDispatcher
 
     if( host != null )
     {
-      connection = new WebSocket( "ws://" + host + ":6437/v3.json" );
+      connection = new WebSocket( "ws://" + host + ":6437/v4.json" );
     }
     else
     {
-      connection = new WebSocket( "ws://localhost:6437/v3.json" );
+      connection = new WebSocket( "ws://localhost:6437/v4.json" );
     }
 
     _listener.onInit( this );
@@ -106,18 +100,12 @@ class Controller extends EventDispatcher
     {
       _isConnected = true;
       _listener.onConnect( this );
-      _heartBeatTimer = new Timer.periodic( new Duration( milliseconds: 80 ), ( timer )
-      {
-        connection.sendString( "{ \"heartbeat\": true }" );
-      });
     });
 
     connection.onClose.listen( ( CloseEvent event )
     {
       _isConnected = false;
       _listener.onDisconnect( this );
-      if( _heartBeatTimer != null )
-        _heartBeatTimer.cancel();
     });
 
     connection.onMessage.listen( ( MessageEvent event )
@@ -132,7 +120,7 @@ class Controller extends EventDispatcher
       int length;
       int type;
 
-      json = JSON.parse( event.data );
+      json = JSON.JSON.decode( event.data );
       
       if( json["id"] == null )
       {
@@ -325,7 +313,7 @@ class Controller extends EventDispatcher
             }
             if( gesture is CircleGesture && gesture.pointables.length > 0 )
             {
-              ( gesture as CircleGesture ).pointable = gesture.pointables[ 0 ];
+              gesture.pointable = gesture.pointables[ 0 ];
             }
           }
 

@@ -1,5 +1,4 @@
 import 'dart:html';
-import 'dart:math' as Math;
 import '../LeapMotionDart.dart';
 
 class InterfaceSample implements Listener
@@ -31,22 +30,22 @@ class InterfaceSample implements Listener
   
   void onDisconnect( Controller controller )
   {
-    query('#status').text = 'onDisconnect';
+    querySelector('#status').text = 'onDisconnect';
   }
   
   void onExit( Controller controller )
   {
-    query('#status').text = 'onExit';
+    querySelector('#status').text = 'onExit';
   }
   
   void onFocusGained( Controller controller )
   {
-    query('#status').text = 'onFocusGained';
+    querySelector('#status').text = 'onFocusGained';
   }
   
   void onFocusLost( Controller controller )
   {
-    query('#status').text = 'onFocusLost';
+    querySelector('#status').text = 'onFocusLost';
   }
   
   void onFrame( Controller controller, Frame frame )
@@ -55,7 +54,7 @@ class InterfaceSample implements Listener
     
     if ( watch.elapsedMilliseconds > 1000 )
     {
-      query('#status').text = "Data FPS: " + ( (( framesNumber / ( watch.elapsedMilliseconds / 1000 ) ) * 10.0 ) / 10.0 ).toString();
+      querySelector('#status').text = "Data FPS: " + ( (( framesNumber / ( watch.elapsedMilliseconds / 1000 ) ) * 10.0 ) / 10.0 ).toString();
       framesNumber = 0;
       watch.stop();
       watch.reset();
@@ -65,6 +64,6 @@ class InterfaceSample implements Listener
 }
 
 main() {
-  query('#status').text = 'Initializing...';
+  querySelector('#status').text = 'Initializing...';
   InterfaceSample interfaceSample = new InterfaceSample();
 }

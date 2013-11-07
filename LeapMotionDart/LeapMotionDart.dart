@@ -2,7 +2,7 @@ library LeapMotionDart;
 
 import 'dart:async';
 import 'dart:math' as Math;
-import 'dart:json' as JSON;
+import 'dart:convert' as JSON;
 import 'dart:collection';
 import 'dart:html' show WebSocket, Event, CloseEvent, MessageEvent;
 
