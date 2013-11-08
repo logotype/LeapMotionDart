@@ -100,6 +100,7 @@ class Controller extends EventDispatcher
     {
       _isConnected = true;
       _listener.onConnect( this );
+      connection.sendString( "{ \"background\": true }" );
     });
 
     connection.onClose.listen( ( CloseEvent event )
