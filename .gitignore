@@ -33,6 +33,7 @@ packages/
 *.js_
 *.js.deps
 *.js.map
+*.precompiled.js
 
 // Include when developing application packages
 pubspec.lock 
