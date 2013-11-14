@@ -1,0 +1,41 @@
+# Numerous always-ignore extensions
+*.diff
+*.err
+*.orig
+*.log
+
+# OS or Editor folders
+.DS_Store
+._*
+.cache
+.project
+.settings
+*.iml
+
+# Folders to ignore
+.hg
+.svn
+.CVS
+.idea
+node_modules
+
+# Project specific
+*.js.map
+*.map
+src/*.js
+src/*.js.map
+docs/
+
+// Don’t commit the following files and directories created by pub, Dart Editor, and dart2js
+packages/
+.project
+.buildlog
+*.js_
+*.js.deps
+*.js.map
+
+// Include when developing application packages
+pubspec.lock 
+
+// Avoid committing generated JavaScript files
+*.dart.js
