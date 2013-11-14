@@ -1,5 +1,5 @@
 import 'dart:math' as Math;
-import '../LeapMotionDart.dart';
+import '../leap_motion.dart';
 
 class Sample
 {
