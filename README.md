@@ -19,7 +19,7 @@ Import the library and create an instance of the Controller class. What you'll g
 with strongly typed properties such as `Hands`, `Pointables`, `Direction`, `Gestures` and more:
 
     import 'dart:math' as Math;
-    import '../LeapMotionDart.dart';
+    import '../leap_motion.dart';
     
     class InterfaceSample implements Listener
     {
