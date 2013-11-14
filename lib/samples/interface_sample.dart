@@ -1,5 +1,5 @@
 import 'dart:html';
-import '../leap_motion.dart';
+import 'package:leap_motion/leap_motion.dart';
 
 class InterfaceSample implements Listener
 {
