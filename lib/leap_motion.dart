@@ -26,3 +26,8 @@ part 'swipe_gesture.dart';
 part 'screen_tap_gesture.dart';
 part 'key_tap_gesture.dart';
 part 'leap_util.dart';
+
+main()
+{
+  
+}

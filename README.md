@@ -145,7 +145,7 @@ Optionally, you can simply call `controller.frame()` e.g. in your main loop, or 
 Documentation
 -----------
 
-[API documentation](http://logotype.se/leapmotion/dart/LeapMotionDart.html)
+[API documentation](http://logotype.github.io/LeapMotionDartDocs/LeapMotionDart.html)
 
 To generate documentation, simply run `dartdoc --out=docs/LeapMotionDart lib/leap_motion.dart` from the main directory.
 
