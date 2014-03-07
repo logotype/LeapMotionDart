@@ -1,10 +1,10 @@
 name: leap_motion
-version: 1.0.91
+version: 1.3.0+dev1
 author: Victor Norgren <victor@logotype.se>
 description: This is the Dart framework for working with Leap Motion. Leap Motion is a motion-control software and hardware company developing the world's most powerful and sensitive 3D motion-control and motion-sensing technology.
 homepage: https://github.com/logotype/LeapMotionDart
-documentation: http://logotype.se/leapmotion/dart/LeapMotionDart.html
 environment:
   sdk: '>=1.0.0'
+documentation: http://logotype.se/leapmotion/dart/LeapMotionDart.html
 dev_dependencies:
   browser: any
