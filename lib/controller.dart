@@ -87,11 +87,11 @@ class Controller extends EventDispatcher
 
     if( host != null )
     {
-      connection = new WebSocket( "ws://" + host + ":6437/v4.json" );
+      connection = new WebSocket( "ws://" + host + ":6437/v6.json" );
     }
     else
     {
-      connection = new WebSocket( "ws://localhost:6437/v4.json" );
+      connection = new WebSocket( "ws://localhost:6437/v6.json" );
     }
 
     _listener.onInit( this );
