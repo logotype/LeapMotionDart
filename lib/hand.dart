@@ -440,7 +440,7 @@ class Hand
    */
   num scaleFactor( Frame sinceFrame )
   {
-    if( sinceFrame && sinceFrame.hand( id ) && sinceFrame.hand( id ).scaleFactorNumber )
+    if( sinceFrame.hand( id ) != null && sinceFrame.hand( id ).scaleFactorNumber != null )
       return Math.exp( scaleFactorNumber - sinceFrame.hand( id ).scaleFactorNumber );
     else
       return 1.0;
@@ -458,7 +458,7 @@ class Hand
    */
   Vector3 translation( Frame sinceFrame )
   {
-    if( sinceFrame.hand( id ) && sinceFrame.hand( id ).translationVector )
+    if( sinceFrame.hand( id ) != null && sinceFrame.hand( id ).translationVector != null )
       return new Vector3( translationVector.x - sinceFrame.hand( id ).translationVector.x, translationVector.y - sinceFrame.hand( id ).translationVector.y, translationVector.z - sinceFrame.hand( id ).translationVector.z );
     else
       return new Vector3( 0.0, 0.0, 0.0 );

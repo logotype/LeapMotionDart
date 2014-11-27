@@ -414,7 +414,7 @@ class Frame
    */
   Vector3 rotationAxis( Frame sinceFrame )
   {
-    if( sinceFrame && sinceFrame.rotation )
+    if( sinceFrame.rotation != null )
     {
       Vector3 vector = new Vector3( rotation.zBasis.y - sinceFrame.rotation.yBasis.z, rotation.xBasis.z - sinceFrame.rotation.zBasis.x, rotation.yBasis.x - sinceFrame.rotation.xBasis.y );
       return vector.normalized();
@@ -477,7 +477,7 @@ class Frame
    */
   Matrix rotationMatrix( Frame sinceFrame )
   {
-    if( sinceFrame && sinceFrame.rotation )
+    if( sinceFrame.rotation != null )
     {
       return sinceFrame.rotation * new Matrix( x: new Vector3( this.rotation.xBasis.x, this.rotation.yBasis.x, this.rotation.zBasis.x ), y: new Vector3( this.rotation.xBasis.y, this.rotation.yBasis.y, this.rotation.zBasis.y ), z: new Vector3( this.rotation.xBasis.z, this.rotation.yBasis.z, this.rotation.zBasis.z ) );
     }
@@ -510,7 +510,7 @@ class Frame
    */
   num scaleFactor( Frame sinceFrame )
   {
-    if( sinceFrame && sinceFrame.scaleFactorNumber )
+    if( sinceFrame.scaleFactorNumber != null )
       return Math.exp( scaleFactorNumber - sinceFrame.scaleFactorNumber );
     else
       return 1.0;

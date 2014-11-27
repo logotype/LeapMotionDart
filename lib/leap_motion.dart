@@ -1,6 +1,5 @@
 library LeapMotionDart;
 
-import 'dart:async';
 import 'dart:math' as Math;
 import 'dart:convert' as JSON;
 import 'dart:collection';
