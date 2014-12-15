@@ -125,8 +125,7 @@ part of LeapMotionDart;
  * @see [Config]
  *
  */
-class Gesture
-{
+class Gesture {
   /**
    * An invalid state.
    */
@@ -240,8 +239,7 @@ class Gesture
    * subclasses, from a Frame object.
    *
    */
-  Gesture()
-  {
+  Gesture() {
   }
 
   /**
@@ -254,8 +252,8 @@ class Gesture
    * [return] True; if equal, False otherwise.
    *
    */
-  operator ==( Gesture other ) => ( id == other.id ) ? true : false;
-  
+  operator ==(Gesture other) => (id == other.id) ? true : false;
+
   /**
    * Reports whether this Gesture instance represents a valid Gesture.
    *
@@ -270,10 +268,8 @@ class Gesture
    * [return] True, if this is a valid Gesture instance; false, otherwise.
    *
    */
-  bool isValid()
-  {
-    if( durationSeconds == null )
-      return false;
+  bool isValid() {
+    if (durationSeconds == null) return false;
 
     return true;
   }
@@ -294,7 +290,7 @@ class Gesture
    * Suppress compiler warning for operator overloads.
    *
    */
-   int get hashCode => super.hashCode;
+  int get hashCode => super.hashCode;
 
   /**
    * A string containing a brief, human-readable description of this Gesture.

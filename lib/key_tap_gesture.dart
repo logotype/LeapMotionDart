@@ -59,8 +59,7 @@ part of LeapMotionDart;
  * @author logotype
  *
  */
-class KeyTapGesture extends Gesture
-{
+class KeyTapGesture extends Gesture {
   /**
    * The type value designating a key tap gesture.
    */
@@ -99,7 +98,6 @@ class KeyTapGesture extends Gesture
    * Get valid instances of the KeyTapGesture class from a Frame object.
    *
    */
-  KeyTapGesture()
-  {
+  KeyTapGesture() {
   }
 }

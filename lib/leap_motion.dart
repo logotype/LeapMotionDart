@@ -1,9 +1,10 @@
 library LeapMotionDart;
 
+import "dart:io";
+
 import 'dart:math' as Math;
 import 'dart:convert' as JSON;
 import 'dart:collection';
-import 'dart:html' show WebSocket, Event, CloseEvent, MessageEvent;
 
 part 'finger_list.dart';
 part 'vector3.dart';
@@ -25,8 +26,3 @@ part 'swipe_gesture.dart';
 part 'screen_tap_gesture.dart';
 part 'key_tap_gesture.dart';
 part 'leap_util.dart';
-
-main()
-{
-  
-}

@@ -14,27 +14,26 @@ part of LeapMotionDart;
  * @author logotype
  *
  */
-class Matrix
-{
+class Matrix {
   /**
    * The translation factors for all three axes.
    */
-  Vector3 origin = new Vector3( 0.0, 0.0, 0.0 );
+  Vector3 origin = new Vector3(0.0, 0.0, 0.0);
 
   /**
    * The rotation and scale factors for the x-axis.
    */
-  Vector3 xBasis = new Vector3( 0.0, 0.0, 0.0 );
+  Vector3 xBasis = new Vector3(0.0, 0.0, 0.0);
 
   /**
    * The rotation and scale factors for the y-axis.
    */
-  Vector3 yBasis = new Vector3( 0.0, 0.0, 0.0 );
+  Vector3 yBasis = new Vector3(0.0, 0.0, 0.0);
 
   /**
    * The rotation and scale factors for the z-axis.
    */
-  Vector3 zBasis = new Vector3( 0.0, 0.0, 0.0 );
+  Vector3 zBasis = new Vector3(0.0, 0.0, 0.0);
 
   /**
    * Constructs a transformation matrix from the specified basis vectors.
@@ -44,14 +43,12 @@ class Matrix
    * [_origin] A Vector specifying translation factors on all three axes.
    *
    */
-  Matrix( { Vector3 x, Vector3 y, Vector3 z, Vector3 o: null } )
-  {
+  Matrix({Vector3 x, Vector3 y, Vector3 z, Vector3 o: null}) {
     xBasis = x;
     yBasis = y;
     zBasis = z;
 
-    if( o != null )
-      origin = o;
+    if (o != null) origin = o;
   }
 
   /**
@@ -63,16 +60,15 @@ class Matrix
    * [angleRadians] The amount of rotation in radians.
    *
    */
-  void setRotation( Vector3 _axis, num angleRadians )
-  {
+  void setRotation(Vector3 _axis, num angleRadians) {
     Vector3 axis = _axis.normalized();
-    num s = Math.sin( angleRadians );
-    num c = Math.cos( angleRadians );
-    num C = ( 1 - c );
+    num s = Math.sin(angleRadians);
+    num c = Math.cos(angleRadians);
+    num C = (1 - c);
 
-    xBasis = new Vector3( axis.x * axis.x * C + c, axis.x * axis.y * C - axis.z * s, axis.x * axis.z * C + axis.y * s );
-    yBasis = new Vector3( axis.y * axis.x * C + axis.z * s, axis.y * axis.y * C + c, axis.y * axis.z * C - axis.x * s );
-    zBasis = new Vector3( axis.z * axis.x * C - axis.y * s, axis.z * axis.y * C + axis.x * s, axis.z * axis.z * C + c );
+    xBasis = new Vector3(axis.x * axis.x * C + c, axis.x * axis.y * C - axis.z * s, axis.x * axis.z * C + axis.y * s);
+    yBasis = new Vector3(axis.y * axis.x * C + axis.z * s, axis.y * axis.y * C + c, axis.y * axis.z * C - axis.x * s);
+    zBasis = new Vector3(axis.z * axis.x * C - axis.y * s, axis.z * axis.y * C + axis.x * s, axis.z * axis.z * C + c);
   }
 
   /**
@@ -83,7 +79,7 @@ class Matrix
    * [return] A new Vector representing the transformed original.
    *
    */
-  Vector3 transformPoint( Vector3 inVector ) => new Vector3( ( xBasis * inVector.x ).x, ( yBasis * inVector.y ).y, ( zBasis * inVector.z ).z + origin.z );
+  Vector3 transformPoint(Vector3 inVector) => new Vector3((xBasis * inVector.x).x, (yBasis * inVector.y).y, (zBasis * inVector.z).z + origin.z);
 
   /**
    * Transforms a vector with this matrix by transforming its rotation and scale only.
@@ -91,8 +87,7 @@ class Matrix
    * [return] A new Vector representing the transformed original.
    *
    */
-  Vector3 transformDirection( Vector3 inVector )
-  {
+  Vector3 transformDirection(Vector3 inVector) {
     Vector3 x = xBasis * inVector.x;
     Vector3 y = yBasis * inVector.y;
     Vector3 z = zBasis * inVector.z;
@@ -104,11 +99,9 @@ class Matrix
    * [return] The rigid inverse of the matrix.
    *
    */
-  Matrix rigidInverse()
-  {
-    Matrix rotInverse = new Matrix( x: new Vector3( xBasis.x, yBasis.x, zBasis.x ), y: new Vector3( xBasis.y, yBasis.y, zBasis.y ), z: new Vector3( xBasis.z, yBasis.z, zBasis.z ) );
-    if( origin != null )
-      rotInverse.origin = rotInverse.transformDirection( origin.opposite() );
+  Matrix rigidInverse() {
+    Matrix rotInverse = new Matrix(x: new Vector3(xBasis.x, yBasis.x, zBasis.x), y: new Vector3(xBasis.y, yBasis.y, zBasis.y), z: new Vector3(xBasis.z, yBasis.z, zBasis.z));
+    if (origin != null) rotInverse.origin = rotInverse.transformDirection(origin.opposite());
     return rotInverse;
   }
 
@@ -118,17 +111,15 @@ class Matrix
    * [return] A new Matrix representing the transformation equivalent to applying the other transformation followed by this transformation.
    *
    */
-  operator *( Matrix other)
-  {
-    Vector3 x = transformDirection( other.xBasis );
-    Vector3 y = transformDirection( other.yBasis );
-    Vector3 z = transformDirection( other.zBasis );
+  operator *(Matrix other) {
+    Vector3 x = transformDirection(other.xBasis);
+    Vector3 y = transformDirection(other.yBasis);
+    Vector3 z = transformDirection(other.zBasis);
     Vector3 o = origin;
 
-    if( origin != null && other.origin != null )
-      o = transformPoint( other.origin );
+    if (origin != null && other.origin != null) o = transformPoint(other.origin);
 
-    return new Matrix( x: x, y: y, z: z, o: o );
+    return new Matrix(x: x, y: y, z: z, o: o);
   }
 
   /**
@@ -137,19 +128,14 @@ class Matrix
    * [return] True; if equal, False otherwise.
    *
    */
-  operator ==( Matrix other)
-  {
-    if( xBasis != other.xBasis )
-      return false;
+  operator ==(Matrix other) {
+    if (xBasis != other.xBasis) return false;
 
-    if( yBasis != other.yBasis )
-      return false;
+    if (yBasis != other.yBasis) return false;
 
-    if( zBasis != other.zBasis )
-      return false;
+    if (zBasis != other.zBasis) return false;
 
-    if( origin != other.origin )
-      return false;
+    if (origin != other.origin) return false;
 
     return true;
   }
@@ -159,20 +145,19 @@ class Matrix
    * [return] The identity matrix.
    *
    */
-  static Matrix identity()
-  {
-    Vector3 xBasis = new Vector3( 1.0, 0.0, 0.0 );
-    Vector3 yBasis = new Vector3( 0.0, 1.0, 0.0 );
-    Vector3 zBasis = new Vector3( 0.0, 0.0, 1.0 );
+  static Matrix identity() {
+    Vector3 xBasis = new Vector3(1.0, 0.0, 0.0);
+    Vector3 yBasis = new Vector3(0.0, 1.0, 0.0);
+    Vector3 zBasis = new Vector3(0.0, 0.0, 1.0);
 
-    return new Matrix( x: xBasis, y: yBasis, z: zBasis );
+    return new Matrix(x: xBasis, y: yBasis, z: zBasis);
   }
 
   /**
    * Suppress compiler warning for operator overloads.
    *
    */
-   int get hashCode => super.hashCode;
+  int get hashCode => super.hashCode;
 
   /**
    * Write the matrix to a string in a human readable format.

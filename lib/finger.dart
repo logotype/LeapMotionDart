@@ -26,8 +26,7 @@ part of LeapMotionDart;
  * @author logotype
  *
  */
-class Finger extends Pointable
-{
+class Finger extends Pointable {
   /**
    * Constructs a Finger object.
    *
@@ -35,8 +34,7 @@ class Finger extends Pointable
    * Get valid Finger objects from a Frame or a Hand object.
    *
    */
-  Finger()
-  {
+  Finger() {
     isFinger = true;
     isTool = false;
   }

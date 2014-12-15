@@ -23,29 +23,28 @@ part of LeapMotionDart;
  * @author logotype
  *
  */
-class Pointable
-{
+class Pointable {
   /**
    * The Pointable object is too far from the plane to be considered hovering or touching.
    * 
    * Defines the values for reporting the state of a Pointable object in relation to an adaptive touch plane.  
    */
   static const int ZONE_NONE = 0;
-  
+
   /**
    * The Pointable object is close to, but not touching the plane. 
    * 
    * Defines the values for reporting the state of a Pointable object in relation to an adaptive touch plane.  
    */
   static const int ZONE_HOVERING = 1;
-  
+
   /**
    * The Pointable has penetrated the plane.  
    * 
    * Defines the values for reporting the state of a Pointable object in relation to an adaptive touch plane.  
    */
   static const int ZONE_TOUCHING = 2;
-  
+
   /**
    * The direction in which this finger or tool is pointing.<br/>
    * The direction is expressed as a unit vector pointing in the
@@ -111,20 +110,20 @@ class Pointable
    * The tip position in millimeters from the Leap Motion origin.
    */
   Vector3 tipPosition;
-  
+
   /**
    * The stabilized tip position of this Pointable.
    * Smoothing and stabilization is performed in order to make this value more suitable for interaction with 2D content.
    * A modified tip position of this Pointable object with some additional smoothing and stabilization applied. 
    */
   Vector3 stabilizedTipPosition;
-  
+
   /**
    * The duration of time this Pointable has been visible to the Leap Motion Controller.
    * The duration (in seconds) that this Pointable has been tracked.
    */
   num timeVisible;
-  
+
   /**
    * The rate of change of the tip position in millimeters/second.
    */
@@ -139,7 +138,7 @@ class Pointable
    * Whether or not the Pointable is believed to be a tool.
    */
   bool isTool;
-  
+
   /**
    * The current touch zone of this Pointable object.
    * 
@@ -183,9 +182,8 @@ class Pointable
    *  
    */
   num touchDistance = 0.0;
-  
-  Pointable()
-  {
+
+  Pointable() {
     direction = Vector3.invalid();
     tipPosition = Vector3.invalid();
     tipVelocity = Vector3.invalid();
@@ -195,10 +193,8 @@ class Pointable
    * Reports whether this is a valid Pointable object.
    * [return] True if <code>direction</code>, <code>tipPosition</code> and <code>tipVelocity</code> are true.
    */
-  bool isValid()
-  {
-    if( ( direction != null && direction.isValid() ) && ( tipPosition != null && tipPosition.isValid() ) && ( tipVelocity != null && tipVelocity.isValid() ) )
-      return true;
+  bool isValid() {
+    if ((direction != null && direction.isValid()) && (tipPosition != null && tipPosition.isValid()) && (tipVelocity != null && tipVelocity.isValid())) return true;
 
     return false;
   }
@@ -214,37 +210,26 @@ class Pointable
    * [return] True; if equal, False otherwise.
    *
    */
-  operator ==( Pointable other )
-  {
-    if( !isValid() || !other.isValid() )
-      return false;
+  operator ==(Pointable other) {
+    if (!isValid() || !other.isValid()) return false;
 
-    if( frame != other.frame )
-      return false;
+    if (frame != other.frame) return false;
 
-    if( hand != other.hand )
-      return false;
+    if (hand != other.hand) return false;
 
-    if( direction != other.direction )
-      return false;
+    if (direction != other.direction) return false;
 
-    if( length != other.length )
-      return false;
+    if (length != other.length) return false;
 
-    if( width != other.width )
-      return false;
+    if (width != other.width) return false;
 
-    if( id != other.id )
-      return false;
+    if (id != other.id) return false;
 
-    if( tipPosition != other.tipPosition )
-      return false;
+    if (tipPosition != other.tipPosition) return false;
 
-    if( tipVelocity != other.tipVelocity )
-      return false;
+    if (tipVelocity != other.tipVelocity) return false;
 
-    if( isFinger != other.isFinger || isTool != other.isTool )
-      return false;
+    if (isFinger != other.isFinger || isTool != other.isTool) return false;
 
     return true;
   }
@@ -266,7 +251,7 @@ class Pointable
    * Suppress compiler warning for operator overloads.
    *
    */
-   int get hashCode => super.hashCode;
+  int get hashCode => super.hashCode;
 
   /**
    * A string containing a brief, human readable description of the Pointable object.

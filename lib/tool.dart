@@ -21,10 +21,8 @@ part of LeapMotionDart;
  * @author logotype
  *
  */
-class Tool extends Pointable
-{
-  Tool()
-  {
+class Tool extends Pointable {
+  Tool() {
     isFinger = false;
     isTool = true;
   }

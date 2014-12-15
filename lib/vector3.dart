@@ -16,8 +16,7 @@ part of LeapMotionDart;
  * @author logotype
  *
  */
-class Vector3
-{
+class Vector3 {
   /**
    * The horizontal component.
    */
@@ -40,34 +39,34 @@ class Vector3
    * [z] The depth component.
    *
    */
-  Vector3( this.x, this.y, this.z );
+  Vector3(this.x, this.y, this.z);
 
   /**
    * A copy of this vector pointing in the opposite direction.
    * [return] A Vector3 object with all components negated.
    *
    */
-  Vector3 opposite() => new Vector3( -x, -y, -z );
+  Vector3 opposite() => new Vector3(-x, -y, -z);
 
   /**
    * Add vectors component-wise.
    */
-  operator +(Vector3 other) => new Vector3( x + other.x, y + other.y, z + other.z );
+  operator +(Vector3 other) => new Vector3(x + other.x, y + other.y, z + other.z);
 
   /**
    * A copy of this vector pointing in the opposite direction.
    */
-  operator -(Vector3 other) => new Vector3( x - other.x, y - other.y, z - other.z );
+  operator -(Vector3 other) => new Vector3(x - other.x, y - other.y, z - other.z);
 
   /**
    * Multiply vector by a scalar.
    */
-  operator *(num scalar) => new Vector3( x * scalar, y * scalar, z * scalar );
+  operator *(num scalar) => new Vector3(x * scalar, y * scalar, z * scalar);
 
   /**
    * Divide vector by a scalar.
    */
-  operator /(num scalar) => new Vector3( x / scalar, y / scalar, z / scalar );
+  operator /(num scalar) => new Vector3(x / scalar, y / scalar, z / scalar);
 
   /**
    * Compare Vector equality/inequality component-wise.
@@ -75,7 +74,7 @@ class Vector3
    * [return] True; if equal, False otherwise.
    *
    */
-  operator ==(Vector3 other) => ( x != other.x || y != other.y || z != other.z );
+  operator ==(Vector3 other) => (x != other.x || y != other.y || z != other.z);
 
   /**
    * The angle between this vector and the specified vector in radians.
@@ -91,13 +90,11 @@ class Vector3
    * [return] The angle between this vector and the specified vector in radians.
    *
    */
-  num angleTo( Vector3 other )
-  {
+  num angleTo(Vector3 other) {
     num denom = magnitudeSquared() * other.magnitudeSquared();
-    if( denom <= 0 )
-      return 0.0;
+    if (denom <= 0) return 0.0;
 
-    return Math.acos( dot( other ) / Math.sqrt( denom ) );
+    return Math.acos(dot(other) / Math.sqrt(denom));
   }
 
   /**
@@ -112,7 +109,7 @@ class Vector3
    * [return] The cross product of this vector and the specified vector.
    *
    */
-  Vector3 cross( Vector3 other ) => new Vector3( ( y * other.z ) - ( z * other.y ), ( z * other.x ) - ( x * other.z ), ( x * other.y ) - ( y * other.x ) );
+  Vector3 cross(Vector3 other) => new Vector3((y * other.z) - (z * other.y), (z * other.x) - (x * other.z), (x * other.y) - (y * other.x));
 
   /**
    * The distance between the point represented by this Vector
@@ -122,7 +119,7 @@ class Vector3
    * [return] The distance from this point to the specified point.
    *
    */
-  num distanceTo( Vector3 other ) => Math.sqrt( ( x - other.x ) * ( x - other.x ) + ( y - other.y ) * ( y - other.y ) + ( z - other.z ) * ( z - other.z ) );
+  num distanceTo(Vector3 other) => Math.sqrt((x - other.x) * (x - other.x) + (y - other.y) * (y - other.y) + (z - other.z) * (z - other.z));
 
   /**
    * The dot product of this vector with another vector.
@@ -133,14 +130,14 @@ class Vector3
    * [return] The dot product of this vector and the specified vector.
    *
    */
-  num dot( Vector3 other ) => ( x * other.x ) + ( y * other.y ) + ( z * other.z );
+  num dot(Vector3 other) => (x * other.x) + (y * other.y) + (z * other.z);
 
   /**
    * Returns true if all of the vector's components are finite.
    * [return] If any component is NaN or infinite, then this returns false.
    *
    */
-  bool isValid() => ( x <= double.MAX_FINITE && x >= -double.MAX_FINITE ) && ( y <= double.MAX_FINITE && y >= -double.MAX_FINITE ) && ( z <= double.MAX_FINITE && z >= -double.MAX_FINITE );
+  bool isValid() => (x <= double.MAX_FINITE && x >= -double.MAX_FINITE) && (y <= double.MAX_FINITE && y >= -double.MAX_FINITE) && (z <= double.MAX_FINITE && z >= -double.MAX_FINITE);
 
   /**
    * Returns an invalid Vector3 object.
@@ -153,7 +150,7 @@ class Vector3
    * [return] The invalid Vector3 instance.
    *
    */
-  static Vector3 invalid() => new Vector3( double.NAN, double.NAN, double.NAN );
+  static Vector3 invalid() => new Vector3(double.NAN, double.NAN, double.NAN);
 
   /**
    * The magnitude, or length, of this vector.
@@ -164,7 +161,7 @@ class Vector3
    * [return] The length of this vector.
    *
    */
-  num magnitude() => Math.sqrt( x * x + y * y + z * z );
+  num magnitude() => Math.sqrt(x * x + y * y + z * z);
 
   /**
    * The square of the magnitude, or length, of this vector.
@@ -180,14 +177,12 @@ class Vector3
    * [return] A Vector object with a length of one, pointing in the same direction as this Vector object.
    *
    */
-  Vector3 normalized()
-  {
+  Vector3 normalized() {
     num denom = magnitudeSquared();
-    if( denom <= 0 )
-      return new Vector3( 0.0, 0.0, 0.0 );
+    if (denom <= 0) return new Vector3(0.0, 0.0, 0.0);
 
-    denom = 1 / Math.sqrt( denom );
-    return new Vector3( x * denom, y * denom, z * denom );
+    denom = 1 / Math.sqrt(denom);
+    return new Vector3(x * denom, y * denom, z * denom);
   }
 
   /**
@@ -201,7 +196,7 @@ class Vector3
    * [return] The angle of this vector above or below the horizon (x-z plane).
    *
    */
-  num get pitch => Math.atan2( y, -z );
+  num get pitch => Math.atan2(y, -z);
 
   /**
    * The yaw angle in radians.
@@ -215,7 +210,7 @@ class Vector3
    * [return] The angle of this vector to the right or left of the negative z-axis.
    *
    */
-  num get yaw => Math.atan2( x, -z );
+  num get yaw => Math.atan2(x, -z);
 
   /**
    * The roll angle in radians.
@@ -233,32 +228,32 @@ class Vector3
    * [return] The angle of this vector to the right or left of the y-axis.
    *
    */
-  num get roll => Math.atan2( x, -y );
+  num get roll => Math.atan2(x, -y);
 
   /**
    * The zero vector: (0.0, 0.0, 0.0)
    */
-  static Vector3 zero() => new Vector3( 0.0, 0.0, 0.0 );
+  static Vector3 zero() => new Vector3(0.0, 0.0, 0.0);
 
   /**
    * The x-axis unit vector: (1, 0, 0)
    */
-  static Vector3 xAxis() => new Vector3( 1.0, 0.0, 0.0 );
+  static Vector3 xAxis() => new Vector3(1.0, 0.0, 0.0);
 
   /**
    * The y-axis unit vector: (0, 1, 0)
    */
-  static Vector3 yAxis() => new Vector3( 0.0, 1.0, 0.0 );
+  static Vector3 yAxis() => new Vector3(0.0, 1.0, 0.0);
 
   /**
    * The z-axis unit vector: (0, 0, 1)
    */
-  static Vector3 zAxis() => new Vector3( 0.0, 0.0, 1.0 );
+  static Vector3 zAxis() => new Vector3(0.0, 0.0, 1.0);
 
   /**
    * The unit vector pointing left along the negative x-axis: (-1, 0, 0)
    */
-  static Vector3 left() => new Vector3( -1.0, 0.0, 0.0 );
+  static Vector3 left() => new Vector3(-1.0, 0.0, 0.0);
 
   /**
    * The unit vector pointing right along the positive x-axis: (1, 0, 0)
@@ -268,7 +263,7 @@ class Vector3
   /**
    * The unit vector pointing down along the negative y-axis: (0, -1, 0)
    */
-  static Vector3 down() => new Vector3( 0.0, -1.0, 0.0 );
+  static Vector3 down() => new Vector3(0.0, -1.0, 0.0);
 
   /**
    * The unit vector pointing up along the positive x-axis: (0, 1, 0)
@@ -278,7 +273,7 @@ class Vector3
   /**
    * The unit vector pointing forward along the negative z-axis: (0, 0, -1)
    */
-  static Vector3 forward() => new Vector3( 0.0, 0.0, -1.0 );
+  static Vector3 forward() => new Vector3(0.0, 0.0, -1.0);
 
   /**
    * The unit vector pointing backward along the positive z-axis: (0, 0, 1)
@@ -288,7 +283,7 @@ class Vector3
   /**
    * Suppress compiler warning for operator overloads.
    */
-   int get hashCode => super.hashCode;
+  int get hashCode => super.hashCode;
 
   /**
    * Returns a string containing this vector in a human readable format: (x, y, z).

@@ -58,8 +58,7 @@ part of LeapMotionDart;
  * @author logotype
  *
  */
-class ScreenTapGesture extends Gesture
-{
+class ScreenTapGesture extends Gesture {
   /**
    * The type value designating a screen tap gesture.
    */
@@ -92,7 +91,6 @@ class ScreenTapGesture extends Gesture
    * Get valid instances of the ScreenTapGesture class from a Frame object.
    *
    */
-  ScreenTapGesture()
-  {
+  ScreenTapGesture() {
   }
 }
