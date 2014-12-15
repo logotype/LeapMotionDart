@@ -22,7 +22,7 @@ class VMWebSocket extends WS.WebSocket {
       _sock = sock;
       completer.complete();
     });
-    return completer;
+    return completer.future;
   }
 
   @override
