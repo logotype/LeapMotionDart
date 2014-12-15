@@ -1,4 +1,4 @@
-library LeapMotion.Browser;
+library LeapMotion.VM;
 
 import "dart:io";
 import "dart:async";
@@ -16,10 +16,13 @@ class VMWebSocket extends WS.WebSocket {
 
   @override
   Future connect(String url) {
-    return WebSocket.connect(url).then((sock) {
+    var completer = new Completer();
+    WebSocket.connect(url).then((sock) {
       sock.pingInterval = new Duration(milliseconds: 500);
       _sock = sock;
+      completer.complete();
     });
+    return completer;
   }
 
   @override
