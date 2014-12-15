@@ -82,17 +82,20 @@ class Controller extends EventDispatcher {
    */
   Controller(this.connection, {String host: null}) {
     _listener = new DefaultListener();
+    _listener.onInit(this);
 
     connection.connect("ws://" + (host != null ? host : "localhost") + ":6437/v6.json").then((_) {
       _isConnected = true;
       _listener.onConnect(this);
       connection.add("{ \"focused\": true }");
+      
       var sub;
       sub = connection.onDisconnect().listen((_) {
         _isConnected = false;
         _listener.onDisconnect(this);
         sub.cancel();
       });
+      
       connection.stream().listen((data) {
         int i;
         Map json;
@@ -321,8 +324,6 @@ class Controller extends EventDispatcher {
         _listener.onFrame(this, _latestFrame);
       });
     });
-
-    _listener.onInit(this);
   }
 
   /**
