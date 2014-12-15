@@ -4,6 +4,10 @@
 *.orig
 *.log
 
+build
+pubspec.lock
+packages
+
 # OS or Editor folders
 .DS_Store
 ._*
