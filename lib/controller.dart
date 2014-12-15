@@ -80,19 +80,21 @@ class Controller extends EventDispatcher {
    * (currently only supported for socket connections).
    *
    */
-  Controller({String host: null}) {
+  Controller(this.connection, {String host: null}) {
     _listener = new DefaultListener();
 
-    WebSocket.connect("ws://" + (host != null ? host : "localhost") + ":6437/v6.json").then((_sock) {
+    connection.connect("ws://" + (host != null ? host : "localhost") + ":6437/v6.json").then((_sock) {
       connection = _sock;
       _isConnected = true;
       _listener.onConnect(this);
       connection.add("{ \"focused\": true }");
-      connection.done.then((_) {
+      var sub;
+      sub = connection.onDisconnect().listen((_) {
         _isConnected = false;
         _listener.onDisconnect(this);
+        sub.cancel();
       });
-      connection.listen((data) {
+      connection.stream().listen((data) {
         int i;
         Map json;
         Frame currentFrame;

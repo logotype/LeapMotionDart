@@ -1,5 +1,5 @@
 import 'dart:html';
-import 'package:leap_motion/leap_motion.dart';
+import 'package:leap_motion/browser.dart';
 
 class InterfaceSample implements Listener {
   Controller controller;
@@ -7,7 +7,7 @@ class InterfaceSample implements Listener {
   int framesNumber = 0;
 
   InterfaceSample() {
-    controller = new Controller();
+    controller = new Controller(new BrowserWebSocket());
     controller.setListener(this);
   }
 
