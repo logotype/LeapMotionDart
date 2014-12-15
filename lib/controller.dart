@@ -83,8 +83,7 @@ class Controller extends EventDispatcher {
   Controller(this.connection, {String host: null}) {
     _listener = new DefaultListener();
 
-    connection.connect("ws://" + (host != null ? host : "localhost") + ":6437/v6.json").then((_sock) {
-      connection = _sock;
+    connection.connect("ws://" + (host != null ? host : "localhost") + ":6437/v6.json").then((_) {
       _isConnected = true;
       _listener.onConnect(this);
       connection.add("{ \"focused\": true }");
