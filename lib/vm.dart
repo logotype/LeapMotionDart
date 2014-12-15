@@ -24,7 +24,13 @@ class VMWebSocket extends WS.WebSocket {
 
   @override
   Stream<String> stream() {
-    return _sock.where((it) => it is String).asBroadcastStream();
+    var controller = new StreamController.broadcast();
+    _sock.listen((data) {
+      if (data is String) {
+        controller.add(data);
+      }
+    });
+    return controller.stream;
   }
 
   @override
