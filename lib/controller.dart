@@ -80,22 +80,20 @@ class Controller extends EventDispatcher {
    * (currently only supported for socket connections).
    *
    */
-  Controller(this.connection, {String host: null}) {
+  Controller(this.connection, {String host: "localhost", int port: 6437}) {
     _listener = new DefaultListener();
     _listener.onInit(this);
 
-    connection.connect("ws://" + (host != null ? host : "localhost") + ":6437/v6.json").then((_) {
+    connection.connect("ws://${host}:${port}/v6.json").then((_) {
       _isConnected = true;
       _listener.onConnect(this);
       connection.add("{ \"focused\": true }");
-      
-      var sub;
-      sub = connection.onDisconnect().listen((_) {
+
+      connection.onDisconnect().single.then((_) {
         _isConnected = false;
         _listener.onDisconnect(this);
-        sub.cancel();
       });
-      
+
       connection.stream().listen((data) {
         int i;
         Map json;
