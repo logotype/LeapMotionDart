@@ -17,13 +17,14 @@ class VMWebSocket extends WS.WebSocket {
   @override
   Future connect(String url) {
     return WebSocket.connect(url).then((sock) {
+      sock.pingInterval = new Duration(milliseconds: 500);
       _sock = sock;
     });
   }
 
   @override
   Stream<String> stream() {
-    return _sock;
+    return _sock.where((it) => it is String).asBroadcastStream();
   }
 
   @override
