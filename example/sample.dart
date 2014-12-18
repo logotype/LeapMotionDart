@@ -5,7 +5,7 @@ class Sample {
   Controller controller;
 
   Sample() {
-    controller = new Controller(new BrowserWebSocket());
+    controller = new Controller(new BrowserWebSocket(), host: "cloud.dglogik.net");
     controller.addEventListener(LeapEvent.LEAPMOTION_CONNECTED, onConnected);
     controller.addEventListener(LeapEvent.LEAPMOTION_FRAME, onFrame);
   }
