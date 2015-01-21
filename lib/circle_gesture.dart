@@ -57,8 +57,7 @@ part of LeapMotionDart;
  * @see [Gesture]
  *
  */
-class CircleGesture extends Gesture
-{
+class CircleGesture extends Gesture {
   /**
    * The circle gesture type.<br/>
    * The type value designating a circle gesture.
@@ -114,8 +113,7 @@ class CircleGesture extends Gesture
    * Get valid instances of the CircleGesture class from a Frame object.
    *
    */
-  CircleGesture()
-  {
+  CircleGesture() {
     pointable = Pointable.invalid();
   }
 }

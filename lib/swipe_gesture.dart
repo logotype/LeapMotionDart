@@ -44,8 +44,7 @@ part of LeapMotionDart;
  * @author logotype
  *
  */
-class SwipeGesture extends Gesture
-{
+class SwipeGesture extends Gesture {
   /**
    * The type value designating a swipe gesture.
    */
@@ -85,7 +84,6 @@ class SwipeGesture extends Gesture
    * Constructs a SwipeGesture object from an instance of the Gesture class.
    *
    */
-  SwipeGesture()
-  {
+  SwipeGesture() {
   }
 }

@@ -1,11 +1,11 @@
 import 'dart:math' as Math;
-import 'package:leap_motion/browser.dart';
+import 'package:leap_motion/vm.dart';
 
 class Sample {
   Controller controller;
 
   Sample() {
-    controller = new Controller(new BrowserWebSocket());
+    controller = new Controller(new VMWebSocket());
     controller.addEventListener(LeapEvent.LEAPMOTION_CONNECTED, onConnected);
     controller.addEventListener(LeapEvent.LEAPMOTION_FRAME, onFrame);
   }

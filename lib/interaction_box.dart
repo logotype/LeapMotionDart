@@ -15,40 +15,38 @@ part of LeapMotionDart;
  * @author logotype
  * 
  */
-class InteractionBox
-{
+class InteractionBox {
   /**
    * The center of the InteractionBox in device coordinates (millimeters).
    * This point is equidistant from all sides of the box. 
    */
   Vector3 center;
-  
+
   /**
    * The depth of the InteractionBox in millimeters, measured along the z-axis. 
    * 
    */
   num depth;
-  
+
   /**
    * The height of the InteractionBox in millimeters, measured along the y-axis. 
    * 
    */
   num height;
-  
+
   /**
    * The width of the InteractionBox in millimeters, measured along the x-axis. 
    * 
    */
   num width;
-  
+
   /**
    * Constructs a InteractionBox object. 
    * 
    */
-  InteractionBox()
-  {
+  InteractionBox() {
   }
-  
+
   /**
    * Converts a position defined by normalized InteractionBox coordinates
    * into device coordinates in millimeters.
@@ -59,17 +57,16 @@ class InteractionBox
    * [return] The corresponding denormalized position in device coordinates.
    * 
    */
-  Vector3 denormalizePoint( Vector3 normalizedPosition )
-  {
+  Vector3 denormalizePoint(Vector3 normalizedPosition) {
     Vector3 vec = Vector3.invalid();
 
-    vec.x = ( normalizedPosition.x - 0.5 ) * width + center.x;
-    vec.y = ( normalizedPosition.y - 0.5 ) * height + center.y;
-    vec.z = ( normalizedPosition.z - 0.5 ) * depth + center.z;
+    vec.x = (normalizedPosition.x - 0.5) * width + center.x;
+    vec.y = (normalizedPosition.y - 0.5) * height + center.y;
+    vec.z = (normalizedPosition.z - 0.5) * depth + center.z;
 
     return vec;
   }
-  
+
   /**
    * Normalizes the coordinates of a point using the interaction box.
    * 
@@ -83,31 +80,29 @@ class InteractionBox
    * [return] The normalized position.
    * 
    */
-  Vector3 normalizePoint( { Vector3 position, bool clamp: true } )
-  {
+  Vector3 normalizePoint({Vector3 position, bool clamp: true}) {
     Vector3 vec = Vector3.invalid();
 
-    vec.x = ( ( position.x - center.x ) / width ) + 0.5;
-    vec.y = ( ( position.y - center.y ) / height ) + 0.5;
-    vec.z = ( ( position.z - center.z ) / depth ) + 0.5;
+    vec.x = ((position.x - center.x) / width) + 0.5;
+    vec.y = ((position.y - center.y) / height) + 0.5;
+    vec.z = ((position.z - center.z) / depth) + 0.5;
 
-    if( clamp )
-    {
-      vec.x = Math.min( Math.max( vec.x, 0 ), 1 );
-      vec.y = Math.min( Math.max( vec.y, 0 ), 1 );
-      vec.z = Math.min( Math.max( vec.z, 0 ), 1 );
+    if (clamp) {
+      vec.x = Math.min(Math.max(vec.x, 0), 1);
+      vec.y = Math.min(Math.max(vec.y, 0), 1);
+      vec.z = Math.min(Math.max(vec.z, 0), 1);
     }
-    
+
     return vec;
   }
-  
+
   /**
    * Reports whether this is a valid InteractionBox object. 
    * [return] True, if this InteractionBox object contains valid data.
    * 
    */
   bool isValid() => center.isValid();
-  
+
   /**
    * Compare InteractionBox object equality/inequality.
    * 
@@ -115,26 +110,20 @@ class InteractionBox
    * objects represent the exact same InteractionBox and both InteractionBoxes are valid.
    *  
    */
-  operator ==(InteractionBox other)
-  {
-    if( !this.isValid() || !other.isValid() )
-      return false;
+  operator ==(InteractionBox other) {
+    if (!this.isValid() || !other.isValid()) return false;
 
-    if( center != other.center )
-      return false;
-    
-    if( depth != other.depth )
-      return false;
-    
-    if( height != other.height )
-      return false;
-    
-    if( width != other.width )
-      return false;
-    
+    if (center != other.center) return false;
+
+    if (depth != other.depth) return false;
+
+    if (height != other.height) return false;
+
+    if (width != other.width) return false;
+
     return true;
   }
-  
+
   /**
    * Returns an invalid InteractionBox object.
    *
@@ -151,7 +140,7 @@ class InteractionBox
    * Suppress compiler warning for operator overloads.
    *
    */
-   int get hashCode => super.hashCode;
+  int get hashCode => super.hashCode;
 
   /**
    * Writes a brief, human readable description of the InteractionBox object.

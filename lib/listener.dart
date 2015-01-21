@@ -18,18 +18,17 @@ part of LeapMotionDart;
  * @author logotype
  *
  */
-abstract class Listener
-{
-    /**
+abstract class Listener {
+  /**
      * Called when the Controller object connects to the Leap software,
      * or when this Listener object is added to a Controller that is already connected.
      *
      * [controller] The Controller object invoking this callback function.
      *
      */
-    void onConnect( Controller controller );
+  void onConnect(Controller controller);
 
-    /**
+  /**
      * Called when the Controller object disconnects from the Leap software.
      *
      * The controller can disconnect when the Leap device is unplugged,
@@ -49,9 +48,9 @@ abstract class Listener
      * [controller] The Controller object invoking this callback function.
      *
      */
-    void onDisconnect( Controller controller );
+  void onDisconnect(Controller controller);
 
-    /**
+  /**
      * Called when this Listener object is removed from the Controller or
      * the Controller instance is destroyed.
      *
@@ -63,9 +62,9 @@ abstract class Listener
      * [controller] The Controller object invoking this callback function.
      *
      */
-    void onExit( Controller controller );
+  void onExit(Controller controller);
 
-    /**
+  /**
      * Called when a new frame of hand and finger tracking data is available.
      *
      * Access the new frame data using the <code>controller.frame()</code> function.
@@ -88,9 +87,9 @@ abstract class Listener
      * [frame] The most recent frame object.
      *
      */
-    void onFrame( Controller controller, Frame frame );
+  void onFrame(Controller controller, Frame frame);
 
-    /**
+  /**
      * Called once, when this Listener object is newly added to a Controller.
      *
      * <listing>
@@ -101,5 +100,5 @@ abstract class Listener
      * [controller] The Controller object invoking this callback function.
      *
      */
-    void onInit( Controller controller );
+  void onInit(Controller controller);
 }

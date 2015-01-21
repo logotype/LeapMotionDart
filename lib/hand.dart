@@ -17,8 +17,7 @@ part of LeapMotionDart;
  * @author logotype
  *
  */
-class Hand
-{
+class Hand {
   /**
    * The direction from the palm position toward the fingers.
    *
@@ -70,13 +69,13 @@ class Hand
    * A modified palm position of this Hand object with some additional smoothing and stabilization applied. 
    */
   Vector3 stabilizedPalmPosition;
-  
+
   /**
    * The duration of time this Hand has been visible to the Leap Motion Controller.
    * The duration (in seconds) that this Hand has been tracked. 
    */
   num timeVisible;
-  
+
   /**
    * The rate of change of the palm position in millimeters/second.
    */
@@ -146,8 +145,7 @@ class Hand
    * Get valid Hand objects from a Frame object.
    *
    */
-  Hand()
-  {
+  Hand() {
   }
 
   /**
@@ -155,10 +153,8 @@ class Hand
    * [return] True, if this Hand object contains valid tracking data.
    *
    */
-  bool isValid()
-  {
-    if( ( direction != null && direction.isValid() ) && ( palmNormal != null && palmNormal.isValid() ) && ( palmPosition != null && palmPosition.isValid() ) && ( palmVelocity != null && palmVelocity.isValid() ) && ( sphereCenter != null && sphereCenter.isValid() ) )
-      return true;
+  bool isValid() {
+    if ((direction != null && direction.isValid()) && (palmNormal != null && palmNormal.isValid()) && (palmPosition != null && palmPosition.isValid()) && (palmVelocity != null && palmVelocity.isValid()) && (sphereCenter != null && sphereCenter.isValid())) return true;
 
     return false;
   }
@@ -174,10 +170,8 @@ class Hand
    * [returns] True; if equal. False otherwise.
    *
    */
-  operator ==( Hand other )
-  {
-    if( id == other.id && frame == other.frame && isValid() && other.isValid() )
-      return true;
+  operator ==(Hand other) {
+    if (id == other.id && frame == other.frame && isValid() && other.isValid()) return true;
 
     return false;
   }
@@ -201,16 +195,13 @@ class Hand
    * @see [Finger]
    *
    */
-  Finger finger( int id )
-  {
+  Finger finger(int id) {
     int i = 0;
     int length = fingerList.length;
 
-    for( i; i < length; ++i )
-    {
-      if( fingerList[ i ].id == id )
-      {
-        return fingerList[ i ];
+    for (i; i < length; ++i) {
+      if (fingerList[i].id == id) {
+        return fingerList[i];
       }
     }
 
@@ -247,16 +238,13 @@ class Hand
    * @see [Tool]
    *
    */
-  Tool tool( int id )
-  {
+  Tool tool(int id) {
     int i = 0;
     int length = toolsVector.length;
 
-    for( i; i < length; ++i )
-    {
-      if( toolsVector[ i ].id == id )
-      {
-        return toolsVector[ i ];
+    for (i; i < length; ++i) {
+      if (toolsVector[i].id == id) {
+        return toolsVector[i];
       }
     }
 
@@ -290,16 +278,13 @@ class Hand
    * @see [Pointable]
    *
    */
-  Pointable pointable( int id )
-  {
+  Pointable pointable(int id) {
     int i = 0;
     int length = pointablesVector.length;
 
-    for( i; i < length; ++i )
-    {
-      if( pointablesVector[ i ].id == id )
-      {
-        return pointablesVector[ i ];
+    for (i; i < length; ++i) {
+      if (pointablesVector[i].id == id) {
+        return pointablesVector[i];
       }
     }
 
@@ -335,15 +320,11 @@ class Hand
    * @see [Vector3]
    *
    */
-  Vector3 rotationAxis( Frame sinceFrame )
-  {
-    if( sinceFrame.hand( id ) != null )
-    {
-      return new Vector3( rotation.zBasis.y - sinceFrame.hand( id ).rotation.yBasis.z, rotation.xBasis.z - sinceFrame.hand( id ).rotation.zBasis.x, rotation.yBasis.x - sinceFrame.hand( id ).rotation.xBasis.y ).normalized();
-    }
-    else
-    {
-      return new Vector3( 0.0, 0.0, 0.0 );
+  Vector3 rotationAxis(Frame sinceFrame) {
+    if (sinceFrame.hand(id) != null) {
+      return new Vector3(rotation.zBasis.y - sinceFrame.hand(id).rotation.yBasis.z, rotation.xBasis.z - sinceFrame.hand(id).rotation.zBasis.x, rotation.yBasis.x - sinceFrame.hand(id).rotation.xBasis.y).normalized();
+    } else {
+      return new Vector3(0.0, 0.0, 0.0);
     }
   }
 
@@ -367,21 +348,18 @@ class Hand
    * change between the current frame and that specified in the sinceFrame parameter.
    *
    */
-  num rotationAngle( { Frame sinceFrame, Vector3 axis: null } )
-  {
-    if( !isValid() || !sinceFrame.hand( id ).isValid() )
-      return 0.0;
+  num rotationAngle({Frame sinceFrame, Vector3 axis: null}) {
+    if (!isValid() || !sinceFrame.hand(id).isValid()) return 0.0;
 
     num returnValue = 0.0;
-    Matrix rotationSinceFrameMatrix = rotationMatrix( sinceFrame );
-    num cs = ( rotationSinceFrameMatrix.xBasis.x + rotationSinceFrameMatrix.yBasis.y + rotationSinceFrameMatrix.zBasis.z - 1 ) * 0.5;
-    num angle = Math.acos( cs );
+    Matrix rotationSinceFrameMatrix = rotationMatrix(sinceFrame);
+    num cs = (rotationSinceFrameMatrix.xBasis.x + rotationSinceFrameMatrix.yBasis.y + rotationSinceFrameMatrix.zBasis.z - 1) * 0.5;
+    num angle = Math.acos(cs);
     returnValue = angle.isNaN ? 0.0 : angle;
 
-    if( axis != null )
-    {
-      Vector3 rotAxis = rotationAxis( sinceFrame.hand( id ).frame );
-      returnValue *= rotAxis.dot( axis.normalized() );
+    if (axis != null) {
+      Vector3 rotAxis = rotationAxis(sinceFrame.hand(id).frame);
+      returnValue *= rotAxis.dot(axis.normalized());
     }
 
     return returnValue;
@@ -404,14 +382,10 @@ class Hand
    * @see [Frame]
    *
    */
-  Matrix rotationMatrix( Frame sinceFrame )
-  {
-    if( sinceFrame.hand( id ).isValid() )
-    {
-      return sinceFrame.hand( id ).rotation * new Matrix( x: new Vector3( this.rotation.xBasis.x, this.rotation.yBasis.x, this.rotation.zBasis.x ), y: new Vector3( this.rotation.xBasis.y, this.rotation.yBasis.y, this.rotation.zBasis.y ), z: new Vector3( this.rotation.xBasis.z, this.rotation.yBasis.z, this.rotation.zBasis.z ) );
-    }
-    else
-    {
+  Matrix rotationMatrix(Frame sinceFrame) {
+    if (sinceFrame.hand(id).isValid()) {
+      return sinceFrame.hand(id).rotation * new Matrix(x: new Vector3(this.rotation.xBasis.x, this.rotation.yBasis.x, this.rotation.zBasis.x), y: new Vector3(this.rotation.xBasis.y, this.rotation.yBasis.y, this.rotation.zBasis.y), z: new Vector3(this.rotation.xBasis.z, this.rotation.yBasis.z, this.rotation.zBasis.z));
+    } else {
       return Matrix.identity();
     }
   }
@@ -438,12 +412,8 @@ class Hand
    * in the sinceFrame parameter.
    *
    */
-  num scaleFactor( Frame sinceFrame )
-  {
-    if( sinceFrame.hand( id ) != null && sinceFrame.hand( id ).scaleFactorNumber != null )
-      return Math.exp( scaleFactorNumber - sinceFrame.hand( id ).scaleFactorNumber );
-    else
-      return 1.0;
+  num scaleFactor(Frame sinceFrame) {
+    if (sinceFrame.hand(id) != null && sinceFrame.hand(id).scaleFactorNumber != null) return Math.exp(scaleFactorNumber - sinceFrame.hand(id).scaleFactorNumber); else return 1.0;
   }
 
   /**
@@ -456,12 +426,8 @@ class Hand
    * @see [Vector3]
    *
    */
-  Vector3 translation( Frame sinceFrame )
-  {
-    if( sinceFrame.hand( id ) != null && sinceFrame.hand( id ).translationVector != null )
-      return new Vector3( translationVector.x - sinceFrame.hand( id ).translationVector.x, translationVector.y - sinceFrame.hand( id ).translationVector.y, translationVector.z - sinceFrame.hand( id ).translationVector.z );
-    else
-      return new Vector3( 0.0, 0.0, 0.0 );
+  Vector3 translation(Frame sinceFrame) {
+    if (sinceFrame.hand(id) != null && sinceFrame.hand(id).translationVector != null) return new Vector3(translationVector.x - sinceFrame.hand(id).translationVector.x, translationVector.y - sinceFrame.hand(id).translationVector.y, translationVector.z - sinceFrame.hand(id).translationVector.z); else return new Vector3(0.0, 0.0, 0.0);
   }
 
   /**
@@ -480,5 +446,5 @@ class Hand
    * Suppress compiler warning for operator overloads.
    *
    */
-   int get hashCode => super.hashCode;
+  int get hashCode => super.hashCode;
 }

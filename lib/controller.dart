@@ -39,8 +39,7 @@ part of LeapMotionDart;
  * @author logotype
  *
  */
-class Controller extends EventDispatcher
-{
+class Controller extends EventDispatcher {
   /**
    * @private
    * The Listener subclass instance.
@@ -81,290 +80,247 @@ class Controller extends EventDispatcher
    * (currently only supported for socket connections).
    *
    */
-  Controller( { String host: null } )
-  {
+  Controller(this.connection, {String host: "localhost", int port: 6437}) {
     _listener = new DefaultListener();
+    _listener.onInit(this);
 
-    if( host != null )
-    {
-      connection = new WebSocket( "ws://" + host + ":6437/v6.json" );
-    }
-    else
-    {
-      connection = new WebSocket( "ws://localhost:6437/v6.json" );
-    }
-
-    _listener.onInit( this );
-    
-    connection.onOpen.listen( ( Event event )
-    {
+    connection.connect("ws://${host}:${port}/v6.json").then((_) {
       _isConnected = true;
-      _listener.onConnect( this );
-      connection.sendString( "{ \"focused\": true }" );
-    });
+      _listener.onConnect(this);
+      connection.add("{ \"focused\": true }");
 
-    connection.onClose.listen( ( CloseEvent event )
-    {
-      _isConnected = false;
-      _listener.onDisconnect( this );
-    });
+      connection.onDisconnect().single.then((_) {
+        _isConnected = false;
+        _listener.onDisconnect(this);
+      });
 
-    connection.onMessage.listen( ( MessageEvent event )
-    {
-      int i;
-      Map json;
-      Frame currentFrame;
-      Hand hand;
-      Pointable pointable;
-      Gesture gesture;
-      bool isTool;
-      int length;
-      int type;
+      connection.stream().listen((data) {
+        int i;
+        Map json;
+        Frame currentFrame;
+        Hand hand;
+        Pointable pointable;
+        Gesture gesture;
+        bool isTool;
+        int length;
+        int type;
 
-      json = JSON.JSON.decode( event.data );
-      
-      if( json["id"] == null )
-      {
-        return;
-      }
+        json = JSON.JSON.decode(data);
 
-      currentFrame = new Frame();
-      currentFrame.controller = this;
-
-      // Hands
-      if ( json["hands"] != null )
-      {
-        i = 0;
-        length = json["hands"].length;
-        for ( i = 0; i < length; i++ )
-        {
-          hand = new Hand();
-          hand.frame = currentFrame;
-          hand.direction = new Vector3( json["hands"][ i ]["direction"][ 0 ], json["hands"][ i ]["direction"][ 1 ], json["hands"][ i ]["direction"][ 2 ] );
-          hand.id = json["hands"][ i ]["id"];
-          hand.palmNormal = new Vector3( json["hands"][ i ]["palmNormal"][ 0 ], json["hands"][ i ]["palmNormal"][ 1 ], json["hands"][ i ]["palmNormal"][ 2 ] );
-          hand.palmPosition = new Vector3( json["hands"][ i ]["palmPosition"][ 0 ], json["hands"][ i ]["palmPosition"][ 1 ], json["hands"][ i ]["palmPosition"][ 2 ] );
-          hand.stabilizedPalmPosition = new Vector3( json["hands"][ i ]["stabilizedPalmPosition"][ 0 ], json["hands"][ i ]["stabilizedPalmPosition"][ 1 ], json["hands"][ i ]["stabilizedPalmPosition"][ 2 ] );
-          hand.palmVelocity = new Vector3( json["hands"][ i ]["palmPosition"][ 0 ], json["hands"][ i ]["palmPosition"][ 1 ], json["hands"][ i ]["palmPosition"][ 2 ] );
-          hand.rotation = new Matrix( x: new Vector3( json["hands"][ i ]["r"][ 0 ][ 0 ], json["hands"][ i ]["r"][ 0 ][ 1 ], json["hands"][ i ]["r"][ 0 ][ 2 ] ), y: new Vector3( json["hands"][ i ]["r"][ 1 ][ 0 ], json["hands"][ i ]["r"][ 1 ][ 1 ], json["hands"][ i ]["r"][ 1 ][ 2 ] ), z: new Vector3( json["hands"][ i ]["r"][ 2 ][ 0 ], json["hands"][ i ]["r"][ 2 ][ 1 ], json["hands"][ i ]["r"][ 2 ][ 2 ] ) );
-          hand.scaleFactorNumber = json["hands"][ i ]["s"];
-          hand.sphereCenter = new Vector3( json["hands"][ i ]["sphereCenter"][ 0 ], json["hands"][ i ]["sphereCenter"][ 1 ], json["hands"][ i ]["sphereCenter"][ 2 ] );
-          hand.sphereRadius = json["hands"][ i ]["sphereRadius"];
-          hand.timeVisible = json["hands"][ i ]["timeVisible"];
-          hand.translationVector = new Vector3( json["hands"][ i ]["t"][ 0 ], json["hands"][ i ]["t"][ 1 ], json["hands"][ i ]["t"][ 2 ] );
-          currentFrame.hands.add( hand );
+        if (json["id"] == null) {
+          return;
         }
-      }
 
-      currentFrame.id = json["id"];
-      currentFrame.currentFramesPerSecond = json["currentFramesPerSecond"];
+        currentFrame = new Frame();
+        currentFrame.controller = this;
 
-      // InteractionBox
-      if ( json["interactionBox"] != null )
-      {
-        currentFrame.interactionBox = new InteractionBox();
-        currentFrame.interactionBox.center = new Vector3( json["interactionBox"]["center"][ 0 ], json["interactionBox"]["center"][ 1 ], json["interactionBox"]["center"][ 2 ] );
-        currentFrame.interactionBox.width = json["interactionBox"]["size"][ 0 ];
-        currentFrame.interactionBox.height = json["interactionBox"]["size"][ 1 ];
-        currentFrame.interactionBox.depth = json["interactionBox"]["size"][ 2 ];
-      }
-
-      // Pointables
-      if ( json["pointables"] != null )
-      {
-        i = 0;
-        length = json["pointables"].length;
-        for ( i = 0; i < length; i++ )
-        {
-          isTool = json["pointables"][ i ]["tool"];
-          if ( isTool )
-            pointable = new Tool();
-          else
-            pointable = new Finger();
-
-          pointable.frame = currentFrame;
-          pointable.id = json["pointables"][ i ]["id"];
-          pointable.hand = Controller.getHandByID( currentFrame, json["pointables"][ i ]["handId"] );
-          pointable.length = json["pointables"][ i ]["length"];
-          pointable.direction = new Vector3( json["pointables"][ i ]["direction"][ 0 ], json["pointables"][ i ]["direction"][ 1 ], json["pointables"][ i ]["direction"][ 2 ] );
-          pointable.tipPosition = new Vector3( json["pointables"][ i ]["tipPosition"][ 0 ], json["pointables"][ i ]["tipPosition"][ 1 ], json["pointables"][ i ]["tipPosition"][ 2 ] );
-          pointable.stabilizedTipPosition = new Vector3( json["pointables"][ i ]["stabilizedTipPosition"][ 0 ], json["pointables"][ i ]["stabilizedTipPosition"][ 1 ], json["pointables"][ i ]["stabilizedTipPosition"][ 2 ] );
-          pointable.tipVelocity = new Vector3( json["pointables"][ i ]["tipVelocity"][ 0 ], json["pointables"][ i ]["tipVelocity"][ 1 ], json["pointables"][ i ]["tipVelocity"][ 2 ] );
-          pointable.touchDistance = json["pointables"][ i ]["touchDistance"];
-          pointable.timeVisible = json["pointables"][ i ]["timeVisible"];
-          currentFrame.pointables.add( pointable );
-
-          switch( json["pointables"][ i ]["touchZone"] )
-          {
-            case "hovering":
-              pointable.touchZone = Pointable.ZONE_HOVERING;
-              break;
-            case "touching":
-              pointable.touchZone = Pointable.ZONE_TOUCHING;
-              break;
-            default:
-              pointable.touchZone = Pointable.ZONE_NONE;
-              break;
-          }
-
-          if ( pointable.hand != null )
-            pointable.hand.pointables.add( pointable );
-
-          if ( isTool )
-          {
-            pointable.isTool = true;
-            pointable.isFinger = false;
-            pointable.width = json["pointables"][ i ]["width"];
-            currentFrame.tools.add( pointable );
-            if ( pointable.hand != null )
-              pointable.hand.toolsVector.add( pointable );
-          }
-          else
-          {
-            pointable.isTool = false;
-            pointable.isFinger = true;
-            currentFrame.fingers.add( pointable );
-            if ( pointable.hand != null )
-              pointable.hand.fingerList.add( pointable );
+        // Hands
+        if (json["hands"] != null) {
+          i = 0;
+          length = json["hands"].length;
+          for (i = 0; i < length; i++) {
+            hand = new Hand();
+            hand.frame = currentFrame;
+            hand.direction = new Vector3(json["hands"][i]["direction"][0], json["hands"][i]["direction"][1], json["hands"][i]["direction"][2]);
+            hand.id = json["hands"][i]["id"];
+            hand.palmNormal = new Vector3(json["hands"][i]["palmNormal"][0], json["hands"][i]["palmNormal"][1], json["hands"][i]["palmNormal"][2]);
+            hand.palmPosition = new Vector3(json["hands"][i]["palmPosition"][0], json["hands"][i]["palmPosition"][1], json["hands"][i]["palmPosition"][2]);
+            hand.stabilizedPalmPosition = new Vector3(json["hands"][i]["stabilizedPalmPosition"][0], json["hands"][i]["stabilizedPalmPosition"][1], json["hands"][i]["stabilizedPalmPosition"][2]);
+            hand.palmVelocity = new Vector3(json["hands"][i]["palmPosition"][0], json["hands"][i]["palmPosition"][1], json["hands"][i]["palmPosition"][2]);
+            hand.rotation = new Matrix(x: new Vector3(json["hands"][i]["r"][0][0], json["hands"][i]["r"][0][1], json["hands"][i]["r"][0][2]), y: new Vector3(json["hands"][i]["r"][1][0], json["hands"][i]["r"][1][1], json["hands"][i]["r"][1][2]), z: new Vector3(json["hands"][i]["r"][2][0], json["hands"][i]["r"][2][1], json["hands"][i]["r"][2][2]));
+            hand.scaleFactorNumber = json["hands"][i]["s"];
+            hand.sphereCenter = new Vector3(json["hands"][i]["sphereCenter"][0], json["hands"][i]["sphereCenter"][1], json["hands"][i]["sphereCenter"][2]);
+            hand.sphereRadius = json["hands"][i]["sphereRadius"];
+            hand.timeVisible = json["hands"][i]["timeVisible"];
+            hand.translationVector = new Vector3(json["hands"][i]["t"][0], json["hands"][i]["t"][1], json["hands"][i]["t"][2]);
+            currentFrame.hands.add(hand);
           }
         }
-      }
 
-      // Gestures
-      if ( json["gestures"] != null )
-      {
-        i = 0;
-        length = json["gestures"].length;
-        for ( i = 0; i < length; i++ )
-        {
-          switch( json["gestures"][ i ]["type"] )
-          {
-            case "circle":
-              gesture = new CircleGesture();
-              type = Gesture.TYPE_CIRCLE;
-              CircleGesture circle = gesture;
+        currentFrame.id = json["id"];
+        currentFrame.currentFramesPerSecond = json["currentFramesPerSecond"];
 
-              circle.center = new Vector3( json["gestures"][ i ]["center"][ 0 ], json["gestures"][ i ]["center"][ 1 ], json["gestures"][ i ]["center"][ 2 ] );
-              circle.normal = new Vector3( json["gestures"][ i ]["normal"][ 0 ], json["gestures"][ i ]["normal"][ 1 ], json["gestures"][ i ]["normal"][ 2 ] );
-              circle.progress = json["gestures"][ i ]["progress"];
-              circle.radius = json["gestures"][ i ]["radius"];
-              break;
+        // InteractionBox
+        if (json["interactionBox"] != null) {
+          currentFrame.interactionBox = new InteractionBox();
+          currentFrame.interactionBox.center = new Vector3(json["interactionBox"]["center"][0], json["interactionBox"]["center"][1], json["interactionBox"]["center"][2]);
+          currentFrame.interactionBox.width = json["interactionBox"]["size"][0];
+          currentFrame.interactionBox.height = json["interactionBox"]["size"][1];
+          currentFrame.interactionBox.depth = json["interactionBox"]["size"][2];
+        }
 
-            case "swipe":
-              gesture = new SwipeGesture();
-              type = Gesture.TYPE_SWIPE;
+        // Pointables
+        if (json["pointables"] != null) {
+          i = 0;
+          length = json["pointables"].length;
+          for (i = 0; i < length; i++) {
+            isTool = json["pointables"][i]["tool"];
+            if (isTool) pointable = new Tool(); else pointable = new Finger();
 
-              SwipeGesture swipe = gesture;
+            pointable.frame = currentFrame;
+            pointable.id = json["pointables"][i]["id"];
+            pointable.hand = Controller.getHandByID(currentFrame, json["pointables"][i]["handId"]);
+            pointable.length = json["pointables"][i]["length"];
+            pointable.direction = new Vector3(json["pointables"][i]["direction"][0], json["pointables"][i]["direction"][1], json["pointables"][i]["direction"][2]);
+            pointable.tipPosition = new Vector3(json["pointables"][i]["tipPosition"][0], json["pointables"][i]["tipPosition"][1], json["pointables"][i]["tipPosition"][2]);
+            pointable.stabilizedTipPosition = new Vector3(json["pointables"][i]["stabilizedTipPosition"][0], json["pointables"][i]["stabilizedTipPosition"][1], json["pointables"][i]["stabilizedTipPosition"][2]);
+            pointable.tipVelocity = new Vector3(json["pointables"][i]["tipVelocity"][0], json["pointables"][i]["tipVelocity"][1], json["pointables"][i]["tipVelocity"][2]);
+            pointable.touchDistance = json["pointables"][i]["touchDistance"];
+            pointable.timeVisible = json["pointables"][i]["timeVisible"];
+            currentFrame.pointables.add(pointable);
 
-              swipe.startPosition = new Vector3( json["gestures"][ i ]["startPosition"][ 0 ], json["gestures"][ i ]["startPosition"][ 1 ], json["gestures"][ i ]["startPosition"][ 2 ] );
-              swipe.position = new Vector3( json["gestures"][ i ]["position"][ 0 ], json["gestures"][ i ]["position"][ 1 ], json["gestures"][ i ]["position"][ 2 ] );
-              swipe.direction = new Vector3( json["gestures"][ i ]["direction"][ 0 ], json["gestures"][ i ]["direction"][ 1 ], json["gestures"][ i ]["direction"][ 2 ] );
-              swipe.speed = json["gestures"][ i ]["speed"];
-              break;
+            switch (json["pointables"][i]["touchZone"]) {
+              case "hovering":
+                pointable.touchZone = Pointable.ZONE_HOVERING;
+                break;
+              case "touching":
+                pointable.touchZone = Pointable.ZONE_TOUCHING;
+                break;
+              default:
+                pointable.touchZone = Pointable.ZONE_NONE;
+                break;
+            }
 
-            case "screenTap":
-              gesture = new ScreenTapGesture();
-              type = Gesture.TYPE_SCREEN_TAP;
+            if (pointable.hand != null) pointable.hand.pointables.add(pointable);
 
-              ScreenTapGesture screenTap = gesture;
-              screenTap.position = new Vector3( json["gestures"][ i ]["position"][ 0 ], json["gestures"][ i ]["position"][ 1 ], json["gestures"][ i ]["position"][ 2 ] );
-              screenTap.direction = new Vector3( json["gestures"][ i ]["direction"][ 0 ], json["gestures"][ i ]["direction"][ 1 ], json["gestures"][ i ]["direction"][ 2 ] );
-              screenTap.progress = json["gestures"][ i ]["progress"];
-              break;
-
-            case "keyTap":
-              gesture = new KeyTapGesture();
-              type = Gesture.TYPE_KEY_TAP;
-
-              KeyTapGesture keyTap = gesture;
-              keyTap.position = new Vector3( json["gestures"][ i ]["position"][ 0 ], json["gestures"][ i ]["position"][ 1 ], json["gestures"][ i ]["position"][ 2 ] );
-              keyTap.direction = new Vector3( json["gestures"][ i ]["direction"][ 0 ], json["gestures"][ i ]["direction"][ 1 ], json["gestures"][ i ]["direction"][ 2 ] );
-              keyTap.progress = json["gestures"][ i ]["progress"];
-              break;
-
-            default:
-              throw( "unkown gesture type" );
-          }
-
-          int j = 0;
-          int lengthInner = 0;
-
-          if( json["gestures"][ i ]["handIds"] != null )
-          {
-            j = 0;
-            lengthInner = json["gestures"][ i ]["handIds"].length;
-            for( j = 0; j < lengthInner; ++j )
-            {
-              Hand gestureHand = Controller.getHandByID( currentFrame, json["gestures"][ i ]["handIds"][ j ] );
-              gesture.hands.add( gestureHand );
+            if (isTool) {
+              pointable.isTool = true;
+              pointable.isFinger = false;
+              pointable.width = json["pointables"][i]["width"];
+              currentFrame.tools.add(pointable);
+              if (pointable.hand != null) pointable.hand.toolsVector.add(pointable);
+            } else {
+              pointable.isTool = false;
+              pointable.isFinger = true;
+              currentFrame.fingers.add(pointable);
+              if (pointable.hand != null) pointable.hand.fingerList.add(pointable);
             }
           }
+        }
 
-          if( json["gestures"][ i ]["pointableIds"] != null )
-          {
-            j = 0;
-            lengthInner = json["gestures"][ i ]["pointableIds"].length;
-            for( j = 0; j < lengthInner; ++j )
-            {
-              Pointable gesturePointable = Controller.getPointableByID( currentFrame, json["gestures"][ i ]["pointableIds"][ j ] );
-              if( gesturePointable != null )
-              {
-                gesture.pointables.add( gesturePointable );
+        // Gestures
+        if (json["gestures"] != null) {
+          i = 0;
+          length = json["gestures"].length;
+          for (i = 0; i < length; i++) {
+            switch (json["gestures"][i]["type"]) {
+              case "circle":
+                gesture = new CircleGesture();
+                type = Gesture.TYPE_CIRCLE;
+                CircleGesture circle = gesture;
+
+                circle.center = new Vector3(json["gestures"][i]["center"][0], json["gestures"][i]["center"][1], json["gestures"][i]["center"][2]);
+                circle.normal = new Vector3(json["gestures"][i]["normal"][0], json["gestures"][i]["normal"][1], json["gestures"][i]["normal"][2]);
+                circle.progress = json["gestures"][i]["progress"];
+                circle.radius = json["gestures"][i]["radius"];
+                break;
+
+              case "swipe":
+                gesture = new SwipeGesture();
+                type = Gesture.TYPE_SWIPE;
+
+                SwipeGesture swipe = gesture;
+
+                swipe.startPosition = new Vector3(json["gestures"][i]["startPosition"][0], json["gestures"][i]["startPosition"][1], json["gestures"][i]["startPosition"][2]);
+                swipe.position = new Vector3(json["gestures"][i]["position"][0], json["gestures"][i]["position"][1], json["gestures"][i]["position"][2]);
+                swipe.direction = new Vector3(json["gestures"][i]["direction"][0], json["gestures"][i]["direction"][1], json["gestures"][i]["direction"][2]);
+                swipe.speed = json["gestures"][i]["speed"];
+                break;
+
+              case "screenTap":
+                gesture = new ScreenTapGesture();
+                type = Gesture.TYPE_SCREEN_TAP;
+
+                ScreenTapGesture screenTap = gesture;
+                screenTap.position = new Vector3(json["gestures"][i]["position"][0], json["gestures"][i]["position"][1], json["gestures"][i]["position"][2]);
+                screenTap.direction = new Vector3(json["gestures"][i]["direction"][0], json["gestures"][i]["direction"][1], json["gestures"][i]["direction"][2]);
+                screenTap.progress = json["gestures"][i]["progress"];
+                break;
+
+              case "keyTap":
+                gesture = new KeyTapGesture();
+                type = Gesture.TYPE_KEY_TAP;
+
+                KeyTapGesture keyTap = gesture;
+                keyTap.position = new Vector3(json["gestures"][i]["position"][0], json["gestures"][i]["position"][1], json["gestures"][i]["position"][2]);
+                keyTap.direction = new Vector3(json["gestures"][i]["direction"][0], json["gestures"][i]["direction"][1], json["gestures"][i]["direction"][2]);
+                keyTap.progress = json["gestures"][i]["progress"];
+                break;
+
+              default:
+                throw ("unkown gesture type");
+            }
+
+            int j = 0;
+            int lengthInner = 0;
+
+            if (json["gestures"][i]["handIds"] != null) {
+              j = 0;
+              lengthInner = json["gestures"][i]["handIds"].length;
+              for (j = 0; j < lengthInner; ++j) {
+                Hand gestureHand = Controller.getHandByID(currentFrame, json["gestures"][i]["handIds"][j]);
+                gesture.hands.add(gestureHand);
               }
             }
-            if( gesture is CircleGesture && gesture.pointables.length > 0 )
-            {
-              gesture.pointable = gesture.pointables[ 0 ];
+
+            if (json["gestures"][i]["pointableIds"] != null) {
+              j = 0;
+              lengthInner = json["gestures"][i]["pointableIds"].length;
+              for (j = 0; j < lengthInner; ++j) {
+                Pointable gesturePointable = Controller.getPointableByID(currentFrame, json["gestures"][i]["pointableIds"][j]);
+                if (gesturePointable != null) {
+                  gesture.pointables.add(gesturePointable);
+                }
+              }
+              if (gesture is CircleGesture && gesture.pointables.length > 0) {
+                gesture.pointable = gesture.pointables[0];
+              }
             }
+
+            gesture.frame = currentFrame;
+            gesture.id = json["gestures"][i]["id"];
+            gesture.duration = json["gestures"][i]["duration"];
+            gesture.durationSeconds = gesture.duration / 1000000;
+
+            switch (json["gestures"][i]["state"]) {
+              case "start":
+                gesture.state = Gesture.STATE_START;
+                break;
+              case "update":
+                gesture.state = Gesture.STATE_UPDATE;
+                break;
+              case "stop":
+                gesture.state = Gesture.STATE_STOP;
+                break;
+              default:
+                gesture.state = Gesture.STATE_INVALID;
+            }
+
+            gesture.type = type;
+
+            currentFrame.gesturesVector.add(gesture);
           }
-
-          gesture.frame = currentFrame;
-          gesture.id = json["gestures"][ i ]["id"];
-          gesture.duration = json["gestures"][ i ]["duration"];
-          gesture.durationSeconds = gesture.duration / 1000000;
-
-          switch( json["gestures"][ i ]["state"] )
-          {
-            case "start":
-              gesture.state = Gesture.STATE_START;
-              break;
-            case "update":
-              gesture.state = Gesture.STATE_UPDATE;
-              break;
-            case "stop":
-              gesture.state = Gesture.STATE_STOP;
-              break;
-            default:
-              gesture.state = Gesture.STATE_INVALID;
-          }
-
-          gesture.type = type;
-
-          currentFrame.gesturesVector.add( gesture );
         }
-      }
 
-      // Rotation (since last frame), interpolate for smoother motion
-      if ( json["r"] != null )
-        currentFrame.rotation = new Matrix( x: new Vector3( json["r"][ 0 ][ 0 ], json["r"][ 0 ][ 1 ], json["r"][ 0 ][ 2 ] ), y: new Vector3( json["r"][ 1 ][ 0 ], json["r"][ 1 ][ 1 ], json["r"][ 1 ][ 2 ] ), z: new Vector3( json["r"][ 2 ][ 0 ], json["r"][ 2 ][ 1 ], json["r"][ 2 ][ 2 ] ) );
+        // Rotation (since last frame), interpolate for smoother motion
+        if (json["r"] != null) currentFrame.rotation = new Matrix(x: new Vector3(json["r"][0][0], json["r"][0][1], json["r"][0][2]), y: new Vector3(json["r"][1][0], json["r"][1][1], json["r"][1][2]), z: new Vector3(json["r"][2][0], json["r"][2][1], json["r"][2][2]));
 
-      // Scale factor (since last frame), interpolate for smoother motion
-      currentFrame.scaleFactorNumber = json["s"];
+        // Scale factor (since last frame), interpolate for smoother motion
+        currentFrame.scaleFactorNumber = json["s"];
 
-      // Translation (since last frame), interpolate for smoother motion
-      if ( json["t"] != null )
-        currentFrame.translationVector = new Vector3( json["t"][ 0 ], json["t"][ 1 ], json["t"][ 2 ] );
+        // Translation (since last frame), interpolate for smoother motion
+        if (json["t"] != null) currentFrame.translationVector = new Vector3(json["t"][0], json["t"][1], json["t"][2]);
 
-      // Timestamp
-      currentFrame.timestamp = json["timestamp"];
+        // Timestamp
+        currentFrame.timestamp = json["timestamp"];
 
-      // Add frame to history
-      if ( frameHistory.length > 59 )
-        frameHistory.removeRange( 59, frameHistory.length );
+        // Add frame to history
+        if (frameHistory.length > 59) frameHistory.removeRange(59, frameHistory.length);
 
-      frameHistory.insert( 0, _latestFrame );
-      _latestFrame = currentFrame;
-      _listener.onFrame( this, _latestFrame );
+        frameHistory.insert(0, _latestFrame);
+        _latestFrame = currentFrame;
+        _listener.onFrame(this, _latestFrame);
+      });
     });
   }
 
@@ -376,16 +332,13 @@ class Controller extends EventDispatcher
    * [return] The Hand object if found, otherwise null
   *
    */
-  static Hand getHandByID( Frame frame, int id )
-  {
+  static Hand getHandByID(Frame frame, int id) {
     Hand returnValue;
     int i = 0;
 
-    for( i = 0; i < frame.hands.length; i++ )
-    {
-      if ( frame.hands[ i ].id == id )
-      {
-        returnValue = frame.hands[ i ];
+    for (i = 0; i < frame.hands.length; i++) {
+      if (frame.hands[i].id == id) {
+        returnValue = frame.hands[i];
         break;
       }
     }
@@ -400,22 +353,19 @@ class Controller extends EventDispatcher
    * [return] The Pointable object if found, otherwise null
   *
    */
-  static Pointable getPointableByID( Frame frame, int id )
-  {
+  static Pointable getPointableByID(Frame frame, int id) {
     Pointable returnValue;
     int i = 0;
 
-    for( i = 0; i < frame.pointables.length; i++ )
-    {
-      if ( frame.pointables[ i ].id == id )
-      {
-        returnValue = frame.pointables[ i ];
+    for (i = 0; i < frame.pointables.length; i++) {
+      if (frame.pointables[i].id == id) {
+        returnValue = frame.pointables[i];
         break;
       }
     }
     return returnValue;
   }
-  
+
   /**
    * Returns a frame of tracking data from the Leap Motion.
    *
@@ -433,14 +383,10 @@ class Controller extends EventDispatcher
    * history position, an invalid Frame is returned.
    *
    */
-  Frame frame( { int history: 0 } )
-  {
-    if( history >= frameHistory.length )
-      return Frame.invalid();
-    else
-      return frameHistory[ history ];
+  Frame frame({int history: 0}) {
+    if (history >= frameHistory.length) return Frame.invalid(); else return frameHistory[history];
   }
-  
+
   /**
    * Update the object that receives direct updates from the Leap Motion Controller.
   *
@@ -449,8 +395,7 @@ class Controller extends EventDispatcher
    * in your own classes, and use this method to set the listener to your
    * own implementation.
    */
-  void setListener( Listener listener )
-  {
+  void setListener(Listener listener) {
     _listener = listener;
   }
 
@@ -468,17 +413,13 @@ class Controller extends EventDispatcher
    * [enable] True, to enable the specified gesture type; False, to disable.
    *
    */
-  void enableGesture( { int type, bool enable: true } )
-  {
-    if( enable )
-    {
+  void enableGesture({int type, bool enable: true}) {
+    if (enable) {
       _isGesturesEnabled = true;
-      connection.sendString( "{ \"enableGestures\": true }" );
-    }
-    else
-    {
+      connection.add("{ \"enableGestures\": true }");
+    } else {
       _isGesturesEnabled = false;
-      connection.sendString( "{ \"enableGestures\": false }" );
+      connection.add("{ \"enableGestures\": false }");
     }
   }
 
@@ -489,7 +430,7 @@ class Controller extends EventDispatcher
    * [return] True, if the specified type is enabled; false, otherwise.
    *
    */
-  bool isGestureEnabled( int type ) => _isGesturesEnabled;
+  bool isGestureEnabled(int type) => _isGesturesEnabled;
 
   /**
    * Reports whether this Controller is connected to the Leap Motion Controller.

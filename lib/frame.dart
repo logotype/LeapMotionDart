@@ -14,8 +14,7 @@ part of LeapMotionDart;
  * @author logotype
  *
  */
-class Frame
-{
+class Frame {
   /**
    * The current framerate (in frames per second) of the Leap Motion Controller.
    * This value may fluctuate depending on available computing resources,
@@ -24,14 +23,14 @@ class Frame
    * An estimate of frames per second of the Leap Motion Controller.
    */
   num currentFramesPerSecond;
-  
+
   /**
    * @private
    * The list of Finger objects detected in this frame, given in arbitrary order.<br/>
    * The list can be empty if no fingers are detected.
    */
   FingerList fingerList = new FingerList();
-  
+
   /**
    * @private
    * The list of Hand objects detected in this frame, given in arbitrary order.<br/>
@@ -74,7 +73,7 @@ class Frame
    * Consecutive frames processed by the Leap Motion have consecutive increasing values.
    */
   int id;
-  
+
   /**
    * The current InteractionBox for the frame.
    * See the InteractionBox class documentation for more details on how this class should be used.
@@ -125,8 +124,7 @@ class Frame
    * Get valid Frame objects by calling the <code>LeapMotion.frame()</code> function.
    *
    */
-  Frame()
-  {
+  Frame() {
   }
 
   /**
@@ -149,16 +147,13 @@ class Frame
    * @see [Hand]
    *
    */
-  Hand hand( int id )
-  {
+  Hand hand(int id) {
     int i = 0;
     int length = handsVector.length;
 
-    for( i; i < length; ++i )
-    {
-      if( handsVector[ i ].id == id )
-      {
-        return handsVector[ i ];
+    for (i; i < length; ++i) {
+      if (handsVector[i].id == id) {
+        return handsVector[i];
       }
     }
 
@@ -196,16 +191,13 @@ class Frame
    * @see [Finger]
    *
    */
-  Finger finger( int id )
-  {
+  Finger finger(int id) {
     int i = 0;
     int length = fingerList.length;
 
-    for( i; i < length; ++i )
-    {
-      if( fingerList[ i ].id == id )
-      {
-        return fingerList[ i ];
+    for (i; i < length; ++i) {
+      if (fingerList[i].id == id) {
+        return fingerList[i];
       }
     }
 
@@ -243,16 +235,13 @@ class Frame
    * @see [Tool]
    *
    */
-  Tool tool( int id )
-  {
+  Tool tool(int id) {
     int i = 0;
     int length = toolsVector.length;
 
-    for( i; i < length; ++i )
-    {
-      if( toolsVector[ i ].id == id )
-      {
-        return toolsVector[ i ];
+    for (i; i < length; ++i) {
+      if (toolsVector[i].id == id) {
+        return toolsVector[i];
       }
     }
 
@@ -289,16 +278,13 @@ class Frame
    * in this frame; otherwise, an invalid Pointable object is returned.
    *
    */
-  Pointable pointable( int id )
-  {
+  Pointable pointable(int id) {
     int i = 0;
     int length = pointablesVector.length;
 
-    for( i; i < length; ++i )
-    {
-      if( pointablesVector[ i ].id == id )
-      {
-        return pointablesVector[ i ];
+    for (i; i < length; ++i) {
+      if (pointablesVector[i].id == id) {
+        return pointablesVector[i];
       }
     }
 
@@ -331,16 +317,13 @@ class Frame
    * exists; Otherwise, an Invalid Gesture object.
    *
    */
-  Gesture gesture( int id )
-  {
+  Gesture gesture(int id) {
     int i = 0;
     int length = gesturesVector.length;
 
-    for( i; i < length; ++i )
-    {
-      if( gesturesVector[ i ].id == id )
-      {
-        return gesturesVector[ i ];
+    for (i; i < length; ++i) {
+      if (gesturesVector[i].id == id) {
+        return gesturesVector[i];
       }
     }
 
@@ -359,33 +342,24 @@ class Frame
    * [return] The list of gestures.
    *
    */
-  List<Gesture> gestures( { Frame sinceFrame: null } )
-  {
-    if( !isValid() )
-      return [];
+  List<Gesture> gestures({Frame sinceFrame: null}) {
+    if (!isValid()) return [];
 
-    if( sinceFrame == null )
-    {
+    if (sinceFrame == null) {
       // The gestures recognized or continuing in this frame.
       return gesturesVector;
-    }
-    else
-    {
-      if( !sinceFrame.isValid() )
-        return new List<Gesture>();
+    } else {
+      if (!sinceFrame.isValid()) return new List<Gesture>();
 
       // Returns a Gesture vector containing all gestures that have occured since the specified frame.
       List<Gesture> gesturesSinceFrame = new List<Gesture>();
       int i = 0;
       int j = 0;
 
-      for( i; i < controller.frameHistory.length; ++i )
-      {
-        for( j; j < controller.frameHistory[ i ].gesturesVector.length; ++j )
-          gesturesSinceFrame.add( controller.frameHistory[ i ].gesturesVector[ j ] );
+      for (i; i < controller.frameHistory.length; ++i) {
+        for (j; j < controller.frameHistory[i].gesturesVector.length; ++j) gesturesSinceFrame.add(controller.frameHistory[i].gesturesVector[j]);
 
-        if( sinceFrame == controller.frameHistory[ i ] )
-          break;
+        if (sinceFrame == controller.frameHistory[i]) break;
       }
 
       return gesturesSinceFrame;
@@ -412,16 +386,12 @@ class Frame
    * frame and that specified in the sinceFrame parameter.
    *
    */
-  Vector3 rotationAxis( Frame sinceFrame )
-  {
-    if( sinceFrame.rotation != null )
-    {
-      Vector3 vector = new Vector3( rotation.zBasis.y - sinceFrame.rotation.yBasis.z, rotation.xBasis.z - sinceFrame.rotation.zBasis.x, rotation.yBasis.x - sinceFrame.rotation.xBasis.y );
+  Vector3 rotationAxis(Frame sinceFrame) {
+    if (sinceFrame.rotation != null) {
+      Vector3 vector = new Vector3(rotation.zBasis.y - sinceFrame.rotation.yBasis.z, rotation.xBasis.z - sinceFrame.rotation.zBasis.x, rotation.yBasis.x - sinceFrame.rotation.xBasis.y);
       return vector.normalized();
-    }
-    else
-    {
-      return new Vector3( 0.0, 0.0, 0.0 );
+    } else {
+      return new Vector3(0.0, 0.0, 0.0);
     }
   }
 
@@ -445,21 +415,18 @@ class Frame
    * change between the current frame and that specified in the sinceFrame parameter.
    *
    */
-  num rotationAngle( { Frame sinceFrame, Vector3 axis: null } )
-  {
-    if( !isValid() || !sinceFrame.isValid() )
-      return 0.0;
+  num rotationAngle({Frame sinceFrame, Vector3 axis: null}) {
+    if (!isValid() || !sinceFrame.isValid()) return 0.0;
 
     num returnValue = 0.0;
-    Matrix rotationSinceFrameMatrix = rotationMatrix( sinceFrame );
-    num cs = ( rotationSinceFrameMatrix.xBasis.x + rotationSinceFrameMatrix.yBasis.y + rotationSinceFrameMatrix.zBasis.z - 1 ) * 0.5;
-    num angle = Math.acos( cs );
+    Matrix rotationSinceFrameMatrix = rotationMatrix(sinceFrame);
+    num cs = (rotationSinceFrameMatrix.xBasis.x + rotationSinceFrameMatrix.yBasis.y + rotationSinceFrameMatrix.zBasis.z - 1) * 0.5;
+    num angle = Math.acos(cs);
     returnValue = angle.isNaN ? 0.0 : angle;
 
-    if( axis != null )
-    {
-      Vector3 rotAxis = rotationAxis( sinceFrame );
-      returnValue *= rotAxis.dot( axis.normalized() );
+    if (axis != null) {
+      Vector3 rotAxis = rotationAxis(sinceFrame);
+      returnValue *= rotAxis.dot(axis.normalized());
     }
 
     return returnValue;
@@ -475,14 +442,10 @@ class Frame
    * then this method returns an identity matrix.
    *
    */
-  Matrix rotationMatrix( Frame sinceFrame )
-  {
-    if( sinceFrame.rotation != null )
-    {
-      return sinceFrame.rotation * new Matrix( x: new Vector3( this.rotation.xBasis.x, this.rotation.yBasis.x, this.rotation.zBasis.x ), y: new Vector3( this.rotation.xBasis.y, this.rotation.yBasis.y, this.rotation.zBasis.y ), z: new Vector3( this.rotation.xBasis.z, this.rotation.yBasis.z, this.rotation.zBasis.z ) );
-    }
-    else
-    {
+  Matrix rotationMatrix(Frame sinceFrame) {
+    if (sinceFrame.rotation != null) {
+      return sinceFrame.rotation * new Matrix(x: new Vector3(this.rotation.xBasis.x, this.rotation.yBasis.x, this.rotation.zBasis.x), y: new Vector3(this.rotation.xBasis.y, this.rotation.yBasis.y, this.rotation.zBasis.y), z: new Vector3(this.rotation.xBasis.z, this.rotation.yBasis.z, this.rotation.zBasis.z));
+    } else {
       return Matrix.identity();
     }
   }
@@ -508,12 +471,8 @@ class Frame
    * in the sinceFrame parameter.
    *
    */
-  num scaleFactor( Frame sinceFrame )
-  {
-    if( sinceFrame.scaleFactorNumber != null )
-      return Math.exp( scaleFactorNumber - sinceFrame.scaleFactorNumber );
-    else
-      return 1.0;
+  num scaleFactor(Frame sinceFrame) {
+    if (sinceFrame.scaleFactorNumber != null) return Math.exp(scaleFactorNumber - sinceFrame.scaleFactorNumber); else return 1.0;
   }
 
   /**
@@ -535,12 +494,8 @@ class Frame
    * in the sinceFrame parameter.
    *
    */
-  Vector3 translation( Frame sinceFrame )
-  {
-    if( sinceFrame.translationVector != null )
-      return new Vector3( translationVector.x - sinceFrame.translationVector.x, translationVector.y - sinceFrame.translationVector.y, translationVector.z - sinceFrame.translationVector.z );
-    else
-      return new Vector3( 0.0, 0.0, 0.0 );
+  Vector3 translation(Frame sinceFrame) {
+    if (sinceFrame.translationVector != null) return new Vector3(translationVector.x - sinceFrame.translationVector.x, translationVector.y - sinceFrame.translationVector.y, translationVector.z - sinceFrame.translationVector.z); else return new Vector3(0.0, 0.0, 0.0);
   }
 
   /**
@@ -554,10 +509,8 @@ class Frame
    * [return] True; if equal. False otherwise.
    *
    */
-  operator ==( Frame other )
-  {
-    if( id != other.id || !isValid() || other.isValid() )
-      return false;
+  operator ==(Frame other) {
+    if (id != other.id || !isValid() || other.isValid()) return false;
 
     return true;
   }
@@ -579,10 +532,8 @@ class Frame
    * [return] True, if this is a valid Frame object; false otherwise.
    *
    */
-  bool isValid()
-  {
-    if( id == null )
-      return false;
+  bool isValid() {
+    if (id == null) return false;
 
     return true;
   }
@@ -603,5 +554,5 @@ class Frame
    * Suppress compiler warning for operator overloads.
    *
    */
-   int get hashCode => super.hashCode;
+  int get hashCode => super.hashCode;
 }
