@@ -1,3 +1,6 @@
+This library is not actively maintained.
+========================================
+
 [<img src="http://logotype.se/leapmotion/logo_dart.png">](https://github.com/logotype/LeapMotionDart)
 
 This is the Dart framework for working with Leap Motion.
@@ -161,7 +164,7 @@ Authors
 Copyright and license
 ---------------------
 
-Copyright © 2014 logotype
+Copyright © 2016 logotype
 
 Author: Victor Norgren
 
