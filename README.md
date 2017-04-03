@@ -1,8 +1,6 @@
 This library is not actively maintained.
 ========================================
 
-[<img src="http://logotype.se/leapmotion/logo_dart.png">](https://github.com/logotype/LeapMotionDart)
-
 This is the Dart framework for working with Leap Motion.
 
 Leap Motion is a motion-control software and hardware company developing the world's most powerful and sensitive 3D motion-control and motion-sensing technology.
@@ -164,7 +162,7 @@ Authors
 Copyright and license
 ---------------------
 
-Copyright © 2016 logotype
+Copyright © 2017 logotype
 
 Author: Victor Norgren
 
@@ -184,3 +182,10 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 IN THE SOFTWARE. 
+
+--------------------------
+Built with IntelliJ IDEA Open Source License
+
+<a href="https://www.jetbrains.com/buy/opensource/"><img src="https://s3-ap-southeast-1.amazonaws.com/www.logotype.se/assets/logo-text.svg" width="200"></a>
+
+The people at JetBrains supports the Open Source community by offering free licences. Check out <a href="https://www.jetbrains.com/buy/opensource/">JetBrains Open Source</a> to apply for your project. Thank you!
